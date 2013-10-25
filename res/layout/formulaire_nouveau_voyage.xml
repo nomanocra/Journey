@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Black"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/voyageEnCours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@style/AppTheme"
+        android:gravity="center"
+        android:text="Nom du Voyage :"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/White"
+        android:textSize="40dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.00" >
+
+        <EditText
+            android:id="@+id/champNouveauVoyage"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:layout_weight="0.50"
+            android:ems="10"
+            android:gravity="center"
+            android:text="" >
+
+            <requestFocus />
+        </EditText>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/confirmer_ajout_voyage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Commencer le voyage" />
+
+</LinearLayout>

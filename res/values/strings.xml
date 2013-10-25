@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Journey</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="voyages">VOS\nVOYAGES</string>
+    <string name="journal">JOURNAL DE VOYAGE</string>
+    <string name="retour">Retour</string>
+
+</resources>

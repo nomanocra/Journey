@@ -1,0 +1,51 @@
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/AbsoluteLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/acceuil" >
+
+    <LinearLayout
+        android:layout_width="966dp"
+        android:layout_height="wrap_content"
+        android:layout_x="176dp"
+        android:layout_y="564dp" >
+
+        <Button
+            android:id="@+id/boutonJeParsEnVoyage"
+            android:layout_width="300dp"
+            android:layout_height="153dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_nouveau_voyage_selector"
+            android:onClick="actionBoutonAjoutVoyage"
+            android:text=" " />
+
+        <Button
+            android:id="@+id/boutonCarnetVoyage"
+            android:layout_width="300dp"
+            android:layout_height="153dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_carnet_selector"
+            android:onClick="actionBoutonCarnetVoyage"
+            android:text=" " />
+
+        <Button
+            android:id="@+id/boutonParametre"
+            android:layout_width="300dp"
+            android:layout_height="153dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_setting_selector"
+            android:text=" " />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="679dp"
+        android:layout_height="171dp"
+        android:layout_x="130dp"
+        android:layout_y="55dp"
+        android:src="@drawable/vous_n_etes_pas_en_voyage" />
+
+</AbsoluteLayout>

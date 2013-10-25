@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/Black"
+    tools:context=".MainActivity" >
+
+    <ImageView
+        android:id="@+id/journal_stats_km_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="127dp"
+        android:layout_marginTop="138dp"
+        android:src="@drawable/settings_icon" />
+
+    <TextView
+        android:id="@+id/journal_stats_km"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="127dp"
+        android:layout_toRightOf="@+id/journal_stats_km_pic"
+        android:text="458,5 km"
+        android:textColor="@color/White"
+        android:textSize="60sp" />
+
+    <ImageView
+        android:id="@+id/journal_stats_speed_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/journal_stats_km_pic"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="231dp"
+        android:src="@drawable/settings_icon" />
+
+    <TextView
+        android:id="@+id/journal_stats_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/journal_stats_km"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="220dp"
+        android:text="14,8 km/h"
+        android:textColor="@color/White"
+        android:textSize="60sp" />
+
+</RelativeLayout>

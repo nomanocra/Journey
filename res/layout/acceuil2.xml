@@ -1,0 +1,84 @@
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/AbsoluteLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/acceuil" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="564dp" >
+
+        <Button
+            android:id="@+id/boutonAjoutEvenement"
+            android:layout_width="300dp"
+            android:layout_height="153dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_nouveau_evenement_selector"
+            android:onClick="actionBoutonAjoutEvenement"
+            android:text=" " />
+
+        <Button
+            android:id="@+id/boutonJeTermineMonVoyage"
+            android:layout_width="300dp"
+            android:layout_height="153dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_fin_voyage_selector"
+            android:onClick="actionBoutonTermineVoyage"
+            android:text=" " />
+
+        <Button
+            android:id="@+id/boutonCarnetVoyage"
+            android:layout_width="300dp"
+            android:layout_height="153dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_carnet_selector"
+            android:onClick="actionBoutonCarnetVoyage"
+            android:text=" " />
+
+        <Button
+            android:id="@+id/boutonParametre"
+            android:layout_width="300dp"
+            android:layout_height="153dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_setting_selector"
+            android:text=" " />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/voyageEnCours"
+        android:layout_width="796dp"
+        android:layout_height="115dp"
+        android:layout_x="86dp"
+        android:layout_y="177dp"
+        android:gravity="center"
+        android:text="LIEU"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/RougeTitre"
+        android:textSize="90dp" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="792dp"
+        android:layout_height="95dp"
+        android:layout_x="93dp"
+        android:layout_y="69dp"
+        android:src="@drawable/vous_etes_en_voyage" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton1"
+        style="@style/AppTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_x="413dp"
+        android:layout_y="295dp"
+        android:text="ToggleButton"
+        android:textOff="Tracker désactivé"
+        android:textOn="Tracker activté" />
+
+</AbsoluteLayout>
