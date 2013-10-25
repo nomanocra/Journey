@@ -1,0 +1,7 @@
+Generating public/private rsa key pair.
+Saving the key failed: .ssh/id_rsa.
+Generating public/private rsa key pair.
+Your identification has been saved in sshkey.
+Your public key has been saved in sshkey.pub.
+The key fingerprint is:
+f4:f0:46:02:cd:d9:70:6a:f5:1b:d3:aa:a1:64:6c:83 dprt.david@hotmail.fr
