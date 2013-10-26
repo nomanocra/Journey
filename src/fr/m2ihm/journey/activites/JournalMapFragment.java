@@ -15,7 +15,6 @@ public class JournalMapFragment extends Fragment {
             Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         View v = inflater.inflate(R.layout.journal_map,null);
-
         return v;
     }
 }

@@ -25,6 +25,8 @@ public interface MyBDAdapter {
 
 	public Voyage getVoyage(long id);
 
+	public ArrayList<Voyage> getAllVoyage();
+	
 	public ArrayList<ElementMap> getAllMedia(int idVoyage);
 
 	public ArrayList<Son> getAllSon(int idVoyage);
@@ -50,5 +52,7 @@ public interface MyBDAdapter {
 	public int supprimerVoyage(long id);
 
 	public int supprimerEvenemet(long id);
+	
+	public int supprimerAllVoyage();
 
 }

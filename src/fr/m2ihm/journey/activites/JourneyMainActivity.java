@@ -1,12 +1,12 @@
 package fr.m2ihm.journey.activites;
 
-
 import java.util.ArrayList;
 
 import fr.m2ihm.journey.R;
 import fr.m2ihm.journey.adapter.MyBDAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
 import fr.m2ihm.journey.metier.Voyage;
+import fr.m2ihm.journey.test.TestBD;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -60,37 +60,12 @@ public class JourneyMainActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.v("START", "1");
 		super.onCreate(savedInstanceState);
-		Log.v("START", "2");
 		init();
-		//initDataBase();
+		TestBD.testBD(this);
 	}
 
-	private void initDataBase() {
-		Log.v("INIT", "4");
-		
-		myDB = new MyBDAdapterImpl(this);
-		
-		Log.v("INIT", "5");
-		
-		/*
-		Toast.makeText(this,
-				"Cliquez sur \"je pars en voyage\" pour creer un nouvel album de voyage voyage",
-				Toast.LENGTH_LONG).show();
-		onCreateDialog(1);
-		*/
-		myDB.open();
-		Log.v("INIT", "6");
-		myDB.ajouterVoyage("Test");
-		Log.v("INIT", "7");
-		myDB.close();
-		myDB.open();
-		Voyage courant = myDB.getVoyageCourant();
-		myDB.close();
-		Log.v("BD", courant.getNom());
-		
-	}
+
 
 	public void init() {
 		Log.v("INIT", "3");
@@ -100,7 +75,7 @@ public class JourneyMainActivity extends Activity {
 		journal = (Button) findViewById(R.id.boutonCarnetVoyage);
 		setting = (Button) findViewById(R.id.boutonParametre);
 		pasDeVoyageLayout();
-		
+
 	}
 
 	public void enVoyageLayout() {
@@ -136,7 +111,6 @@ public class JourneyMainActivity extends Activity {
 				 */
 				.show();
 		enVoyageLayout();
-		System.out.println("2");
 	}
 
 	public void actionBoutonAjoutEvenement(View v) {
@@ -174,8 +148,8 @@ public class JourneyMainActivity extends Activity {
 			break;
 
 		case IDENTIFIANT_BOITE_DEUX:
-		      box = new Dialog(this);
-		      box.setTitle("ET MOI ALORS ???");
+			box = new Dialog(this);
+			box.setTitle("ET MOI ALORS ???");
 			break;
 		}
 		return box;

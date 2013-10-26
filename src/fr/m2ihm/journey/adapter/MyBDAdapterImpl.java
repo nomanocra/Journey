@@ -82,22 +82,18 @@ public class MyBDAdapterImpl implements MyBDAdapter{
 	public static final String COL_V_ID = "_id";
 	public static final String COL_V_NOM_VOYAGE = "nomV";
 	public static final String COL_V_EN_COURS = "en_cours";
-	public static final String COL_V_SECONDES_DEBUT = "secondes";
-	public static final String COL_V_MINUTES_DEBUT  = "minutes";
-	public static final String COL_V_HOUR_DEBUT  = "heures";
-	
-	//FINIR CA !!
-	
-	public static final String COL_V_DAY_DEBUT  = "day";
-	public static final String COL_V_MONTH_DEBUT  = "month";
-	public static final String COL_V_YEAR_DEBUT  = "year";
-	public static final String COL_V_SECONDES_FIN  = "day";
-	public static final String COL_V_MINUTES_FIN = "month";
-	public static final String COL_V_HOUR_FIN = "year";
-	public static final String COL_V_DAY_FIN = "day";
-	public static final String COL_V_MONTH_FIN = "month";
-	public static final String COL_V_YEAR_FIN = "year";
-	
+	public static final String COL_V_SECONDES_DEBUT = "secondes_d";
+	public static final String COL_V_MINUTES_DEBUT  = "minutes_d";
+	public static final String COL_V_HOUR_DEBUT  = "heures_d";
+	public static final String COL_V_DAY_DEBUT  = "day_d";
+	public static final String COL_V_MONTH_DEBUT  = "month_d";
+	public static final String COL_V_YEAR_DEBUT  = "year_d";
+	public static final String COL_V_SECONDES_FIN  = "secondes_f";
+	public static final String COL_V_MINUTES_FIN = "minutes_f";
+	public static final String COL_V_HOUR_FIN = "heures_f";
+	public static final String COL_V_DAY_FIN = "day_f";
+	public static final String COL_V_MONTH_FIN = "month_f";
+	public static final String COL_V_YEAR_FIN = "year_f";
 	
 	private static final String CREATE_TABLE_VOYAGE =
 			"create table " + TABLE_VOYAGE + " ("
@@ -119,7 +115,6 @@ public class MyBDAdapterImpl implements MyBDAdapter{
 					+ COL_V_DAY_FIN + " integer, "
 					+ COL_V_MONTH_FIN + " integer, "
 					+ COL_V_YEAR_FIN + " integer);";
-	
 	
 	private SQLiteDatabase mDB;
 	private MyOpenHelper mOpenHelper;
@@ -236,6 +231,41 @@ public class MyBDAdapterImpl implements MyBDAdapter{
 								new Date(cursor.getInt(9), cursor.getInt(10), cursor.getInt(11), cursor.getInt(12), cursor.getInt(13), cursor.getInt(14)));
 		v.setId(cursor.getInt(0));
 		return v;
+	}
+	
+	@Override
+	public ArrayList<Voyage> getAllVoyage() {
+		ArrayList<Voyage> mesVoyages = new ArrayList<Voyage>();
+		Cursor cursor = mDB.query(
+				TABLE_VOYAGE ,
+				new String [] {
+						COL_V_ID,				//0
+						COL_V_NOM_VOYAGE,		//1
+						COL_V_EN_COURS,			//2
+						COL_V_SECONDES_DEBUT, 	//3
+						COL_V_MINUTES_DEBUT, 	//4
+						COL_V_HOUR_DEBUT, 		//5
+						COL_V_DAY_DEBUT, 		//6
+						COL_V_MONTH_DEBUT,		//7
+						COL_V_YEAR_DEBUT,		//8
+						COL_V_SECONDES_FIN,		//9
+						COL_V_MINUTES_FIN,		//10
+						COL_V_HOUR_FIN,			//11
+						COL_V_DAY_FIN,			//12
+						COL_V_MONTH_FIN,		//13
+						COL_V_YEAR_FIN},		//14
+						null, null, null, null, null );
+		cursor.moveToFirst();
+		for (int i=0; i<cursor.getCount();i++){
+		Log.v("getAllVoyage", cursor.getString(1) + " : " + cursor.getInt(2) + " | Time : " + cursor.getInt(5) + ":"+ cursor.getInt(4) + "."+ cursor.getInt(3) + " | Date : "+ cursor.getInt(6)  + "/"+ cursor.getInt(7) + "/"+ cursor.getInt(8));
+		Voyage v = new Voyage( cursor.getString(1), 
+								(cursor.getInt(2) == 1), 
+								new Date(cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6), cursor.getInt(7), cursor.getInt(8)),
+								new Date(cursor.getInt(9), cursor.getInt(10), cursor.getInt(11), cursor.getInt(12), cursor.getInt(13), cursor.getInt(14)));
+		v.setId(cursor.getInt(0));
+		mesVoyages.add(v);
+		}
+		return mesVoyages;
 	}
 	
 	public ArrayList<ElementMap> getAllMedia(int idVoyage){
@@ -461,6 +491,7 @@ public class MyBDAdapterImpl implements MyBDAdapter{
 	}
 	
 	public Voyage getVoyageCourant(){
+		Voyage v = new Voyage("", false, new Date(0,0,0,0,0,0), new Date(0,0,0,0,0,0));
 		Cursor cursor = mDB.query(
 				TABLE_VOYAGE ,
 				new String [] {
@@ -479,13 +510,15 @@ public class MyBDAdapterImpl implements MyBDAdapter{
 						COL_V_DAY_FIN,			//12
 						COL_V_MONTH_FIN,		//13
 						COL_V_YEAR_FIN},		//14
-						COL_V_EN_COURS + " = true", null, null, null, null );
+						COL_V_EN_COURS + " = " + 1, null, null, null, null );
 		cursor.moveToFirst();
-		Voyage v = new Voyage( cursor.getString(1), 
+		if(cursor.getCount()!=0){
+		v = new Voyage( cursor.getString(1), 
 								cursor.getInt(2) == 1, 
 								new Date(cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6), cursor.getInt(7), cursor.getInt(8)),
 								new Date(cursor.getInt(9), cursor.getInt(10), cursor.getInt(11), cursor.getInt(12), cursor.getInt(13), cursor.getInt(14)));
 		v.setId(cursor.getInt(0));
+		}
 		return v;
 	}
 
@@ -497,10 +530,11 @@ public class MyBDAdapterImpl implements MyBDAdapter{
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
 		int month = calendar.get(Calendar.MONTH)+1;
 		int year = calendar.get(Calendar.YEAR);
+		int encours = 1;
 		ContentValues values = new ContentValues();
 		
 		values.put(COL_V_NOM_VOYAGE, nom);
-		values.put(COL_V_EN_COURS, "true");
+		values.put(COL_V_EN_COURS, encours);
 		
 		values.put(COL_V_SECONDES_DEBUT, seconde);
 		values.put(COL_V_MINUTES_DEBUT, minutes);
@@ -515,7 +549,6 @@ public class MyBDAdapterImpl implements MyBDAdapter{
 		values.put(COL_V_DAY_FIN, 0);
 		values.put(COL_V_MONTH_FIN, 0);
 		values.put(COL_V_YEAR_FIN, 0);
-		
 		return mDB.insert(TABLE_VOYAGE , null, values);
 	}
 	
@@ -550,20 +583,20 @@ public class MyBDAdapterImpl implements MyBDAdapter{
 	public int modifierNomVoyage(long id, String nom){
 		ContentValues values = new ContentValues();
 		values.put(COL_V_NOM_VOYAGE, nom);
-		return mDB.update(TABLE_VOYAGE , values, COL_V_ID + "=" + id, null);
+		return mDB.update(TABLE_VOYAGE , values, COL_V_ID + "==" + id, null);
 	}
 	
 	public int terminerVoyage(long id){
 		ContentValues values = new ContentValues();
-		values.put(COL_V_EN_COURS, "false");
-		return mDB.update(TABLE_VOYAGE , values, COL_V_ID + "=" + id, null);
+		values.put(COL_V_EN_COURS, 0);
+		return mDB.update(TABLE_VOYAGE , values, COL_V_ID + "==" + id, null);
 	}
 	
 	public int modifierElementMap(long id, String comment, String lieu){
 		ContentValues values = new ContentValues();	
 		values.put(COL_E_COMMENTAIRE, comment);
 		values.put(COL_E_LIEU, lieu);
-		return mDB.update(TABLE_EVENEMENT , values, COL_E_ID + "=" + id, null);
+		return mDB.update(TABLE_EVENEMENT , values, COL_E_ID + "==" + id, null);
 	}
 	
 	public int supprimerVoyage(long id){
@@ -571,9 +604,16 @@ public class MyBDAdapterImpl implements MyBDAdapter{
 		return mDB.delete(TABLE_VOYAGE , COL_V_ID + " == " + id, null);
 	}
 	
+	public int supprimerAllVoyage(){
+		mDB.delete(TABLE_EVENEMENT , null, null);
+		return mDB.delete(TABLE_VOYAGE , null, null);
+	}
+	
 	public int supprimerEvenemet(long id){
 		return mDB.delete(TABLE_EVENEMENT , COL_E_ID + " == " + id, null);
 	}
+	
+
 
 	//-------------------------------------------------------------------------
 	//-------------------------------------------------------------------------
@@ -586,21 +626,17 @@ public class MyBDAdapterImpl implements MyBDAdapter{
 		
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			Log.v("onCreate table event", "01");
 			db.execSQL(CREATE_TABLE_EVENEMENT);
-			Log.v("onCreate table event", "02");
 			db.execSQL(CREATE_TABLE_VOYAGE);
-			Log.v("onCreate table event", "03");
-
 		}
 		
 		@Override
 		public void onUpgrade(SQLiteDatabase db,
 			int oldVersion, int newVersion) {
-			Log.v("onUpgrade", "01");
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENEMENT + ";");
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_VOYAGE + ";");
 			onCreate(db);
-			Log.v("onUpgrade", "02");
 		}
-	}}
+	}
+
+	}
