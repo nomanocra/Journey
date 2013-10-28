@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.style.BackgroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
@@ -37,7 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 enum State {
-	nomVoyageEnCours, PASVOYAGE
+	Init, PasVoyage, VoyageEnCours, NouveauVoayge
 }
 
 public class JourneyMainActivity extends Activity {
@@ -57,33 +58,40 @@ public class JourneyMainActivity extends Activity {
 	private State etat;
 
 	MyBDAdapter myDB;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		init();
-		TestBD.testBD(this);
+		// TestBD.testBD(this);
 	}
 
-
-
 	public void init() {
-		Log.v("INIT", "3");
+		MyBDAdapterImpl myDB = new MyBDAdapterImpl(this);
 		newTrip = (Button) findViewById(R.id.boutonJeParsEnVoyage);
 		newEvent = (Button) findViewById(R.id.boutonAjoutEvenement);
 		endTrip = (Button) findViewById(R.id.boutonJeTermineMonVoyage);
 		journal = (Button) findViewById(R.id.boutonCarnetVoyage);
 		setting = (Button) findViewById(R.id.boutonParametre);
 		pasDeVoyageLayout();
-
+		TextView textAcceuil = new TextView(getApplicationContext());
+		
+		textAcceuil.setTextSize(25);
+		textAcceuil.setBackgroundColor(Color.BLACK);
+		textAcceuil.setTextColor(Color.WHITE);
+		textAcceuil.setSingleLine();
+		textAcceuil.setText("Cliquez sur \"je pars en voyage\" pour creer un nouvel album de voyage");
+		 
+		Toast messageAcceuil = Toast.makeText(JourneyMainActivity.this,"Cliquez sur \"je pars en voyage\" pour creer un nouvel album de voyage", Toast.LENGTH_LONG);
+		 messageAcceuil.setGravity(0, 0, 200);
+		// messageAcceuil.setView(textAcceuil);
+		 messageAcceuil.show();
 	}
 
 	public void enVoyageLayout() {
 		setContentView(R.layout.acceuil2);
-		System.out.println("3");
 		voyageEnCours = (TextView) findViewById(R.id.voyageEnCours);
 		voyageEnCours.setText(nomVoyageEnCours);
-		System.out.println("4");
 	}
 
 	public void pasDeVoyageLayout() {
@@ -93,24 +101,35 @@ public class JourneyMainActivity extends Activity {
 	// Gestion des boutons
 	public void actionBoutonAjoutVoyage(View v) {
 		nomVoyageEnCours = "Doubai";
-		new AlertDialog.Builder(JourneyMainActivity.this)
-		// .setTitle("Nouveau voyage")
-		// .setMessage("Veuillez entrer un nom pour votre nouveau voyage")
-				.setView(findViewById(R.layout.formulaire_nouveau_evement))
+		
+		final EditText champNouveauVoyage = new EditText(JourneyMainActivity.this);
+		//champNouveauVoyage.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+		champNouveauVoyage.setBackgroundColor(Color.WHITE);
+		champNouveauVoyage.setTextSize(35);
+		AlertDialog.Builder nouveauVoyageDialogue = new AlertDialog.Builder(
+				JourneyMainActivity.this);
+		nouveauVoyageDialogue.setView(champNouveauVoyage);
+		nouveauVoyageDialogue.setTitle("Nouveau voyage");
+		nouveauVoyageDialogue .setMessage("Veuillez entrer un nom pour votre nouveau voyage");
+		
+		nouveauVoyageDialogue.setPositiveButton("C'est partie !",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						String nomVoyage = champNouveauVoyage.getText().toString();
+						if(nomVoyage != ""){
+							myDB.ajouterVoyage(nomVoyage);
+						}else{
+							 Toast.makeText(getApplicationContext(), "Vous n'avez pas entré de nom de voyage", Toast.LENGTH_LONG);
+						}
+					}
+				});
+		nouveauVoyageDialogue.setNegativeButton("Annuler",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				});
+		nouveauVoyageDialogue.show();
 
-				/*
-				 * .setPositiveButton("C'est partie !", new
-				 * DialogInterface.OnClickListener() { public void
-				 * onClick(DialogInterface dialog, int whichButton) { EditText
-				 * nomInput = (EditText) findViewById(R.id.champNouveauVoyage);
-				 * Editable value = nomInput.getText(); }
-				 * }).setNegativeButton("Annuler", new
-				 * DialogInterface.OnClickListener() { public void
-				 * onClick(DialogInterface dialog, int whichButton) { // Do
-				 * nothing. } })
-				 */
-				.show();
-		enVoyageLayout();
 	}
 
 	public void actionBoutonAjoutEvenement(View v) {
@@ -134,25 +153,6 @@ public class JourneyMainActivity extends Activity {
 	public void actionBoutonTermineVoyage(View v) {
 		pasDeVoyageLayout();
 		nomVoyageEnCours = "";
-	}
-
-	@Override
-	public Dialog onCreateDialog(int identifiant) {
-		Dialog box = null;
-		// En fonction de l'identifiant de la boîte qu'on veut créer
-		switch (identifiant) {
-		case IDENTIFIANT_BOITE_UN:
-			box = new Dialog(this);
-			box.setTitle("Je viens tout juste de naître.");
-			box.setContentView(R.layout.formulaire_nouveau_voyage);
-			break;
-
-		case IDENTIFIANT_BOITE_DEUX:
-			box = new Dialog(this);
-			box.setTitle("ET MOI ALORS ???");
-			break;
-		}
-		return box;
 	}
 
 	@Override

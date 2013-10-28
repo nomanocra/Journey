@@ -25,11 +25,8 @@ public class AjouterEvenementActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		System.out.println("luuul");
 		setContentView(R.layout.formulaire_nouveau_evement);
-		System.out.println("luuul");
 		intent = getIntent();
-		System.out.println("luuul");
 		}
 
 

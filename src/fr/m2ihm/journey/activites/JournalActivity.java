@@ -29,42 +29,28 @@ public class JournalActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.v("JOURNAL", "1");
 		setContentView(R.layout.journal_de_voyage);
-		Log.v("JOURNAL", "2");
 		Button currentButton = (Button) findViewById(R.id.Journal_map_button);
 		currentButton.setEnabled(false);
-		Log.v("JOURNAL", "3");
 		HashMap<String, String> map;
 		ListView maListViewPerso = (ListView) findViewById(R.id.journal_journeys_list);
-		Log.v("JOURNAL", "4");
 		List<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
-		Log.v("JOURNAL", "5");
 		map = new HashMap<String, String>();
 		map.put("Nom_Voyage","Acapulco");
 		map.put("Date", "11/03/2012");
 		listItem.add(map);
-		Log.v("JOURNAL", "6");
 		map = new HashMap<String, String>();
 		map.put("Nom_Voyage","Paris");
 		map.put("Date", "11/08/2012");
 		listItem.add(map);
-		Log.v("JOURNAL", "7");
 		map = new HashMap<String, String>();
 		map.put("Nom_Voyage","Paris");
 		map.put("Date", "11/08/2012");
 		listItem.add(map);
-		Log.v("JOURNAL", "8");
 		map = new HashMap<String, String>();
 		map.put("Nom_Voyage","Paris");
 		map.put("Date", "11/08/2012");
 		listItem.add(map);
-		Log.v("JOURNAL", "9");
-		map = new HashMap<String, String>();
-		map.put("Nom_Voyage","Paris");
-		map.put("Date", "11/08/2012");
-		listItem.add(map);
-		
 		map = new HashMap<String, String>();
 		map.put("Nom_Voyage","Paris");
 		map.put("Date", "11/08/2012");
@@ -74,12 +60,14 @@ public class JournalActivity extends Activity {
 		map.put("Nom_Voyage","Paris");
 		map.put("Date", "11/08/2012");
 		listItem.add(map);
-		Log.v("JOURNAL", "10");
+		
+		map = new HashMap<String, String>();
+		map.put("Nom_Voyage","Paris");
+		map.put("Date", "11/08/2012");
+		listItem.add(map);
 		SimpleAdapter mSchedule = new SimpleAdapter(this.getBaseContext(), listItem, R.layout.journal_liste_voyages,
 	               new String[] {"Nom_Voyage", "Date"}, new int[] {R.id.nom_voyage, R.id.date});
-		Log.v("JOURNAL", "11");
 		maListViewPerso.setAdapter(mSchedule);
-		Log.v("JOURNAL", "12");
 		// Add the map
 		Fragment fg = new JournalMapFragment();
 		getFragmentManager().beginTransaction().add(R.id.journal_content, fg).commit();

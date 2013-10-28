@@ -2,6 +2,7 @@ package fr.m2ihm.journey.metier;
 
 import fr.m2ihm.journey.adapter.GpsAdapter;
 import android.R.string;
+import android.util.Log;
 
 public abstract class ElementMap {
 	int id;
@@ -10,13 +11,13 @@ public abstract class ElementMap {
 	String lieu;
 	String commentaire;
 	String nomMedia;
-	boolean automatique;
 	Date date;
 
 
 
 	// Constructeur appelé pour les evenements entrés par l'utilisateur.
 	public ElementMap(Voyage voyage, Gps positionGps, Date date, String nomMedia, String lieu, String commentaire) {
+		this.id = -1;
 		this.voyage = voyage;
 		gps = positionGps;
 		this.lieu = GpsAdapter.gpsToAdresse(gps);
@@ -73,14 +74,6 @@ public abstract class ElementMap {
 		this.nomMedia = nomMedia;
 	}
 
-	public boolean isAutomatique() {
-		return automatique;
-	}
-
-	public void setAutomatique(boolean automatique) {
-		this.automatique = automatique;
-	}
-
 	public Date getDate() {
 		return date;
 	}
@@ -91,5 +84,18 @@ public abstract class ElementMap {
 
 	public String getType(){
 		return "Evenement";
+	}
+	
+	public void description(){
+		Log.v("CAAAACAAAAAAAA","CCCCCCCAAAAAAAAACAAAAAAAAA");
+		Log.v("Descritption", 	"id : " + id +
+								"\nVoyage : " + voyage.getNom()+
+								"\n Gps : " + gps.getLatitude() + " | " + gps.longitude + 
+								"\n Lieu : " +  lieu +
+								"\n Commentaire : " + commentaire +
+								"\n Nom media : " + nomMedia +
+								"\n Heure :" + date.getHeure() + ":" + date.getMinute() + ":" + date.getSeconde() + "."  +
+								"\n Date :" + date.getDay() + "/" + date.getMonth() + "/" +  date.getYear());
+		Log.v("CAAAACAAAAAAAA","CCCCCCCAAAAAAAAACAAAAAAAAA");
 	}
 }

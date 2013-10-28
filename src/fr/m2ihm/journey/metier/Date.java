@@ -22,6 +22,66 @@ public class Date {
 	}
 
 
+	public int getSeconde() {
+		return seconde;
+	}
+
+
+	public void setSeconde(int seconde) {
+		this.seconde = seconde;
+	}
+
+
+	public int getMinute() {
+		return minute;
+	}
+
+
+	public void setMinute(int minute) {
+		this.minute = minute;
+	}
+
+
+	public int getHeure() {
+		return heure;
+	}
+
+
+	public void setHeure(int heure) {
+		this.heure = heure;
+	}
+
+
+	public int getDay() {
+		return day;
+	}
+
+
+	public void setDay(int day) {
+		this.day = day;
+	}
+
+
+	public int getMonth() {
+		return month;
+	}
+
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+
+	public int getYear() {
+		return year;
+	}
+
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+
 	static Date dateCourant(){
 		Calendar calendar = Calendar.getInstance();
 		int seconde = calendar.get(Calendar.SECOND);

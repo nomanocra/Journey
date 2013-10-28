@@ -4,7 +4,7 @@ public class Note extends ElementMap{
 
 	public Note(Voyage voyage, Gps positionGps, Date date,
 			String lieu, String commentaire) {
-		super(voyage, positionGps, date, "", lieu, commentaire);
+		super(voyage, positionGps, date, "No media", lieu, commentaire);
 		// TODO Stub du constructeur généré automatiquement
 	}
 	@Override

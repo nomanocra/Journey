@@ -3,27 +3,27 @@ package fr.m2ihm.journey.metier;
 import fr.m2ihm.journey.adapter.GpsAdapter;
 
 public class Gps{
-	float latitude;
-	float longitude;
+	double latitude;
+	double longitude;
 	String lieu;
 	
-	public float getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(float latitude) {
+	public void setLatitude(long latitude) {
 		this.latitude = latitude;
 	}
-	public float getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(float longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	public String getLieu() {
 		return lieu;
 	}
 
-	public Gps(float latitude, float longitude) {
+	public Gps(double latitude, double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.lieu = GpsAdapter.gpsToAdresse(this);

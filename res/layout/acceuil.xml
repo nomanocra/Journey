@@ -4,41 +4,45 @@
     android:layout_height="fill_parent"
     android:background="@drawable/acceuil" >
 
-    <LinearLayout
-        android:layout_width="966dp"
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_x="176dp"
+        android:layout_x="2dp"
         android:layout_y="564dp" >
-
-        <Button
-            android:id="@+id/boutonJeParsEnVoyage"
-            android:layout_width="300dp"
-            android:layout_height="153dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/button_nouveau_voyage_selector"
-            android:onClick="actionBoutonAjoutVoyage"
-            android:text=" " />
 
         <Button
             android:id="@+id/boutonCarnetVoyage"
             android:layout_width="300dp"
             android:layout_height="153dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/button_carnet_selector"
             android:onClick="actionBoutonCarnetVoyage"
+            android:text=" " />
+
+        <Button
+            android:id="@+id/boutonJeParsEnVoyage"
+            android:layout_width="300dp"
+            android:layout_height="153dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="72dp"
+            android:background="@drawable/button_nouveau_voyage_selector"
+            android:onClick="actionBoutonAjoutVoyage"
             android:text=" " />
 
         <Button
             android:id="@+id/boutonParametre"
             android:layout_width="300dp"
             android:layout_height="153dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="63dp"
             android:background="@drawable/button_setting_selector"
             android:text=" " />
-    </LinearLayout>
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/imageView1"
