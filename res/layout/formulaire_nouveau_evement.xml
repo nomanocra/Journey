@@ -9,21 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="83dp" >
 
-        <Button
-            android:id="@+id/confirmer_ajout_voyage"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:text="Retour" />
-
         <TextView
             android:id="@+id/TextView01"
             android:layout_width="900dp"
             android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/confirmer_ajout_voyage"
             android:background="@color/White"
             android:gravity="center"
             android:text="Nouvel evement"
@@ -164,18 +156,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.68" >
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="624dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="318dp"
-            android:gravity="center"
-            android:onClick="save"
-            android:text="+ Ajouter l&apos;évenement"
-            android:textSize="50dp" />
 
     </RelativeLayout>
 

@@ -71,6 +71,8 @@ public class JourneyMainActivity extends Activity {
 		myDB.open();
 		voyageEnCours = myDB.getVoyageCourant();
 		myDB.close();
+		Log.i("Test", "1");
+		Log.i("Test", ""+voyageEnCours.getId());
 		if (voyageEnCours.getId() == -1) {
 			pasDeVoyageLayout();
 			Toast messageAcceuil = Toast
@@ -98,8 +100,11 @@ public class JourneyMainActivity extends Activity {
 	}
 
 	public void enVoyageLayout() {
+		
 		setContentView(R.layout.acceuil2);
+		myDB.open();
 		voyageEnCours = myDB.getVoyageCourant();
+		myDB.close();
 		textVoyageEnCours = (TextView) findViewById(R.id.voyageEnCours);
 		textVoyageEnCours.setText(voyageEnCours.getNom());
 	}
@@ -136,6 +141,7 @@ public class JourneyMainActivity extends Activity {
 							message.setGravity(1, 0, 200);
 							message.show();
 						}
+						enVoyageLayout();
 					}
 				});
 		nouveauVoyageDialogue.setNegativeButton("Annuler",
@@ -148,9 +154,31 @@ public class JourneyMainActivity extends Activity {
 	}
 
 	public void actionBoutonAjoutEvenement(View v) {
-		Intent intent = new Intent(this, AjouterEvenementActivity.class);
-		startActivity(intent);
-		finish();
+
+		LayoutInflater factory = LayoutInflater.from(this);
+		final View alertDialogView = factory.inflate(
+				R.layout.formulaire_nouveau_evement, null);
+		AlertDialog.Builder nouveauVoyageDialogue = new AlertDialog.Builder(
+				JourneyMainActivity.this);
+		nouveauVoyageDialogue.setView(alertDialogView);
+		nouveauVoyageDialogue.setPositiveButton("Ajouter",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						EditText champNouveauVoyage = (EditText) alertDialogView.findViewById(R.id.champNouveauVoyage);
+						String nomVoyage = champNouveauVoyage.getText().toString();
+						if (!nomVoyage.equals("")) {
+
+						} else {
+
+						}
+						enVoyageLayout();
+					}
+				});
+		nouveauVoyageDialogue.setNegativeButton("Annuler",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				});
 	}
 
 	public void actionBoutonCarnetVoyage(View v) {
