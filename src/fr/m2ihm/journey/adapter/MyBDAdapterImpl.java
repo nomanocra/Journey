@@ -22,46 +22,16 @@ import fr.m2ihm.journey.metier.Voyage;
 import fr.m2ihm.journey.metier.Gps;
 
 public class MyBDAdapterImpl implements MyBDAdapter {
-	public static final int DB_VERSION = 1;
+	public static final int DB_VERSION = 4;
 	public static final String DB_NAME = "Journey.db";
-
-	private static final String TABLE_EVENEMENT = "table_evenement";
-
-	// Les attributs suivant carractérise un unique evement
-	public static final String COL_E_ID = "_id";
-	public static final String COL_E_ID_VOYAGE = "idV";
-	public static final String COL_E_LAT = "latitude";
-	public static final String COL_E_LON = "longitude";
-	public static final String COL_E_SECONDES = "secondes";
-	public static final String COL_E_MINUTES = "minutes";
-	public static final String COL_E_HOUR = "heures";
-	public static final String COL_E_DAY = "day";
-	public static final String COL_E_MONTH = "month";
-	public static final String COL_E_YEAR = "year";
-
-	public static final String COL_E_LIEU = "lieu";
-	public static final String COL_E_MEDIA_TYPE = "typeM";
-	public static final String COL_E_MEDIA_NOM = "nomM";
-	public static final String COL_E_COMMENTAIRE = "commentaire";
-
-	private static final String CREATE_TABLE_EVENEMENT = "create table "
-			+ TABLE_EVENEMENT + " (" + COL_E_ID
-			+ " integer primary key autoincrement, " + COL_E_ID_VOYAGE
-			+ " integer, "
-
-			+ COL_E_LAT + " real, " + COL_E_LON + " real, "
-
-			+ COL_E_SECONDES + " integer, " + COL_E_MINUTES + " integer, "
-			+ COL_E_HOUR + " integer, " + COL_E_DAY + " integer, "
-			+ COL_E_MONTH + " integer, " + COL_E_YEAR + " integer, "
-
-			+ COL_E_LIEU + " text not null, " + COL_E_COMMENTAIRE
-			+ " text not null, " + COL_E_MEDIA_TYPE + " integer not null, "
-			+ COL_E_MEDIA_NOM + " text not null);";
-
+	
+	private SQLiteDatabase mDB;
+	private MyOpenHelper mOpenHelper;
+	private Calendar calendar;
+	
 	// -------------------------------------------------------------------------
-	private static final String TABLE_VOYAGE = "table_voyage";
 
+	private static final String TABLE_VOYAGE = "table_voyage";
 	public static final String COL_V_ID = "_id";
 	public static final String COL_V_NOM_VOYAGE = "nomV";
 	public static final String COL_V_EN_COURS = "en_cours";
@@ -79,25 +49,60 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 	public static final String COL_V_YEAR_FIN = "year_f";
 
 	private static final String CREATE_TABLE_VOYAGE = "create table "
-			+ TABLE_VOYAGE + " (" + COL_V_ID
-			+ " integer primary key autoincrement, "
+			+ TABLE_VOYAGE + " (" 
+			+ COL_V_ID + " integer primary key autoincrement, "
 
-			+ COL_V_NOM_VOYAGE + " text not null, " + COL_V_EN_COURS
-			+ " integer, "
+			+ COL_V_NOM_VOYAGE + " text not null, " 
+			+ COL_V_EN_COURS + " integer, "
 
-			+ COL_V_SECONDES_DEBUT + " integer, " + COL_V_MINUTES_DEBUT
-			+ " integer, " + COL_V_HOUR_DEBUT + " integer, " + COL_V_DAY_DEBUT
-			+ " integer, " + COL_V_MONTH_DEBUT + " integer, "
+			+ COL_V_SECONDES_DEBUT + " integer, " 
+			+ COL_V_MINUTES_DEBUT + " integer, " 
+			+ COL_V_HOUR_DEBUT + " integer, " 
+			+ COL_V_DAY_DEBUT + " integer, " 
+			+ COL_V_MONTH_DEBUT + " integer, "
 			+ COL_V_YEAR_DEBUT + " integer, "
 
-			+ COL_V_SECONDES_FIN + " integer, " + COL_V_MINUTES_FIN
-			+ " integer, " + COL_V_HOUR_FIN + " integer, " + COL_V_DAY_FIN
-			+ " integer, " + COL_V_MONTH_FIN + " integer, " + COL_V_YEAR_FIN
-			+ " integer);";
+			+ COL_V_SECONDES_FIN + " integer, "
+			+ COL_V_MINUTES_FIN + " integer, " 
+			+ COL_V_HOUR_FIN + " integer, "
+			+ COL_V_DAY_FIN + " integer, " 
+			+ COL_V_MONTH_FIN + " integer, " 
+			+ COL_V_YEAR_FIN + " integer);";
+	
+	// -------------------------------------------------------------------------
+	private static final String TABLE_EVENEMENT = "table_evenement";
+	public static final String COL_E_ID = "_id";
+	public static final String COL_E_ID_VOYAGE = "idV";
+	public static final String COL_E_LAT = "latitude";
+	public static final String COL_E_LON = "longitude";
+	public static final String COL_E_SECONDES = "secondes";
+	public static final String COL_E_MINUTES = "minutes";
+	public static final String COL_E_HOUR = "heures";
+	public static final String COL_E_DAY = "day";
+	public static final String COL_E_MONTH = "month";
+	public static final String COL_E_YEAR = "year";
 
-	private SQLiteDatabase mDB;
-	private MyOpenHelper mOpenHelper;
-	private Calendar calendar;
+	public static final String COL_E_LIEU = "lieu";
+	public static final String COL_E_MEDIA_TYPE = "typeM";
+	public static final String COL_E_MEDIA_NOM = "nomM";
+	public static final String COL_E_COMMENTAIRE = "commentaire";
+
+	private static final String CREATE_TABLE_EVENEMENT = "create table "
+			+ TABLE_EVENEMENT + " (" 
+			+ COL_E_ID + " integer primary key autoincrement, "
+
+			+ COL_E_LAT + " real, " + COL_E_LON + " real, "
+
+			+ COL_E_SECONDES + " integer, " + COL_E_MINUTES + " integer, "
+			+ COL_E_HOUR + " integer, " + COL_E_DAY + " integer, "
+			+ COL_E_MONTH + " integer, " + COL_E_YEAR + " integer, "
+
+			+ COL_E_LIEU + " text not null, " + COL_E_COMMENTAIRE
+			+ " text not null, " + COL_E_MEDIA_TYPE + " integer not null, "
+			+ COL_E_MEDIA_NOM + " text not null, "
+			+ COL_E_ID_VOYAGE + " integer" +" REFERENCES " + TABLE_VOYAGE
+			+");";
+
 
 	// -------------------------------------------------------------------------
 
@@ -575,12 +580,10 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 	}
 
 	public int supprimerVoyage(long id) {
-		mDB.delete(TABLE_EVENEMENT, COL_E_ID_VOYAGE + " == " + id, null);
 		return mDB.delete(TABLE_VOYAGE, COL_V_ID + " == " + id, null);
 	}
 
 	public int supprimerAllVoyage() {
-		mDB.delete(TABLE_EVENEMENT, null, null);
 		return mDB.delete(TABLE_VOYAGE, null, null);
 	}
 

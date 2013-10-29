@@ -70,6 +70,16 @@ public class TestBD {
 			e.description();
 		}
 		myDB.close();
-
+		myDB.open();
+		myDB.supprimerAllVoyage();
+		myDB.close();
+		myDB.open();
+		lv = myDB.getAllVoyage();
+		if(myDB.getVoyageCourant().getId() >= 0){
+		listElementMap = myDB.getAllMedia(myDB.getVoyageCourant().getId());
+		}
+		Log.v("ENDTEST", "NB VOYAGE : " + lv.size());
+		Log.v("ENDTEST", "NB EVT : " + lv.size());
+		myDB.close();
 	}
 }

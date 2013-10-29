@@ -87,8 +87,8 @@ public abstract class ElementMap {
 	}
 	
 	public void description(){
-		Log.v("CAAAACAAAAAAAA","CCCCCCCAAAAAAAAACAAAAAAAAA");
-		Log.v("Descritption", 	"id : " + id +
+		Log.v("Descritption","-----------------Debut-----------");
+		Log.v(voyage.getNom(), 	"id : " + id +
 								"\nVoyage : " + voyage.getNom()+
 								"\n Gps : " + gps.getLatitude() + " | " + gps.longitude + 
 								"\n Lieu : " +  lieu +
@@ -96,6 +96,6 @@ public abstract class ElementMap {
 								"\n Nom media : " + nomMedia +
 								"\n Heure :" + date.getHeure() + ":" + date.getMinute() + ":" + date.getSeconde() + "."  +
 								"\n Date :" + date.getDay() + "/" + date.getMonth() + "/" +  date.getYear());
-		Log.v("CAAAACAAAAAAAA","CCCCCCCAAAAAAAAACAAAAAAAAA");
+		Log.v("Descritption","-----------------Fin-----------");
 	}
 }
