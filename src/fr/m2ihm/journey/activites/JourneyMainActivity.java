@@ -128,9 +128,13 @@ public class JourneyMainActivity extends Activity {
 							myDB.open();
 							myDB.ajouterVoyage(nomVoyage);
 							myDB.close();
-							Toast.makeText(getApplicationContext(),"Vous êtes maintenant en voyage à : " + nomVoyage, Toast.LENGTH_LONG).show();
+							Toast message = Toast.makeText(getApplicationContext(),"Vous êtes maintenant en voyage à : " + nomVoyage, Toast.LENGTH_LONG);
+							message.setGravity(1, 0, 200);
+							message.show();
 						} else {
-							Toast.makeText(getApplicationContext(),"Vous n'avez pas entré de nom de voyage. Veuillez recommencer", Toast.LENGTH_LONG).show();
+							Toast message = Toast.makeText(getApplicationContext(),"Vous n'avez pas entré de nom de voyage. Veuillez recommencer", Toast.LENGTH_LONG);
+							message.setGravity(1, 0, 200);
+							message.show();
 						}
 					}
 				});
