@@ -42,6 +42,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 enum State {
 	Init, PasVoyage, VoyageEnCours, NouveauVoayge
@@ -54,6 +55,7 @@ public class JourneyMainActivity extends Activity {
 	private Button endTrip;
 	private Button journal;
 	private Button setting;
+	private ToggleButton tracerManagerButton;
 	private TextView textVoyageEnCours;
 	private Voyage voyageEnCours;
 	private State etat;
@@ -69,6 +71,7 @@ public class JourneyMainActivity extends Activity {
 		endTrip = (Button) findViewById(R.id.boutonJeTermineMonVoyage);
 		journal = (Button) findViewById(R.id.boutonCarnetVoyage);
 		setting = (Button) findViewById(R.id.boutonParametre);
+		tracerManagerButton = (ToggleButton) findViewById(R.id.activationTracker);
 		TestBD.testBD2(this);
 		init();
 		//TestBD.testBD(this);
@@ -189,6 +192,16 @@ public class JourneyMainActivity extends Activity {
 		
 	}
 	
+	public void tracerManagement(){
+		
+		if(tracerManagerButton.isChecked()){
+			Log.i("tracerManagement", "Traceur activé");
+			startLocationTracerService();
+		}else{
+			Log.i("pasDeVoyageLayout", "Traceur désactivé");
+			stopLocationTracerService();
+		}	
+	}
 	
 	public void actionBoutonTermineVoyage(View v) {
 		pasDeVoyageLayout();
