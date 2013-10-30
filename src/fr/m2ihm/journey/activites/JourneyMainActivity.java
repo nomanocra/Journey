@@ -3,9 +3,15 @@ package fr.m2ihm.journey.activites;
 import java.util.ArrayList;
 
 import fr.m2ihm.journey.R;
+import fr.m2ihm.journey.adapter.GpsAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
+import fr.m2ihm.journey.metier.Date;
+import fr.m2ihm.journey.metier.ElementMap;
+import fr.m2ihm.journey.metier.Note;
+import fr.m2ihm.journey.metier.Photo;
 import fr.m2ihm.journey.metier.Voyage;
+import fr.m2ihm.journey.services.LocationTrackerService;
 import fr.m2ihm.journey.test.TestBD;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -63,16 +69,17 @@ public class JourneyMainActivity extends Activity {
 		endTrip = (Button) findViewById(R.id.boutonJeTermineMonVoyage);
 		journal = (Button) findViewById(R.id.boutonCarnetVoyage);
 		setting = (Button) findViewById(R.id.boutonParametre);
+		TestBD.testBD2(this);
 		init();
-		// TestBD.testBD(this);
+		//TestBD.testBD(this);
+		
+		
 	}
 
 	public void init() {
 		myDB.open();
 		voyageEnCours = myDB.getVoyageCourant();
 		myDB.close();
-		Log.i("Test", "1");
-		Log.i("Test", ""+voyageEnCours.getId());
 		if (voyageEnCours.getId() == -1) {
 			pasDeVoyageLayout();
 			Toast messageAcceuil = Toast
@@ -104,13 +111,15 @@ public class JourneyMainActivity extends Activity {
 		setContentView(R.layout.acceuil2);
 		myDB.open();
 		voyageEnCours = myDB.getVoyageCourant();
+		Log.i("enVoyageLayout", ""+voyageEnCours.getId());
 		myDB.close();
-		textVoyageEnCours = (TextView) findViewById(R.id.voyageEnCours);
+		textVoyageEnCours = (TextView) findViewById(R.id.voyageEnCoursText);
 		textVoyageEnCours.setText(voyageEnCours.getNom());
 	}
 
 	public void pasDeVoyageLayout() {
 		setContentView(R.layout.acceuil);
+		Log.i("pasDeVoyageLayout", "pasDeVoyageLayout");
 	}
 
 	// Gestion des boutons
@@ -154,31 +163,10 @@ public class JourneyMainActivity extends Activity {
 	}
 
 	public void actionBoutonAjoutEvenement(View v) {
+		Intent intent = new Intent(this, AjouterEvenementActivity.class);
+		startActivity(intent);
+		finish();
 
-		LayoutInflater factory = LayoutInflater.from(this);
-		final View alertDialogView = factory.inflate(
-				R.layout.formulaire_nouveau_evement, null);
-		AlertDialog.Builder nouveauVoyageDialogue = new AlertDialog.Builder(
-				JourneyMainActivity.this);
-		nouveauVoyageDialogue.setView(alertDialogView);
-		nouveauVoyageDialogue.setPositiveButton("Ajouter",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						EditText champNouveauVoyage = (EditText) alertDialogView.findViewById(R.id.champNouveauVoyage);
-						String nomVoyage = champNouveauVoyage.getText().toString();
-						if (!nomVoyage.equals("")) {
-
-						} else {
-
-						}
-						enVoyageLayout();
-					}
-				});
-		nouveauVoyageDialogue.setNegativeButton("Annuler",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-					}
-				});
 	}
 
 	public void actionBoutonCarnetVoyage(View v) {
@@ -192,7 +180,16 @@ public class JourneyMainActivity extends Activity {
 		startActivity(intent);
 		finish();
 	}
-
+	public void startLocationTracerService(){
+		startService(new Intent(JourneyMainActivity.this, LocationTrackerService.class));
+	}
+	
+	public void stopLocationTracerService(){
+		stopService(new Intent(JourneyMainActivity.this, LocationTrackerService.class));
+		
+	}
+	
+	
 	public void actionBoutonTermineVoyage(View v) {
 		pasDeVoyageLayout();
 		myDB.open();

@@ -20,7 +20,7 @@ public abstract class ElementMap {
 		this.id = -1;
 		this.voyage = voyage;
 		gps = positionGps;
-		this.lieu = GpsAdapter.gpsToAdresse(gps);
+		this.lieu = lieu;
 		this.commentaire = commentaire;
 		this.nomMedia = nomMedia;
 		this.date = date;
@@ -88,7 +88,7 @@ public abstract class ElementMap {
 	
 	public void description(){
 		Log.v("Descritption","-----------------Debut-----------");
-		Log.v(voyage.getNom(), 	"id : " + id +
+		Log.v(nomMedia, 	"id : " + id +
 								"\nVoyage : " + voyage.getNom()+
 								"\n Gps : " + gps.getLatitude() + " | " + gps.longitude + 
 								"\n Lieu : " +  lieu +

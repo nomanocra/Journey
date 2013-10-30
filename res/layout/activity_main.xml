@@ -9,7 +9,7 @@
     tools:context=".JourneyMainActivity" >
 
     <TextView
-        android:id="@+id/voyageEnCours"
+        android:id="@+id/voyageEnCoursText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
@@ -18,10 +18,10 @@
         android:id="@+id/boutonJeTermineMonVoyage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/voyageEnCours"
+        android:layout_below="@+id/voyageEnCoursText"
         android:layout_marginLeft="88dp"
         android:layout_marginTop="202dp"
-        android:layout_toRightOf="@+id/voyageEnCours"
+        android:layout_toRightOf="@+id/voyageEnCoursText"
         android:text="Button" />
 
 </RelativeLayout>

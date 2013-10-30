@@ -36,9 +36,9 @@ public class TestBD {
 		myDB.open();
 		ArrayList<Voyage> lv = myDB.getAllVoyage();
 		for (int i = 0; i < lv.size(); i++) {
-			Log.v("initDataBase", "id : " + lv.get(i).getId());
-			Log.v("initDataBase", "Courant : " + lv.get(i).isEncours());
-			Log.v("initDataBase", "Nom :" + lv.get(i).getNom());
+			Log.v("getAllVoyage", "id : " + lv.get(i).getId());
+			Log.v("getAllVoyage", "Courant : " + lv.get(i).isEncours());
+			Log.v("getAllVoyage", "Nom :" + lv.get(i).getNom());
 		}
 		myDB.close();
 		/*
@@ -80,6 +80,16 @@ public class TestBD {
 		}
 		Log.v("ENDTEST", "NB VOYAGE : " + lv.size());
 		Log.v("ENDTEST", "NB EVT : " + lv.size());
+		myDB.close();
+	}
+	
+	public static void testBD2(Context context){
+		MyBDAdapterImpl myDB = new MyBDAdapterImpl(context);
+		myDB.open();
+		myDB.supprimerAllVoyage();
+		myDB.close();
+		myDB.open();
+		myDB.ajouterVoyage("Ile de la Réunion");
 		myDB.close();
 	}
 }

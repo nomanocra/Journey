@@ -1,7 +1,7 @@
 <AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/AbsoluteLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/acceuil" >
 
     <LinearLayout
@@ -51,11 +51,11 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/voyageEnCours"
+        android:id="@+id/voyageEnCoursText"
         android:layout_width="796dp"
         android:layout_height="115dp"
-        android:layout_x="86dp"
-        android:layout_y="177dp"
+        android:layout_x="74dp"
+        android:layout_y="240dp"
         android:gravity="center"
         android:text="LIEU"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -66,19 +66,19 @@
         android:id="@+id/imageView1"
         android:layout_width="792dp"
         android:layout_height="95dp"
-        android:layout_x="93dp"
-        android:layout_y="69dp"
+        android:layout_x="90dp"
+        android:layout_y="114dp"
         android:src="@drawable/vous_etes_en_voyage" />
 
     <ToggleButton
-        android:id="@+id/toggleButton1"
+        android:id="@+id/activationTracker"
         style="@style/AppTheme"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="56dp"
-        android:layout_x="413dp"
-        android:layout_y="295dp"
+        android:layout_x="0dp"
+        android:layout_y="1dp"
         android:text="ToggleButton"
-        android:textOff="Tracker désactivé"
-        android:textOn="Tracker activté" />
+        android:textOff="Traceur désactivé"
+        android:textOn="Traceur activté" />
 
 </AbsoluteLayout>

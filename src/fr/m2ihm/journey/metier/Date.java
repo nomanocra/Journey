@@ -82,7 +82,7 @@ public class Date {
 	}
 
 
-	static Date dateCourant(){
+	public static Date dateCourant(){
 		Calendar calendar = Calendar.getInstance();
 		int seconde = calendar.get(Calendar.SECOND);
 		int minute = calendar.get(Calendar.MINUTE);
