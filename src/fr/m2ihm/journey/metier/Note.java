@@ -1,5 +1,7 @@
 package fr.m2ihm.journey.metier;
 
+import fr.m2ihm.journey.R;
+
 public class Note extends ElementMap{
 
 	public Note(Voyage voyage, Gps positionGps, Date date,
@@ -10,5 +12,10 @@ public class Note extends ElementMap{
 	@Override
 	public String getType(){
 		return "Note";
+	}
+	
+	@Override
+	public int getIconResource(){
+		return R.drawable.ic_launcher;
 	}
 }

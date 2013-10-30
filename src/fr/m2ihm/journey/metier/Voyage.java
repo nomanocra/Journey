@@ -1,9 +1,6 @@
 package fr.m2ihm.journey.metier;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Voyage {
+public class Voyage implements Comparable {
 	int id;
 	String nom;
 	boolean encours;
@@ -47,5 +44,19 @@ public class Voyage {
 		this.encours = encours;
 		this.debut = debut;
 		this.fin = fin;
+	}
+	@Override
+	public int compareTo(Object otherVoyage) {
+		
+		if(this.debut.isMoreActualThan(
+				((Voyage) otherVoyage).getFin())
+		){
+			// So this Voyage is more actuel than the one given
+			return 1;
+		}
+		else
+		{
+			return -1;
+		}
 	}
 }

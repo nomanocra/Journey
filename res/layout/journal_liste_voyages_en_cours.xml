@@ -14,10 +14,10 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/journal_liste_voyages_formatteddate"
+        android:id="@+id/journal_liste_voyages_en_cours_text"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:textColor="@color/White"
-        android:textSize="15sp" />
+        android:text="EN COURS"
+        android:textColor="@color/RougeTitre" />
 
 </LinearLayout>

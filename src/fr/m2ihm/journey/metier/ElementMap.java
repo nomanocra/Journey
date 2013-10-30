@@ -1,7 +1,5 @@
 package fr.m2ihm.journey.metier;
 
-import fr.m2ihm.journey.adapter.GpsAdapter;
-import android.R.string;
 import android.util.Log;
 
 public abstract class ElementMap {
@@ -94,8 +92,13 @@ public abstract class ElementMap {
 								"\n Lieu : " +  lieu +
 								"\n Commentaire : " + commentaire +
 								"\n Nom media : " + nomMedia +
-								"\n Heure :" + date.getHeure() + ":" + date.getMinute() + ":" + date.getSeconde() + "."  +
+								"\n Heure :" + date.getHour() + ":" + date.getMinute() + ":" + date.getSecond() + "."  +
 								"\n Date :" + date.getDay() + "/" + date.getMonth() + "/" +  date.getYear());
 		Log.v("Descritption","-----------------Fin-----------");
+	}
+	
+	public int getIconResource()
+	{
+		return 0;
 	}
 }
