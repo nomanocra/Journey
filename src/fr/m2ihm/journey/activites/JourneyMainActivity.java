@@ -193,7 +193,6 @@ public class JourneyMainActivity extends Activity {
 	}
 	
 	public void tracerManagement(){
-		
 		if(tracerManagerButton.isChecked()){
 			Log.i("tracerManagement", "Traceur activé");
 			startLocationTracerService();
