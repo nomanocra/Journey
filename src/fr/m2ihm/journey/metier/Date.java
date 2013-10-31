@@ -3,32 +3,32 @@ package fr.m2ihm.journey.metier;
 import java.util.Calendar;
 
 public class Date {
-	int seconde;
+	int second;
 	int minute;
-	int heure;
+	int hour;
 	int day;
 	int month;
 	int year;
 	
 	
-	public Date(int seconde, int minute, int heure, int day, int month, int year) {
+	public Date(int second, int minute, int hour, int day, int month, int year) {
 		super();
-		this.seconde = seconde;
+		this.second = second;
 		this.minute = minute;
-		this.heure = heure;
+		this.hour = hour;
 		this.day = day;
 		this.month = month;
 		this.year = year;
 	}
 
 
-	public int getSeconde() {
-		return seconde;
+	public int getSecond() {
+		return second;
 	}
 
 
-	public void setSeconde(int seconde) {
-		this.seconde = seconde;
+	public void setSecond(int second) {
+		this.second = second;
 	}
 
 
@@ -42,13 +42,13 @@ public class Date {
 	}
 
 
-	public int getHeure() {
-		return heure;
+	public int getHour() {
+		return this.hour;
 	}
 
 
-	public void setHeure(int heure) {
-		this.heure = heure;
+	public void setHour(int hour) {
+		this.hour = hour;
 	}
 
 
@@ -84,12 +84,43 @@ public class Date {
 
 	public static Date dateCourant(){
 		Calendar calendar = Calendar.getInstance();
-		int seconde = calendar.get(Calendar.SECOND);
+		int second = calendar.get(Calendar.SECOND);
 		int minute = calendar.get(Calendar.MINUTE);
-		int heure = calendar.get(Calendar.HOUR_OF_DAY);
+		int hour = calendar.get(Calendar.HOUR_OF_DAY);
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
 		int month = calendar.get(Calendar.MONTH)+1;
 		int year = calendar.get(Calendar.YEAR);
-		return new Date(seconde, minute, heure, day, month, year);
+		return new Date(second, minute, hour, day, month, year);
+	}
+	
+	@Override
+	public String toString(){
+		return this.day + "/" + this.month + "/" + this.year;
+	}
+	
+	/**
+	 * Compare two dates, give if the current is more actual than the one given
+	 */
+	public boolean isMoreActualThan(Date d)
+	{
+		if (this.year > d.year) return true;
+		else if (this.year < d.year ) return false;
+		// Same year
+		else if ( this.month > d.month ) return true;
+		else if ( this.month < d.month ) return false;
+		// Same month
+		else if ( this.day > d.day ) return true;
+		else if ( this.day < d.day ) return false;
+		// Same day
+		else if ( this.hour > d.hour ) return true;
+		else if ( this.hour < d.hour ) return false;
+		// Same hour
+		else if ( this.minute > d.minute ) return true;
+		else if ( this.minute < d.minute ) return false;
+		// Same minute
+		else if ( this.second > d.second ) return true;
+		else if ( this.second < d.second ) return false;
+		// If they have the same second, I send false (for the Voyage comparison)
+		return true;
 	}
 }

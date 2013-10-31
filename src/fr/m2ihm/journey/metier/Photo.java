@@ -1,5 +1,7 @@
 package fr.m2ihm.journey.metier;
 
+import fr.m2ihm.journey.R;
+
 public class Photo extends ElementMap{
 
 	public Photo(Voyage voyage, Gps positionGps, Date date, String nomMedia,
@@ -10,5 +12,10 @@ public class Photo extends ElementMap{
 	@Override
 	public String getType(){
 		return "Photo";
+	}
+	
+	@Override
+	public int getIconResource(){
+		return R.drawable.ic_launcher;
 	}
 }
