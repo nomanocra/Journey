@@ -37,7 +37,7 @@ public class LocationTrackerService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		updateParametre(Settings.getDelayTraceur());
-		return super.onStartCommand(intent, flags, startId);
+		return START_REDELIVER_INTENT;
 	}
 	
 	@Override
