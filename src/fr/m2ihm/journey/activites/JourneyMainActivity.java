@@ -13,6 +13,7 @@ import fr.m2ihm.journey.metier.Photo;
 import fr.m2ihm.journey.metier.Voyage;
 import fr.m2ihm.journey.services.LocationTrackerService;
 import fr.m2ihm.journey.test.TestBD;
+import fr.m2ihm.journey.settings.Settings;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -44,21 +45,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-enum State {
-	Init, PasVoyage, VoyageEnCours, NouveauVoayge
-}
 
 public class JourneyMainActivity extends Activity {
 
-	private Button newTrip;
-	private Button newEvent;
-	private Button endTrip;
-	private Button journal;
-	private Button setting;
+
 	private ToggleButton tracerManagerButton;
 	private TextView textVoyageEnCours;
 	private Voyage voyageEnCours;
-	private State etat;
+	private boolean delayTraceur;
 
 	MyBDAdapter myDB;
 
@@ -66,11 +60,13 @@ public class JourneyMainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		myDB = new MyBDAdapterImpl(this);
+		/*
 		newTrip = (Button) findViewById(R.id.boutonJeParsEnVoyage);
 		newEvent = (Button) findViewById(R.id.boutonAjoutEvenement);
 		endTrip = (Button) findViewById(R.id.boutonJeTermineMonVoyage);
 		journal = (Button) findViewById(R.id.boutonCarnetVoyage);
 		setting = (Button) findViewById(R.id.boutonParametre);
+		*/
 		tracerManagerButton = (ToggleButton) findViewById(R.id.activationTracker);
 		TestBD.testBD2(this);
 		init();
@@ -184,7 +180,9 @@ public class JourneyMainActivity extends Activity {
 		finish();
 	}
 	public void startLocationTracerService(){
-		startService(new Intent(JourneyMainActivity.this, LocationTrackerService.class));
+		Intent i = new Intent(JourneyMainActivity.this, LocationTrackerService.class);
+		i.putExtra("delay",Settings.getDelayTraceur());
+		startService(i);
 	}
 	
 	public void stopLocationTracerService(){
