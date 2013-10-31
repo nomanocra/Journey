@@ -114,7 +114,7 @@ public class JourneyMainActivity extends Activity {
 		setContentView(R.layout.acceuil2);
 		myDB.open();
 		voyageEnCours = myDB.getVoyageCourant();
-		Log.i("enVoyageLayout", ""+voyageEnCours.getId());
+		Log.i("enVoyageLayout", ""+voyageEnCours.getId() + voyageEnCours.getNom());
 		myDB.close();
 		textVoyageEnCours = (TextView) findViewById(R.id.voyageEnCoursText);
 		textVoyageEnCours.setText(voyageEnCours.getNom());
@@ -192,14 +192,22 @@ public class JourneyMainActivity extends Activity {
 		
 	}
 	
-	public void tracerManagement(){
+	public void tracerManagement(View v){
+		
+		Log.v("tracerManagement", "Traceur :" + tracerManagerButton.getText());
+		/*
+		Log.i("tracerManagement", "Traceur :" + tracerManagerButton.isChecked());
+		
 		if(tracerManagerButton.isChecked()){
+		*/
 			Log.i("tracerManagement", "Traceur activé");
 			startLocationTracerService();
+			/*
 		}else{
 			Log.i("pasDeVoyageLayout", "Traceur désactivé");
 			stopLocationTracerService();
 		}	
+		*/
 	}
 	
 	public void actionBoutonTermineVoyage(View v) {
