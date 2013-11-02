@@ -2,6 +2,7 @@ package fr.m2ihm.journey.settings;
 
 public class Settings {
 	static public int delayTraceur = 30000;
+	static public int distanceTraceur = 0;
 	static public boolean traceurActive = false;
 	
 	
@@ -18,6 +19,13 @@ public class Settings {
 		Settings.traceurActive = traceurActive;
 	}
 	
+	public static int getDistanceTraceur() {
+		return distanceTraceur;
+	}
+	
+	public static void setDistanceTraceur(int distanceTraceur) {
+		Settings.distanceTraceur = distanceTraceur;
+	}
 
 	
 }

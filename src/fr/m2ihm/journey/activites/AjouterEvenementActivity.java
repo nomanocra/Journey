@@ -112,8 +112,13 @@ public class AjouterEvenementActivity extends Activity {
 	}
 	
 	public void prendrePhoto(View v){
+		/*
 		File monMediaExistant = new File(Media.EXTERNAL_CONTENT_URI + "/" +nomMedia);
+		if(monMediaExistant.exists()){
 		monMediaExistant.delete();
+		Log.v("prendrePhoto AjouterEvenement","Delete : " + Media.EXTERNAL_CONTENT_URI);
+		}
+		*/
 		Intent intent = new Intent(this, ActiveCameraActivity.class);
 		intent.putExtra("lieu", lieu.getText().toString());
 		intent.putExtra("commentaire", commentaire.getText().toString());

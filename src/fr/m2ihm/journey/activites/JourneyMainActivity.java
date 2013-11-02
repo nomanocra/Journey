@@ -70,10 +70,8 @@ public class JourneyMainActivity extends Activity {
 		tracerManagerButton = (ToggleButton) findViewById(R.id.activationTracker);
 //		TestBD.testBD2(this);
 //		TestBD.testBD(this);
-		TestBD.testBD3(this);
+		//TestBD.testBD3(this);
 		init();
-		
-		
 	}
 
 	public void init() {
@@ -111,15 +109,17 @@ public class JourneyMainActivity extends Activity {
 		setContentView(R.layout.acceuil2);
 		myDB.open();
 		voyageEnCours = myDB.getVoyageCourant();
-		Log.i("enVoyageLayout", ""+voyageEnCours.getId() + voyageEnCours.getNom());
+		Log.v("enVoyageLayout", ""+voyageEnCours.getId() + voyageEnCours.getNom());
 		myDB.close();
 		textVoyageEnCours = (TextView) findViewById(R.id.voyageEnCoursText);
 		textVoyageEnCours.setText(voyageEnCours.getNom());
+		startLocationTracerService();
+		
 	}
 
 	public void pasDeVoyageLayout() {
 		setContentView(R.layout.acceuil);
-		Log.i("pasDeVoyageLayout", "pasDeVoyageLayout");
+		Log.v("pasDeVoyageLayout", "pasDeVoyageLayout");
 	}
 
 	// Gestion des boutons
@@ -181,9 +181,10 @@ public class JourneyMainActivity extends Activity {
 		finish();
 	}
 	public void startLocationTracerService(){
-		Intent i = new Intent(JourneyMainActivity.this, LocationTrackerService.class);
-		i.putExtra("delay",Settings.getDelayTraceur());
-		startService(i);
+		Intent monService = new Intent(JourneyMainActivity.this, LocationTrackerService.class);
+		Settings.setDelayTraceur(3000);
+		startService(monService);
+		Log.v("startLocationService", "startLocationService");
 	}
 	
 	public void stopLocationTracerService(){
@@ -200,7 +201,7 @@ public class JourneyMainActivity extends Activity {
 		if(tracerManagerButton.isChecked()){
 		*/
 			Log.i("tracerManagement", "Traceur activé");
-			startLocationTracerService();
+			//startLocationTracerService();
 			/*
 		}else{
 			Log.i("pasDeVoyageLayout", "Traceur désactivé");
