@@ -60,15 +60,11 @@ public class JourneyMainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		myDB = new MyBDAdapterImpl(this);
-		/*
-		newTrip = (Button) findViewById(R.id.boutonJeParsEnVoyage);
-		newEvent = (Button) findViewById(R.id.boutonAjoutEvenement);
-		endTrip = (Button) findViewById(R.id.boutonJeTermineMonVoyage);
-		journal = (Button) findViewById(R.id.boutonCarnetVoyage);
-		setting = (Button) findViewById(R.id.boutonParametre);
-		*/
+		
 		tracerManagerButton = (ToggleButton) findViewById(R.id.activationTracker);
-//		TestBD.testBD2(this);
+		
+		
+		TestBD.testBD2(this);
 //		TestBD.testBD(this);
 		//TestBD.testBD3(this);
 		init();
@@ -121,6 +117,7 @@ public class JourneyMainActivity extends Activity {
 		setContentView(R.layout.acceuil);
 		Log.v("pasDeVoyageLayout", "pasDeVoyageLayout");
 	}
+
 
 	// Gestion des boutons
 	public void actionBoutonAjoutVoyage(View v) {
@@ -194,10 +191,9 @@ public class JourneyMainActivity extends Activity {
 	
 	public void tracerManagement(View v){
 		
-		Log.v("tracerManagement", "Traceur :" + tracerManagerButton.getText());
-		/*
+
 		Log.i("tracerManagement", "Traceur :" + tracerManagerButton.isChecked());
-		
+		/*
 		if(tracerManagerButton.isChecked()){
 		*/
 			Log.i("tracerManagement", "Traceur activé");
