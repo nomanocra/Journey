@@ -149,7 +149,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/relativeLayout1"
         android:layout_alignParentBottom="true"
-        android:onClick="closeNewEvent"
+        android:onClick="closeActivity"
         android:text="Annuler"
         android:textSize="30dp" />
 
@@ -160,7 +160,7 @@
         android:layout_above="@+id/annulerNouveauEvenement"
         android:layout_alignLeft="@+id/TextView03"
         android:layout_marginBottom="27dp"
-        android:onClick="addVideo"
+        android:onClick="prendreVideo"
         android:text="Video" />
 
     <Button
@@ -171,7 +171,7 @@
         android:layout_alignBottom="@+id/boutonJeTermineMonVoyage"
         android:layout_marginLeft="38dp"
         android:layout_toRightOf="@+id/boutonJeTermineMonVoyage"
-        android:onClick="addSon"
+        android:onClick="prendreSon"
         android:text="Son" />
 
     <Button
@@ -182,7 +182,7 @@
         android:layout_alignBottom="@+id/button3"
         android:layout_marginLeft="48dp"
         android:layout_toRightOf="@+id/button3"
-        android:onClick="addPhoto"
+        android:onClick="prendrePhoto"
         android:text="Photo" />
 
     <TextView
