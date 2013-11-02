@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.XmlResourceParser;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -49,20 +50,20 @@ import android.widget.ToggleButton;
 public class JourneyMainActivity extends Activity {
 
 
-	private ToggleButton tracerManagerButton;
 	private TextView textVoyageEnCours;
 	private Voyage voyageEnCours;
-	private boolean delayTraceur;
-
+	private boolean traceurActive;
 	MyBDAdapter myDB;
-
+	Button traceurButton;
+	SharedPreferences sharedPref;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		myDB = new MyBDAdapterImpl(this);
-		
-		tracerManagerButton = (ToggleButton) findViewById(R.id.activationTracker);
-		
+		sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+		traceurActive = false;
+		sharedPref.getBoolean("traceurActive", traceurActive);
+		Settings.setTraceurActive(false);
 		
 		TestBD.testBD2(this);
 //		TestBD.testBD(this);
@@ -97,7 +98,6 @@ public class JourneyMainActivity extends Activity {
 		 * "Cliquez sur \"je pars en voyage\" pour creer un nouvel album de voyage"
 		 * );
 		 */
-
 	}
 
 	public void enVoyageLayout() {
@@ -107,10 +107,17 @@ public class JourneyMainActivity extends Activity {
 		voyageEnCours = myDB.getVoyageCourant();
 		Log.v("enVoyageLayout", ""+voyageEnCours.getId() + voyageEnCours.getNom());
 		myDB.close();
+		traceurButton = (Button) findViewById(R.id.traceur);
 		textVoyageEnCours = (TextView) findViewById(R.id.voyageEnCoursText);
 		textVoyageEnCours.setText(voyageEnCours.getNom());
-		startLocationTracerService();
 		
+		if (traceurActive){
+		startLocationTracerService();
+		traceurButton.setText("Traceur activé");
+		}else{
+			traceurButton.setText("Traceur désactivé");
+		}
+			
 	}
 
 	public void pasDeVoyageLayout() {
@@ -186,24 +193,22 @@ public class JourneyMainActivity extends Activity {
 	
 	public void stopLocationTracerService(){
 		stopService(new Intent(JourneyMainActivity.this, LocationTrackerService.class));
-		
 	}
 	
-	public void tracerManagement(View v){
-		
-
-		Log.i("tracerManagement", "Traceur :" + tracerManagerButton.isChecked());
-		/*
-		if(tracerManagerButton.isChecked()){
-		*/
-			Log.i("tracerManagement", "Traceur activé");
-			//startLocationTracerService();
-			/*
-		}else{
-			Log.i("pasDeVoyageLayout", "Traceur désactivé");
+	public void clickOnTraceurButton(View c){
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.commit();
+		if(traceurActive){
+			traceurButton.setText("Traceur désactivé");
+			traceurActive = false;
 			stopLocationTracerService();
-		}	
-		*/
+		}else{
+			traceurButton.setText("Traceur activé");
+			traceurActive = true;
+			startLocationTracerService();
+		}
+		editor.putBoolean("traceurActive", traceurActive);
+		Settings.setTraceurActive(traceurActive);
 	}
 	
 	public void actionBoutonTermineVoyage(View v) {

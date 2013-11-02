@@ -70,17 +70,12 @@
         android:layout_y="114dp"
         android:src="@drawable/vous_etes_en_voyage" />
 
-    <ToggleButton
-        android:id="@+id/activationTracker"
-        style="@style/AppTheme"
-        android:layout_width="150dp"
-        android:layout_height="56dp"
-        android:layout_x="0dp"
-        android:layout_y="1dp"
-        android:checked="false"
-        android:onClick="tracerManagement"
-        android:text="ToggleButton"
-        android:textOff="Traceur désactivé"
-        android:textOn="Traceur activté" />
+    <Button
+        android:id="@+id/traceur"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_x="-1dp"
+        android:layout_y="3dp"
+        android:text="Traceur activé" />
 
 </AbsoluteLayout>
