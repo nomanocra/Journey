@@ -39,6 +39,7 @@ public class AjouterEvenementActivity extends Activity {
 	ElementMap newEvent;
 	MyBDAdapter myDB;
 	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,12 +49,38 @@ public class AjouterEvenementActivity extends Activity {
 		commentaire = (EditText) findViewById(R.id.champCommentaireEvenement);
 		lieu = (EditText) findViewById(R.id.champLieuEvenement);
 		indicateurMedia = (TextView) findViewById(R.id.indicateurMedia);
-		ajoutMedia = false;
 		myDB.open();
 		voyageCourant = myDB.getVoyageCourant();
 		myDB.close();
+		
+		 intent = getIntent();
+		 Log.v("onCreate - AjoutEvenement" , ""+ (intent.hasExtra("nomMedia") && intent.hasExtra("typeMedia")));
+		  if(intent.hasExtra("nomMedia") && intent.hasExtra("typeMedia")){
+			  initWithMedia();
+		  }
 		}
+	
+	public void init(){
+		ajoutMedia = false;
+	}
+	
+	public void initWithMedia(){
+		String typeMedia = intent.getExtras().getString("typeMedia");
+		ajoutMedia = true;
+		  lieu.setText(intent.getExtras().getString("lieu"));
+		  commentaire.setText(intent.getExtras().getString("commentaire"));
+		  nomMedia = intent.getExtras().getString("nomMedia");
+		  if(typeMedia.equals("photo")){
+			  addPhoto();
+		  }else if(typeMedia.equals("video")){
+			  addVideo();
+		  }
+		  else if(typeMedia.equals("audio")){
+			  addVideo();
+		  }
+	}
 
+	
 	public void saveNewEvent(View v) {
 		if( commentaire.getText().toString().equals("")&& ajoutMedia==false ){
 			Toast messageAcceuil = Toast
@@ -71,31 +98,46 @@ public class AjouterEvenementActivity extends Activity {
 		myDB.open();
 		myDB.ajouterElementMap(newEvent);
 		myDB.close();
-		closeNewEvent(v);
+		closeActivity(v);
 		}	
 	}
 	
-	public void closeNewEvent(View v){
-		Log.v("closeNewEvent", "1");
+	public void closeActivity(View v){
 		Intent intent = new Intent(this, JourneyMainActivity.class);
 		startActivity(intent);
 		finish();
 	}
 	
-	public void addPhoto(View v){
-		newEvent = new Photo(voyageCourant, GpsAdapter.getCurrentGps(), Date.dateCourant(), "mediaphoto", lieu.getText().toString(), commentaire.getText().toString());
+	public void prendrePhoto(View v){
+		Intent intent = new Intent(this, ActiveCameraActivity.class);
+		intent.putExtra("lieu", lieu.getText().toString());
+		intent.putExtra("commentaire", commentaire.getText().toString());
+		startActivity(intent);
+		finish();
+	}
+	public void prendreVideo(View v){
+	}
+	public void prendreSon(View v){
+	}
+	public void photoAddPhoto(){
+		newEvent = new Photo(voyageCourant, GpsAdapter.getCurrentGps(), Date.dateCourant(), nomMedia, lieu.getText().toString(), commentaire.getText().toString());
+		ajoutMedia = true;
+	}
+	
+	public void addPhoto(){
+		newEvent = new Photo(voyageCourant, GpsAdapter.getCurrentGps(), Date.dateCourant(), nomMedia, lieu.getText().toString(), commentaire.getText().toString());
 		ajoutMedia = true;
 		indicateurMedia.setText("Vous avez ajouté une photo");
 	}
 	
-	public void addVideo(View v){
-		newEvent = new Video(voyageCourant, GpsAdapter.getCurrentGps(), Date.dateCourant(), "mediavideo", lieu.getText().toString(), commentaire.getText().toString());
+	public void addVideo(){
+		newEvent = new Video(voyageCourant, GpsAdapter.getCurrentGps(), Date.dateCourant(), nomMedia, lieu.getText().toString(), commentaire.getText().toString());
 		ajoutMedia = true;
 		indicateurMedia.setText("Vous avez ajouté une video");
 	}
 	
-	public void addSon(View v){
-		newEvent = new Son(voyageCourant, GpsAdapter.getCurrentGps(), Date.dateCourant(), "mediason", lieu.getText().toString(), commentaire.getText().toString());
+	public void addSon(){
+		newEvent = new Son(voyageCourant, GpsAdapter.getCurrentGps(), Date.dateCourant(), nomMedia, lieu.getText().toString(), commentaire.getText().toString());
 		ajoutMedia = true;
 		indicateurMedia.setText("Vous avez ajouté un son");
 	}
