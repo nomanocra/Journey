@@ -1,5 +1,7 @@
 package fr.m2ihm.journey.activites;
 
+import java.io.File;
+
 import fr.m2ihm.journey.R;
 import fr.m2ihm.journey.adapter.GpsAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapter;
@@ -12,7 +14,9 @@ import fr.m2ihm.journey.metier.Photo;
 import fr.m2ihm.journey.metier.Son;
 import fr.m2ihm.journey.metier.Video;
 import fr.m2ihm.journey.metier.Voyage;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -52,9 +56,8 @@ public class AjouterEvenementActivity extends Activity {
 		myDB.open();
 		voyageCourant = myDB.getVoyageCourant();
 		myDB.close();
-		
+		Log.v("photoAddPhoto AjouterEvenement","" + Media.EXTERNAL_CONTENT_URI);
 		 intent = getIntent();
-		 Log.v("onCreate - AjoutEvenement" , ""+ (intent.hasExtra("nomMedia") && intent.hasExtra("typeMedia")));
 		  if(intent.hasExtra("nomMedia") && intent.hasExtra("typeMedia")){
 			  initWithMedia();
 		  }
@@ -62,6 +65,7 @@ public class AjouterEvenementActivity extends Activity {
 	
 	public void init(){
 		ajoutMedia = false;
+		nomMedia = "";
 	}
 	
 	public void initWithMedia(){
@@ -92,7 +96,6 @@ public class AjouterEvenementActivity extends Activity {
 			messageAcceuil.show();
 		}else{
 		if(ajoutMedia==false){
-			Log.v("saveNewEvent", voyageCourant.getNom());
 			newEvent = new Note(voyageCourant, GpsAdapter.getCurrentGps(), Date.dateCourant(), lieu.getText().toString(), commentaire.getText().toString());
 		}
 		myDB.open();
@@ -109,6 +112,8 @@ public class AjouterEvenementActivity extends Activity {
 	}
 	
 	public void prendrePhoto(View v){
+		File monMediaExistant = new File(Media.EXTERNAL_CONTENT_URI + "/" +nomMedia);
+		monMediaExistant.delete();
 		Intent intent = new Intent(this, ActiveCameraActivity.class);
 		intent.putExtra("lieu", lieu.getText().toString());
 		intent.putExtra("commentaire", commentaire.getText().toString());
