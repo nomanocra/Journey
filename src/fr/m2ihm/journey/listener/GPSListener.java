@@ -43,17 +43,24 @@ public class GPSListener implements LocationListener {
 
 	private LocationManager lManager;
     private Location location;
-    
+    private Context context;
 	private MyBDAdapter myDB;
 
 	@Override
 	public void onLocationChanged(Location location) {
 		this.location = location;
 		Log.v("Mise à jour de la Localisation", "Lat : " + location.getLatitude() + "| Lon : " + location.getLongitude());
+		Toast message = Toast.makeText(context,"Lat : " + location.getLatitude() + "| Lon : " + location.getLongitude(), Toast.LENGTH_SHORT);
+		message.setGravity(1, 400, -400);
+		message.show();
 		savePosition();
 	}
 	
+	public GPSListener(Context c){
+		context = c;
+	}
 	private void savePosition(){
+		myDB = new MyBDAdapterImpl(context);
 		myDB.open();
 		Position maPosition = new Position(myDB.getVoyageCourant(), new Gps(location.getLatitude(), location.getLongitude()), Date.dateCourant());
 		myDB.ajouterElementMap(maPosition);
