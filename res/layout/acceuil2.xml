@@ -72,10 +72,11 @@
 
     <Button
         android:id="@+id/traceur"
-        android:layout_width="130dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_x="-1dp"
+        android:layout_x="419dp"
         android:layout_y="3dp"
+        android:onClick="clickOnTraceurButton"
         android:text="Traceur activé" />
 
 </AbsoluteLayout>

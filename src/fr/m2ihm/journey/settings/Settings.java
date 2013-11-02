@@ -1,10 +1,13 @@
 package fr.m2ihm.journey.settings;
 
+import android.content.SharedPreferences;
+
 public class Settings {
 	static public int delayTraceur = 30000;
 	static public int distanceTraceur = 0;
 	static public boolean traceurActive = false;
-	
+
+
 	
 	public static int getDelayTraceur() {
 		return delayTraceur;
@@ -27,5 +30,5 @@ public class Settings {
 		Settings.distanceTraceur = distanceTraceur;
 	}
 
-	
+
 }

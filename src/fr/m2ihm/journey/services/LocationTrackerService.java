@@ -33,18 +33,12 @@ public class LocationTrackerService extends Service {
 		super.onCreate();
 		delay = 3000;
 		distance = 0;
-		Log.v("getAllVoyage", "creation du service");
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		//delay = Settings.getDelayTraceur();
-		Log.v("onStartCommand",""+ delay);
 		locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		/*
-		locationMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-				delay, 0, onLocationChange);
-				*/
+		
 		locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, delay,
 				distance, onLocationChange);
 		return START_REDELIVER_INTENT;
@@ -56,37 +50,4 @@ public class LocationTrackerService extends Service {
 		locationMgr.removeUpdates(onLocationChange);
 	}
 
-	/*
-	private LocationManager locationMgr = null;
-	private LocationListener myLocationListener = new GPSListener();
-	@Override
-	public IBinder onBind(Intent arg0) {
-		return null;
-	}
-
-	@Override
-	public void onCreate() {
-		super.onCreate();
-	}
-
-	public void updateParametre(int delay) {
-		locationMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-				delay, 0, myLocationListener);
-		locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, delay,
-				0, myLocationListener);
-		Log.v("updateParametre", "Service actif");
-	}
-
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		updateParametre(Settings.getDelayTraceur());
-		return START_REDELIVER_INTENT;
-	}
-	
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		locationMgr.removeUpdates(myLocationListener);
-	}
-	*/
 }
