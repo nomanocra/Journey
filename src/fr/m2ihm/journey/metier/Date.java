@@ -123,4 +123,5 @@ public class Date {
 		// If they have the same second, I send false (for the Voyage comparison)
 		return true;
 	}
+
 }

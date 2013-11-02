@@ -17,6 +17,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -352,6 +353,19 @@ public class JournalActivity extends Activity {
 		currentButton.setEnabled(false);
 
 		currentFragmentName = OurFragments.stats;
+	}
+	
+	public void returnButton_Click(View v) {
+		Intent intent = new Intent(this, JourneyMainActivity.class);
+		startActivity(intent);
+		finish();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		Intent intent = new Intent(this, JourneyMainActivity.class);
+		startActivity(intent);
+		finish();
 	}
 
 	// ###################################

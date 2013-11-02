@@ -24,6 +24,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="40dp"
+                android:onClick="returnButton_Click"
                 android:text="@string/retour"
                 android:textSize="30sp" />
 

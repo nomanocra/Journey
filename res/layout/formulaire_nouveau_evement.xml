@@ -11,7 +11,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/fullscreen_dateheure"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=" "
@@ -25,7 +25,7 @@
         android:textSize="15dp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/fullscreen_commentaire"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" " />
@@ -101,7 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/champCommentaireEvenement"
-        android:layout_toRightOf="@+id/textView3"
+        android:layout_toRightOf="@+id/fullscreen_commentaire"
         android:layout_weight="0.00"
         android:text="2) Ajouter une description à votre evenement :"
         android:textColor="@color/White"
@@ -126,7 +126,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/champLieuEvenement"
-        android:layout_toRightOf="@+id/textView3"
+        android:layout_toRightOf="@+id/fullscreen_commentaire"
         android:layout_weight="0.00"
         android:text="1) Ajouter un lieu à l&apos;évenement :"
         android:textColor="@color/White"

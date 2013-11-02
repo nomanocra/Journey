@@ -39,48 +39,6 @@ public class JournalMapFragment extends Fragment {
 		return v;
 	}
 
-	// public void initializeMap() {
-	// // We get the map ref
-	// GoogleMap googleMap = ((MapFragment) getFragmentManager()
-	// .findFragmentById(R.id.map)).getMap();
-	//
-	// // Get DB data from the current (or last) trip, if it exists
-	//
-	// // Test
-	// TestMarqueurs tm = new TestMarqueurs();
-	// List<ElementMap> elementList = tm.elementList;
-	// List<ElementMap> positionList = tm.positionList;
-	//
-	// // Then we print markers
-	// MarkerOptions marker;
-	// ElementMap currentElement;
-	// for (int i = 0; i < elementList.size(); i++) {
-	// currentElement = elementList.get(i);
-	// marker = new MarkerOptions().position(
-	// new LatLng(currentElement.getGps().getLatitude(),
-	// currentElement.getGps().getLongitude())).title(
-	// currentElement.getLieu());
-	//
-	// marker.icon(BitmapDescriptorFactory.fromResource(currentElement
-	// .getIconResource()));
-	//
-	// googleMap.addMarker(marker);
-	// }
-	//
-	// // And then we draw the waypoints
-	// List<LatLng> latlngList = new ArrayList<LatLng>();
-	// for (int i = 0; i < positionList.size(); i++) {
-	// latlngList
-	// .add(new LatLng(positionList.get(i).getGps().getLatitude(),
-	// positionList.get(i).getGps().getLongitude()));
-	// }
-	//
-	// PolylineOptions line = new PolylineOptions().addAll(latlngList)
-	// .width(5).color(Color.RED);
-	//
-	// googleMap.addPolyline(line);
-	// }
-
 	public void fillMap(Context context, int voyageFocusedId) {
 
 		// We get the map ref
@@ -108,10 +66,12 @@ public class JournalMapFragment extends Fragment {
 			marker = new MarkerOptions().position(
 					new LatLng(currentElement.getGps().getLatitude(),
 							currentElement.getGps().getLongitude())).title(
-					currentElement.getLieu());
-
+					currentElement.getLieu() + " - " + currentElement.getDate().toString());
+			
 			marker.icon(BitmapDescriptorFactory.fromResource(currentElement
 					.getIconResource()));
+			
+			marker.snippet(currentElement.getCommentaire());
 
 			googleMap.addMarker(marker);
 		}
@@ -128,6 +88,28 @@ public class JournalMapFragment extends Fragment {
 				.width(5).color(Color.RED);
 
 		googleMap.addPolyline(line);
+		
+		// Then we put a flag on the first and the last waypoint
+		
+		marker = new MarkerOptions().position(
+				new LatLng(positionList.get(0).getGps().getLatitude(),
+						positionList.get(0).getGps().getLongitude()));
+		marker.title("Départ");
+		googleMap.addMarker(marker);
+		
+		// DEPARTURE FLAG
+//		marker.icon(BitmapDescriptorFactory.fromResource(currentElement
+//				.getIconResource()));
+		
+		marker = new MarkerOptions().position(
+				new LatLng(positionList.get(positionList.size()-1).getGps().getLatitude(),
+						positionList.get(positionList.size()-1).getGps().getLongitude()));
+		marker.title("Arrivée");
+		googleMap.addMarker(marker);
+		
+		// FINISH FLAG
+//		marker.icon(BitmapDescriptorFactory.fromResource(currentElement
+//				.getIconResource()));
 	}
 
 	@Override
@@ -138,7 +120,6 @@ public class JournalMapFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		// this.initializeMap();
 	}
 
 	@Override

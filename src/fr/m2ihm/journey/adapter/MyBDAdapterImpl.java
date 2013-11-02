@@ -308,8 +308,8 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 							new Date(cursor.getInt(4), cursor.getInt(5), cursor
 									.getInt(6), cursor.getInt(7), cursor.getInt(8),
 									cursor.getInt(9)),
-							cursor.getString(11), cursor.getString(12),
-							cursor.getString(10));
+							cursor.getString(12), cursor.getString(10),
+							cursor.getString(11));
 					e.setId(cursor.getInt(0));
 					allMedia.add(e);
 				} else if (typeMedia.equals("Photo")) {
@@ -318,8 +318,8 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 							new Date(cursor.getInt(4), cursor.getInt(5), cursor
 									.getInt(6), cursor.getInt(7), cursor.getInt(8),
 									cursor.getInt(9)),
-							cursor.getString(11), cursor.getString(12),
-							cursor.getString(10));
+							cursor.getString(12), cursor.getString(10),
+							cursor.getString(11));
 					e.setId(cursor.getInt(0));
 					allMedia.add(e);
 				} else if (typeMedia.equals("Son")) {
@@ -327,8 +327,8 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 							new Date(cursor.getInt(4), cursor.getInt(5), cursor
 									.getInt(6), cursor.getInt(7), cursor.getInt(8),
 									cursor.getInt(9)),
-							cursor.getString(11), cursor.getString(12),
-							cursor.getString(10));
+							cursor.getString(12), cursor.getString(10),
+							cursor.getString(11));
 					e.setId(cursor.getInt(0));
 					allMedia.add(e);
 				} else if (typeMedia.equals("Note")) {
@@ -337,7 +337,7 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 							new Date(cursor.getInt(4), cursor.getInt(5), cursor
 									.getInt(6), cursor.getInt(7), cursor.getInt(8),
 									cursor.getInt(9)),
-							cursor.getString(11), cursor.getString(10));
+							cursor.getString(10), cursor.getString(11));
 					e.setId(cursor.getInt(0));
 					allMedia.add(e);
 				} else {
@@ -389,8 +389,8 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 						new Date(cursor.getInt(4), cursor.getInt(5), cursor
 								.getInt(6), cursor.getInt(7), cursor.getInt(8),
 								cursor.getInt(9)),
-						cursor.getString(11), cursor.getString(12),
-						cursor.getString(10));
+						cursor.getString(12), cursor.getString(10),
+						cursor.getString(11));
 				e.setId(cursor.getInt(0));
 				allSong.add(e);
 				cursor.moveToNext();
@@ -430,8 +430,8 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 				ElementMap e = new Photo(v, new Gps(cursor.getFloat(2),
 						cursor.getFloat(3)), new Date(cursor.getInt(4),
 						cursor.getInt(5), cursor.getInt(6), cursor.getInt(7),
-						cursor.getInt(8), cursor.getInt(9)), cursor.getString(11),
-						cursor.getString(12), cursor.getString(10));
+						cursor.getInt(8), cursor.getInt(9)), cursor.getString(12),
+						cursor.getString(10), cursor.getString(11));
 				e.setId(cursor.getInt(0));
 				allPhoto.add(e);
 				cursor.moveToNext();
@@ -473,8 +473,8 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 						cursor.getFloat(3)), new Date(cursor.getInt(4),
 						cursor.getInt(5), cursor.getInt(6), cursor.getInt(7),
 						cursor.getInt(8), cursor.getInt(9)),
-						cursor.getString(11), cursor.getString(12),
-						cursor.getString(10));
+						cursor.getString(12), cursor.getString(10),
+						cursor.getString(11));
 				e.setId(cursor.getInt(0));
 				allVideo.add(e);
 				cursor.moveToNext();
