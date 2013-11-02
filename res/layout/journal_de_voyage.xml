@@ -104,6 +104,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginLeft="23dp"
                         android:layout_marginTop="23dp"
+                        android:onClick="onDeleteButton_Click"
                         android:src="@drawable/cross_icon" />
 
                     <ImageButton

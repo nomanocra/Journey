@@ -2,7 +2,7 @@ package fr.m2ihm.journey.metier;
 
 import android.util.Log;
 
-public abstract class ElementMap {
+public abstract class ElementMap implements Comparable<ElementMap> {
 	int id;
 	Voyage voyage;
 	Gps gps;
@@ -11,10 +11,9 @@ public abstract class ElementMap {
 	String nomMedia;
 	Date date;
 
-
-
 	// Constructeur appelé pour les evenements entrés par l'utilisateur.
-	public ElementMap(Voyage voyage, Gps positionGps, Date date, String nomMedia, String lieu, String commentaire) {
+	public ElementMap(Voyage voyage, Gps positionGps, Date date,
+			String nomMedia, String lieu, String commentaire) {
 		this.id = -1;
 		this.voyage = voyage;
 		gps = positionGps;
@@ -22,6 +21,18 @@ public abstract class ElementMap {
 		this.commentaire = commentaire;
 		this.nomMedia = nomMedia;
 		this.date = date;
+	}
+
+	// Override the constructor, to add an EM to the DB we don't need a date
+	public ElementMap(Voyage voyage, Gps positionGps, String nomMedia,
+			String lieu, String commentaire) {
+		this.id = -1;
+		this.voyage = voyage;
+		gps = positionGps;
+		this.lieu = lieu;
+		this.commentaire = commentaire;
+		this.nomMedia = nomMedia;
+		this.date = new Date(0, 0, 0, 0, 0, 0);
 	}
 
 	public int getId() {
@@ -80,25 +91,34 @@ public abstract class ElementMap {
 		this.date = date;
 	}
 
-	public String getType(){
+	public String getType() {
 		return "Evenement";
 	}
-	
-	public void description(){
-		Log.v("Descritption","-----------------Debut-----------");
-		Log.v(nomMedia, 	"id : " + id +
-								"\nVoyage : " + voyage.getNom()+
-								"\n Gps : " + gps.getLatitude() + " | " + gps.longitude + 
-								"\n Lieu : " +  lieu +
-								"\n Commentaire : " + commentaire +
-								"\n Nom media : " + nomMedia +
-								"\n Heure :" + date.getHour() + ":" + date.getMinute() + ":" + date.getSecond() + "."  +
-								"\n Date :" + date.getDay() + "/" + date.getMonth() + "/" +  date.getYear());
-		Log.v("Descritption","-----------------Fin-----------");
+
+	public void description() {
+		Log.v("Descritption", "-----------------Debut-----------");
+		Log.v(nomMedia, "id : " + id + "\nVoyage : " + voyage.getNom()
+				+ "\n Gps : " + gps.getLatitude() + " | " + gps.longitude
+				+ "\n Lieu : " + lieu + "\n Commentaire : " + commentaire
+				+ "\n Nom media : " + nomMedia + "\n Heure :" + date.getHour()
+				+ ":" + date.getMinute() + ":" + date.getSecond() + "."
+				+ "\n Date :" + date.getDay() + "/" + date.getMonth() + "/"
+				+ date.getYear());
+		Log.v("Descritption", "-----------------Fin-----------");
 	}
-	
-	public int getIconResource()
-	{
+
+	public int getIconResource() {
 		return 0;
+	}
+
+	@Override
+	public int compareTo(ElementMap otherElement) {
+
+		if (this.date.isMoreActualThan(otherElement.getDate())) {
+			return 1;
+		}
+		else {
+			return -1;
+		}
 	}
 }

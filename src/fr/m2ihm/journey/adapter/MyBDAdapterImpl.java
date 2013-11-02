@@ -2,6 +2,7 @@ package fr.m2ihm.journey.adapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,11 +25,11 @@ import fr.m2ihm.journey.metier.Gps;
 public class MyBDAdapterImpl implements MyBDAdapter {
 	public static final int DB_VERSION = 4;
 	public static final String DB_NAME = "Journey.db";
-	
+
 	private SQLiteDatabase mDB;
 	private MyOpenHelper mOpenHelper;
 	private Calendar calendar;
-	
+
 	// -------------------------------------------------------------------------
 
 	private static final String TABLE_VOYAGE = "table_voyage";
@@ -49,26 +50,22 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 	public static final String COL_V_YEAR_FIN = "year_f";
 
 	private static final String CREATE_TABLE_VOYAGE = "create table "
-			+ TABLE_VOYAGE + " (" 
-			+ COL_V_ID + " integer primary key autoincrement, "
+			+ TABLE_VOYAGE + " (" + COL_V_ID
+			+ " integer primary key autoincrement, "
 
-			+ COL_V_NOM_VOYAGE + " text not null, " 
-			+ COL_V_EN_COURS + " integer, "
+			+ COL_V_NOM_VOYAGE + " text not null, " + COL_V_EN_COURS
+			+ " integer, "
 
-			+ COL_V_SECONDES_DEBUT + " integer, " 
-			+ COL_V_MINUTES_DEBUT + " integer, " 
-			+ COL_V_HOUR_DEBUT + " integer, " 
-			+ COL_V_DAY_DEBUT + " integer, " 
-			+ COL_V_MONTH_DEBUT + " integer, "
+			+ COL_V_SECONDES_DEBUT + " integer, " + COL_V_MINUTES_DEBUT
+			+ " integer, " + COL_V_HOUR_DEBUT + " integer, " + COL_V_DAY_DEBUT
+			+ " integer, " + COL_V_MONTH_DEBUT + " integer, "
 			+ COL_V_YEAR_DEBUT + " integer, "
 
-			+ COL_V_SECONDES_FIN + " integer, "
-			+ COL_V_MINUTES_FIN + " integer, " 
-			+ COL_V_HOUR_FIN + " integer, "
-			+ COL_V_DAY_FIN + " integer, " 
-			+ COL_V_MONTH_FIN + " integer, " 
-			+ COL_V_YEAR_FIN + " integer);";
-	
+			+ COL_V_SECONDES_FIN + " integer, " + COL_V_MINUTES_FIN
+			+ " integer, " + COL_V_HOUR_FIN + " integer, " + COL_V_DAY_FIN
+			+ " integer, " + COL_V_MONTH_FIN + " integer, " + COL_V_YEAR_FIN
+			+ " integer);";
+
 	// -------------------------------------------------------------------------
 	private static final String TABLE_EVENEMENT = "table_evenement";
 	public static final String COL_E_ID = "_id";
@@ -88,8 +85,8 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 	public static final String COL_E_COMMENTAIRE = "commentaire";
 
 	private static final String CREATE_TABLE_EVENEMENT = "create table "
-			+ TABLE_EVENEMENT + " (" 
-			+ COL_E_ID + " integer primary key autoincrement, "
+			+ TABLE_EVENEMENT + " (" + COL_E_ID
+			+ " integer primary key autoincrement, "
 
 			+ COL_E_LAT + " real, " + COL_E_LON + " real, "
 
@@ -99,10 +96,8 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 
 			+ COL_E_LIEU + " text not null, " + COL_E_COMMENTAIRE
 			+ " text not null, " + COL_E_MEDIA_TYPE + " integer not null, "
-			+ COL_E_MEDIA_NOM + " text not null, "
-			+ COL_E_ID_VOYAGE + " integer" +" REFERENCES " + TABLE_VOYAGE
-			+");";
-
+			+ COL_E_MEDIA_NOM + " text not null, " + COL_E_ID_VOYAGE
+			+ " integer" + " REFERENCES " + TABLE_VOYAGE + ");";
 
 	// -------------------------------------------------------------------------
 
@@ -138,51 +133,59 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 				COL_E_MEDIA_TYPE // 13
 				}, COL_E_ID + " = " + id, null, null, null, null);
 		cursor.moveToFirst();
-		Voyage v = getVoyage(cursor.getInt(1));
-		String typeMedia = cursor.getString(13);
 
-		if (typeMedia.equals("Video")) {
-			e = new Video(v, new Gps(cursor.getFloat(2), cursor.getFloat(3)),
-					new Date(cursor.getInt(4), cursor.getInt(5), cursor
-							.getInt(6), cursor.getInt(7), cursor.getInt(8),
-							cursor.getInt(9)),
-					cursor.getString(11), cursor.getString(12),
-					cursor.getString(10));
-		} else if (typeMedia.equals("Photo")) {
-			e = new Photo(v, new Gps(cursor.getFloat(2), cursor.getFloat(3)),
-					new Date(cursor.getInt(4), cursor.getInt(5), cursor
-							.getInt(6), cursor.getInt(7), cursor.getInt(8),
-							cursor.getInt(9)),
-					cursor.getString(11), cursor.getString(12),
-					cursor.getString(10));
-		} else if (typeMedia.equals("Son")) {
-			e = new Son(v, new Gps(cursor.getFloat(2), cursor.getFloat(3)),
-					new Date(cursor.getInt(4), cursor.getInt(5), cursor
-							.getInt(6), cursor.getInt(7), cursor.getInt(8),
-							cursor.getInt(9)),
-					cursor.getString(11), cursor.getString(12),
-					cursor.getString(10));
-		} else if (typeMedia.equals("Note")) {
-			e = new Note(v, new Gps(cursor.getFloat(2), cursor.getFloat(3)),
-					new Date(cursor.getInt(4), cursor.getInt(5), cursor
-							.getInt(6), cursor.getInt(7), cursor.getInt(8),
-							cursor.getInt(9)),
-					cursor.getString(12), cursor.getString(10));
-		} else if (typeMedia.equals("Position")) {
-			e = new Position(v,
-					new Gps(cursor.getFloat(2), cursor.getFloat(3)), new Date(
-							cursor.getInt(4), cursor.getInt(5),
-							cursor.getInt(6), cursor.getInt(7),
-							cursor.getInt(8), cursor.getInt(9)));
+		if (cursor.getCount() != 0) {
+
+			Voyage v = getVoyage(cursor.getInt(1));
+			String typeMedia = cursor.getString(13);
+
+			if (typeMedia.equals("Video")) {
+				e = new Video(v,
+						new Gps(cursor.getFloat(2), cursor.getFloat(3)),
+						new Date(cursor.getInt(4), cursor.getInt(5), cursor
+								.getInt(6), cursor.getInt(7), cursor.getInt(8),
+								cursor.getInt(9)),
+						cursor.getString(11), cursor.getString(12),
+						cursor.getString(10));
+			} else if (typeMedia.equals("Photo")) {
+				e = new Photo(v,
+						new Gps(cursor.getFloat(2), cursor.getFloat(3)),
+						new Date(cursor.getInt(4), cursor.getInt(5), cursor
+								.getInt(6), cursor.getInt(7), cursor.getInt(8),
+								cursor.getInt(9)),
+						cursor.getString(11), cursor.getString(12),
+						cursor.getString(10));
+			} else if (typeMedia.equals("Son")) {
+				e = new Son(v, new Gps(cursor.getFloat(2), cursor.getFloat(3)),
+						new Date(cursor.getInt(4), cursor.getInt(5), cursor
+								.getInt(6), cursor.getInt(7), cursor.getInt(8),
+								cursor.getInt(9)),
+						cursor.getString(11), cursor.getString(12),
+						cursor.getString(10));
+			} else if (typeMedia.equals("Note")) {
+				e = new Note(v,
+						new Gps(cursor.getFloat(2), cursor.getFloat(3)),
+						new Date(cursor.getInt(4), cursor.getInt(5), cursor
+								.getInt(6), cursor.getInt(7), cursor.getInt(8),
+								cursor.getInt(9)),
+						cursor.getString(12), cursor.getString(10));
+			} else if (typeMedia.equals("Position")) {
+				e = new Position(v, new Gps(cursor.getFloat(2),
+						cursor.getFloat(3)), new Date(cursor.getInt(4),
+						cursor.getInt(5), cursor.getInt(6), cursor.getInt(7),
+						cursor.getInt(8), cursor.getInt(9)));
+			} else {
+				e = new Position(v, new Gps(cursor.getFloat(2),
+						cursor.getFloat(3)), new Date(cursor.getInt(4),
+						cursor.getInt(5), cursor.getInt(6), cursor.getInt(7),
+						cursor.getInt(8), cursor.getInt(9)));
+			}
+
+			e.setId(cursor.getInt(0));
+
 		} else {
-			e = new Position(v,
-					new Gps(cursor.getFloat(2), cursor.getFloat(3)), new Date(
-							cursor.getInt(4), cursor.getInt(5),
-							cursor.getInt(6), cursor.getInt(7),
-							cursor.getInt(8), cursor.getInt(9)));
+			Log.v("base de donnees _ getEvenement", "This evenement doesn't exist in DB");
 		}
-
-		e.setId(cursor.getInt(0));
 		return e;
 	}
 
@@ -205,18 +208,25 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 				COL_V_ID + " = " + id, null, null, null, null);
 		cursor.moveToFirst();
 
-		Voyage v = new Voyage(cursor.getString(1), cursor.getInt(2) == 1,
-				new Date(cursor.getInt(3), cursor.getInt(4), cursor.getInt(5),
-						cursor.getInt(6), cursor.getInt(7), cursor.getInt(8)),
-				new Date(cursor.getInt(9), cursor.getInt(10),
-						cursor.getInt(11), cursor.getInt(12),
-						cursor.getInt(13), cursor.getInt(14)));
-		v.setId(cursor.getInt(0));
+		Voyage v = null;
+		
+		if (cursor.getCount() != 0) {
+			v = new Voyage(cursor.getString(1), cursor.getInt(2) == 1,
+					new Date(cursor.getInt(3), cursor.getInt(4), cursor.getInt(5),
+							cursor.getInt(6), cursor.getInt(7), cursor.getInt(8)),
+					new Date(cursor.getInt(9), cursor.getInt(10),
+							cursor.getInt(11), cursor.getInt(12),
+							cursor.getInt(13), cursor.getInt(14)));
+			v.setId(cursor.getInt(0));
+		} else {
+			Log.v("base de donnees _ getVoyage", "This voyage's ID doesn't exist in DB");
+		}
+		
 		return v;
 	}
 
 	@Override
-	public ArrayList<Voyage> getAllVoyage() {
+	public ArrayList<Voyage> getAllVoyages() {
 		ArrayList<Voyage> mesVoyages = new ArrayList<Voyage>();
 		Cursor cursor = mDB.query(TABLE_VOYAGE, new String[] { COL_V_ID, // 0
 				COL_V_NOM_VOYAGE, // 1
@@ -236,7 +246,7 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 				null, null, null, null, null);
 		cursor.moveToFirst();
 		for (int i = 0; i < cursor.getCount(); i++) {
-			Log.v("getAllVoyage",
+			Log.v("getAllVoyages",
 					cursor.getString(1) + " : " + cursor.getInt(2)
 							+ " | Time : " + cursor.getInt(5) + ":"
 							+ cursor.getInt(4) + "." + cursor.getInt(3)
@@ -251,7 +261,13 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 							cursor.getInt(13), cursor.getInt(14)));
 			v.setId(cursor.getInt(0));
 			mesVoyages.add(v);
+			
+			cursor.moveToNext();
 		}
+		
+		// We sort the Voyages
+		Collections.sort(mesVoyages);
+		
 		return mesVoyages;
 	}
 
@@ -274,60 +290,75 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 				COL_E_MEDIA_TYPE // 13
 				}, COL_E_ID_VOYAGE + " = " + idVoyage, null, null, null, null);
 		cursor.moveToFirst();
-		Voyage v = getVoyage(cursor.getInt(1));
-		String typeMedia = cursor.getString(13);
+		
+		Log.v("base de donnees _ getAllMedia", "GET COUNT : " + cursor.getCount());
+		Log.v("base de donnees _ getAllMedia", "GET MEDIA : " + cursor.getString(13));
+		
+		if (cursor.getCount() != 0) {
+			Voyage v = getVoyage(cursor.getInt(1));
+			String typeMedia;
 
-		for (int i = 0; i < cursor.getCount(); i++) {
-			if (typeMedia.equals("Video")) {
-				e = new Video(v,
-						new Gps(cursor.getFloat(2), cursor.getFloat(3)),
-						new Date(cursor.getInt(4), cursor.getInt(5), cursor
-								.getInt(6), cursor.getInt(7), cursor.getInt(8),
-								cursor.getInt(9)),
-						cursor.getString(11), cursor.getString(12),
-						cursor.getString(10));
-				e.setId(cursor.getInt(0));
-				allMedia.add(e);
-			} else if (typeMedia.equals("Photo")) {
-				e = new Photo(v,
-						new Gps(cursor.getFloat(2), cursor.getFloat(3)),
-						new Date(cursor.getInt(4), cursor.getInt(5), cursor
-								.getInt(6), cursor.getInt(7), cursor.getInt(8),
-								cursor.getInt(9)),
-						cursor.getString(11), cursor.getString(12),
-						cursor.getString(10));
-				e.setId(cursor.getInt(0));
-				allMedia.add(e);
-			} else if (typeMedia.equals("Son")) {
-				e = new Son(v, new Gps(cursor.getFloat(2), cursor.getFloat(3)),
-						new Date(cursor.getInt(4), cursor.getInt(5), cursor
-								.getInt(6), cursor.getInt(7), cursor.getInt(8),
-								cursor.getInt(9)),
-						cursor.getString(11), cursor.getString(12),
-						cursor.getString(10));
-				e.setId(cursor.getInt(0));
-				allMedia.add(e);
-			} else if (typeMedia.equals("Note")) {
-				e = new Note(v,
-						new Gps(cursor.getFloat(2), cursor.getFloat(3)),
-						new Date(cursor.getInt(4), cursor.getInt(5), cursor
-								.getInt(6), cursor.getInt(7), cursor.getInt(8),
-								cursor.getInt(9)),
-						cursor.getString(11), cursor.getString(10));
-				e.setId(cursor.getInt(0));
-				allMedia.add(e);
-			} else {
+			for (int i = 0; i < cursor.getCount(); i++) {
+				
+				typeMedia = cursor.getString(13);
+				
+				if (typeMedia.equals("Video")) {
+					e = new Video(v,
+							new Gps(cursor.getFloat(2), cursor.getFloat(3)),
+							new Date(cursor.getInt(4), cursor.getInt(5), cursor
+									.getInt(6), cursor.getInt(7), cursor.getInt(8),
+									cursor.getInt(9)),
+							cursor.getString(11), cursor.getString(12),
+							cursor.getString(10));
+					e.setId(cursor.getInt(0));
+					allMedia.add(e);
+				} else if (typeMedia.equals("Photo")) {
+					e = new Photo(v,
+							new Gps(cursor.getFloat(2), cursor.getFloat(3)),
+							new Date(cursor.getInt(4), cursor.getInt(5), cursor
+									.getInt(6), cursor.getInt(7), cursor.getInt(8),
+									cursor.getInt(9)),
+							cursor.getString(11), cursor.getString(12),
+							cursor.getString(10));
+					e.setId(cursor.getInt(0));
+					allMedia.add(e);
+				} else if (typeMedia.equals("Son")) {
+					e = new Son(v, new Gps(cursor.getFloat(2), cursor.getFloat(3)),
+							new Date(cursor.getInt(4), cursor.getInt(5), cursor
+									.getInt(6), cursor.getInt(7), cursor.getInt(8),
+									cursor.getInt(9)),
+							cursor.getString(11), cursor.getString(12),
+							cursor.getString(10));
+					e.setId(cursor.getInt(0));
+					allMedia.add(e);
+				} else if (typeMedia.equals("Note")) {
+					e = new Note(v,
+							new Gps(cursor.getFloat(2), cursor.getFloat(3)),
+							new Date(cursor.getInt(4), cursor.getInt(5), cursor
+									.getInt(6), cursor.getInt(7), cursor.getInt(8),
+									cursor.getInt(9)),
+							cursor.getString(11), cursor.getString(10));
+					e.setId(cursor.getInt(0));
+					allMedia.add(e);
+				} else {
+					// Positions
+				}
+				/*
+				 * else if(typeMedia.equals("Position")){ e = new Position( v, new
+				 * Gps(cursor.getFloat(2), cursor.getFloat(3)), new
+				 * Date(cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
+				 * cursor.getInt(7), cursor.getInt(8), cursor.getInt(9))); }
+				 */
 
+				cursor.moveToNext();
 			}
-			/*
-			 * else if(typeMedia.equals("Position")){ e = new Position( v, new
-			 * Gps(cursor.getFloat(2), cursor.getFloat(3)), new
-			 * Date(cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
-			 * cursor.getInt(7), cursor.getInt(8), cursor.getInt(9))); }
-			 */
-
-			cursor.moveToNext();
+		} else {
+			Log.v("base de donnees _ getAllMedia", "There are no medias in DB");
 		}
+		
+		// We sort the Voyages
+		Collections.sort(allMedia);
+		
 		return allMedia;
 	}
 
@@ -351,18 +382,26 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 				null);
 		cursor.moveToFirst();
 
-		Voyage v = getVoyage(cursor.getInt(1));
-		for (int i = 0; i < cursor.getCount(); i++) {
-			Son e = new Son(v, new Gps(cursor.getFloat(2), cursor.getFloat(3)),
-					new Date(cursor.getInt(4), cursor.getInt(5), cursor
-							.getInt(6), cursor.getInt(7), cursor.getInt(8),
-							cursor.getInt(9)),
-					cursor.getString(11), cursor.getString(12),
-					cursor.getString(10));
-			e.setId(cursor.getInt(0));
-			allSong.add(e);
-			cursor.moveToNext();
+		if (cursor.getCount() != 0) {
+			Voyage v = getVoyage(cursor.getInt(1));
+			for (int i = 0; i < cursor.getCount(); i++) {
+				Son e = new Son(v, new Gps(cursor.getFloat(2), cursor.getFloat(3)),
+						new Date(cursor.getInt(4), cursor.getInt(5), cursor
+								.getInt(6), cursor.getInt(7), cursor.getInt(8),
+								cursor.getInt(9)),
+						cursor.getString(11), cursor.getString(12),
+						cursor.getString(10));
+				e.setId(cursor.getInt(0));
+				allSong.add(e);
+				cursor.moveToNext();
+			}
+		} else {
+			Log.v("base de donnees _ getAllSon", "There are no 'Son' associated to this Voyage in DB");
 		}
+		
+		// We sort the Voyages
+		Collections.sort(allSong);
+		
 		return allSong;
 	}
 
@@ -384,17 +423,26 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 				COL_E_ID_VOYAGE + " = " + idVoyage + " AND " + COL_E_MEDIA_TYPE
 						+ " = " + "Photo", null, null, null, null);
 		cursor.moveToFirst();
-		Voyage v = getVoyage(cursor.getInt(1));
-		for (int i = 0; i < cursor.getCount(); i++) {
-			ElementMap e = new Photo(v, new Gps(cursor.getFloat(2),
-					cursor.getFloat(3)), new Date(cursor.getInt(4),
-					cursor.getInt(5), cursor.getInt(6), cursor.getInt(7),
-					cursor.getInt(8), cursor.getInt(9)), cursor.getString(11),
-					cursor.getString(12), cursor.getString(10));
-			e.setId(cursor.getInt(0));
-			allPhoto.add(e);
-			cursor.moveToNext();
+		
+		if (cursor.getCount() != 0) {
+			Voyage v = getVoyage(cursor.getInt(1));
+			for (int i = 0; i < cursor.getCount(); i++) {
+				ElementMap e = new Photo(v, new Gps(cursor.getFloat(2),
+						cursor.getFloat(3)), new Date(cursor.getInt(4),
+						cursor.getInt(5), cursor.getInt(6), cursor.getInt(7),
+						cursor.getInt(8), cursor.getInt(9)), cursor.getString(11),
+						cursor.getString(12), cursor.getString(10));
+				e.setId(cursor.getInt(0));
+				allPhoto.add(e);
+				cursor.moveToNext();
+			}
+		} else {
+			Log.v("base de donnees _ getAllPhoto", "There are no 'Photo' associated to this Voyage in DB");
 		}
+		
+		// We sort the Voyages
+		Collections.sort(allPhoto);
+		
 		return allPhoto;
 	}
 
@@ -417,17 +465,27 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 				COL_E_ID_VOYAGE + " = " + idVoyage + " AND " + COL_E_MEDIA_TYPE
 						+ " = " + "Video", null, null, null, null);
 		cursor.moveToFirst();
-		Voyage v = getVoyage(cursor.getInt(1));
-		for (int i = 0; i < cursor.getCount(); i++) {
-			Video e = new Video(v, new Gps(cursor.getFloat(2),
-					cursor.getFloat(3)), new Date(cursor.getInt(4),
-					cursor.getInt(5), cursor.getInt(6), cursor.getInt(7),
-					cursor.getInt(8), cursor.getInt(9)), cursor.getString(11),
-					cursor.getString(12), cursor.getString(10));
-			e.setId(cursor.getInt(0));
-			allVideo.add(e);
-			cursor.moveToNext();
+
+		if (cursor.getCount() != 0) {
+			Voyage v = getVoyage(cursor.getInt(1));
+			for (int i = 0; i < cursor.getCount(); i++) {
+				Video e = new Video(v, new Gps(cursor.getFloat(2),
+						cursor.getFloat(3)), new Date(cursor.getInt(4),
+						cursor.getInt(5), cursor.getInt(6), cursor.getInt(7),
+						cursor.getInt(8), cursor.getInt(9)),
+						cursor.getString(11), cursor.getString(12),
+						cursor.getString(10));
+				e.setId(cursor.getInt(0));
+				allVideo.add(e);
+				cursor.moveToNext();
+			}
+		} else {
+			Log.v("base de donnees _ getAllVideo", "No videos in DB");
 		}
+
+		// We sort the Voyages
+		Collections.sort(allVideo);
+		
 		return allVideo;
 	}
 
@@ -449,17 +507,26 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 				COL_E_MEDIA_NOM }, // 13
 				COL_E_ID_VOYAGE + " = " + idVoyage, null, null, null, null);
 		cursor.moveToFirst();
-		Voyage v = getVoyage(cursor.getInt(1));
 
-		for (int i = 0; i < cursor.getCount(); i++) {
-			Position position = new Position(v, new Gps(cursor.getFloat(2),
-					cursor.getFloat(3)), new Date(cursor.getInt(4),
-					cursor.getInt(5), cursor.getInt(6), cursor.getInt(7),
-					cursor.getInt(8), cursor.getInt(9)));
+		if (cursor.getCount() != 0) {
+			Voyage v = getVoyage(cursor.getInt(1));
 
-			allGps.add(position);
-			cursor.moveToNext();
+			for (int i = 0; i < cursor.getCount(); i++) {
+				Position position = new Position(v, new Gps(cursor.getFloat(2),
+						cursor.getFloat(3)), new Date(cursor.getInt(4),
+						cursor.getInt(5), cursor.getInt(6), cursor.getInt(7),
+						cursor.getInt(8), cursor.getInt(9)));
+
+				allGps.add(position);
+				cursor.moveToNext();
+			}
+		} else {
+			Log.v("base de donnees _ getAllPosition", "No positions in DB");
 		}
+		
+		// We sort the Voyages
+		Collections.sort(allGps);
+
 		return allGps;
 	}
 
@@ -493,6 +560,9 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 							cursor.getInt(11), cursor.getInt(12),
 							cursor.getInt(13), cursor.getInt(14)));
 			v.setId(cursor.getInt(0));
+		}
+		else {
+			Log.v("base de donnees _ getVoyageCourant", "There is no current Voyage in DB");
 		}
 		return v;
 	}
@@ -535,27 +605,27 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
 		int month = calendar.get(Calendar.MONTH) + 1;
 		int year = calendar.get(Calendar.YEAR);
-		
-		int idVoyage = getVoyageCourant().getId();
-		
-		if(idVoyage != -1){
-		ContentValues values = new ContentValues();
-		values.put(COL_E_ID_VOYAGE, idVoyage);
-		values.put(COL_E_LAT, e.getGps().getLatitude());
-		values.put(COL_E_LON, e.getGps().getLongitude());
-		values.put(COL_E_SECONDES, seconde);
-		values.put(COL_E_MINUTES, minutes);
-		values.put(COL_E_HOUR, heures);
-		values.put(COL_E_DAY, day);
-		values.put(COL_E_MONTH, month);
-		values.put(COL_E_YEAR, year);
 
-		values.put(COL_E_LIEU, e.getLieu());
-		values.put(COL_E_MEDIA_TYPE, e.getType());
-		values.put(COL_E_COMMENTAIRE, e.getCommentaire());
-		values.put(COL_E_MEDIA_NOM, e.getNomMedia());
-		
-		return mDB.insert(TABLE_EVENEMENT, null, values);
+		int idVoyage = getVoyageCourant().getId();
+
+		if (idVoyage != -1) {
+			ContentValues values = new ContentValues();
+			values.put(COL_E_ID_VOYAGE, idVoyage);
+			values.put(COL_E_LAT, e.getGps().getLatitude());
+			values.put(COL_E_LON, e.getGps().getLongitude());
+			values.put(COL_E_SECONDES, seconde);
+			values.put(COL_E_MINUTES, minutes);
+			values.put(COL_E_HOUR, heures);
+			values.put(COL_E_DAY, day);
+			values.put(COL_E_MONTH, month);
+			values.put(COL_E_YEAR, year);
+
+			values.put(COL_E_LIEU, e.getLieu());
+			values.put(COL_E_MEDIA_TYPE, e.getType());
+			values.put(COL_E_COMMENTAIRE, e.getCommentaire());
+			values.put(COL_E_MEDIA_NOM, e.getNomMedia());
+
+			return mDB.insert(TABLE_EVENEMENT, null, values);
 		}
 		return 0;
 	}

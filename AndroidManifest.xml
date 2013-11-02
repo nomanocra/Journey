@@ -4,6 +4,8 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -21,7 +23,9 @@
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-
+    
+ 	<uses-feature android:name="android.hardware.camera" />
+    
     <uses-sdk
         android:minSdkVersion="12"
         android:targetSdkVersion="18" />
@@ -52,14 +56,14 @@
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
         </activity>
 			<service android:name="fr.m2ihm.journey.listener.GpsListener"/>
-         <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyATqt27k2rNIvKJl39F2SXBitMFRbzz-z4" />
+<!--          <meta-data -->
+<!--             android:name="com.google.android.maps.v2.API_KEY" -->
+<!--             android:value="AIzaSyATqt27k2rNIvKJl39F2SXBitMFRbzz-z4" /> -->
  
-<!--         <meta-data
+		<meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDYDSdMr5xh28Gi-UhhvaCXs4DAMa8dh0E" />
- -->
+
     </application>
     
 

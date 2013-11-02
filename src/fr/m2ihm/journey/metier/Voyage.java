@@ -1,11 +1,12 @@
 package fr.m2ihm.journey.metier;
 
-public class Voyage implements Comparable {
+public class Voyage implements Comparable<Voyage> {
 	int id;
 	String nom;
 	boolean encours;
 	Date debut;
 	Date fin;
+	
 	public int getId() {
 		return id;
 	}
@@ -46,11 +47,10 @@ public class Voyage implements Comparable {
 		this.fin = fin;
 	}
 	@Override
-	public int compareTo(Object otherVoyage) {
+	public int compareTo(Voyage otherVoyage) {
 		
-		if(this.debut.isMoreActualThan(
-				((Voyage) otherVoyage).getFin())
-		){
+		if(this.debut.isMoreActualThan(otherVoyage.getFin()))
+		{
 			// So this Voyage is more actuel than the one given
 			return 1;
 		}

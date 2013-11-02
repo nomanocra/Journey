@@ -9,6 +9,13 @@ public class Note extends ElementMap{
 		super(voyage, positionGps, date, "No media", lieu, commentaire);
 		// TODO Stub du constructeur généré automatiquement
 	}
+	
+	public Note(Voyage voyage, Gps positionGps,
+			String lieu, String commentaire) {
+		super(voyage, positionGps, "No media", lieu, commentaire);
+		// TODO Stub du constructeur généré automatiquement
+	}
+	
 	@Override
 	public String getType(){
 		return "Note";

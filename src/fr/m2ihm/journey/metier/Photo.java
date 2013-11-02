@@ -9,6 +9,13 @@ public class Photo extends ElementMap{
 		super(voyage, positionGps, date, nomMedia, lieu, commentaire);
 		// TODO Stub du constructeur généré automatiquement
 	}
+	
+	public Photo(Voyage voyage, Gps positionGps, String nomMedia,
+			String lieu, String commentaire) {
+		super(voyage, positionGps, nomMedia, lieu, commentaire);
+		// TODO Stub du constructeur généré automatiquement
+	}
+	
 	@Override
 	public String getType(){
 		return "Photo";

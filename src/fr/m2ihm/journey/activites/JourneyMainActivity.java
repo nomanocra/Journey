@@ -68,9 +68,10 @@ public class JourneyMainActivity extends Activity {
 		setting = (Button) findViewById(R.id.boutonParametre);
 		*/
 		tracerManagerButton = (ToggleButton) findViewById(R.id.activationTracker);
-		TestBD.testBD2(this);
+//		TestBD.testBD2(this);
+//		TestBD.testBD(this);
+		TestBD.testBD3(this);
 		init();
-		//TestBD.testBD(this);
 		
 		
 	}
@@ -132,7 +133,7 @@ public class JourneyMainActivity extends Activity {
 				JourneyMainActivity.this);
 		nouveauVoyageDialogue.setView(alertDialogView);
 		nouveauVoyageDialogue.setTitle("Nouveau voyage");
-		nouveauVoyageDialogue.setPositiveButton("C'est partie !",
+		nouveauVoyageDialogue.setPositiveButton("C'est parti !",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						EditText champNouveauVoyage = (EditText) alertDialogView.findViewById(R.id.champNouveauVoyage);
