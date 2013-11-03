@@ -73,7 +73,7 @@ public class AjouterEvenementActivity extends Activity {
 		LocationListener objlistener = new Myobjlistener();
 		objgps.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
 				objlistener);
-		
+
 		lieu.setText(GpsAdapter.gpsToAdresse(positionElement, this));
 	}
 
@@ -88,7 +88,7 @@ public class AjouterEvenementActivity extends Activity {
 			messageAcceuil.show();
 		} else {
 			if (ajoutMedia == false) {
-				newEvent = new Note(voyageCourant, GpsAdapter.getCurrentGps(),
+				newEvent = new Note(voyageCourant, positionElement,
 						Date.dateCourant(), lieu.getText().toString(),
 						commentaire.getText().toString());
 			}
@@ -117,38 +117,43 @@ public class AjouterEvenementActivity extends Activity {
 		return path;
 	}
 
-	private static File getOutputMediaFile(int type){
-	    // To be safe, you should check that the SDCard is mounted
-	    // using Environment.getExternalStorageState() before doing this.
+	private static File getOutputMediaFile(int type) {
+		// To be safe, you should check that the SDCard is mounted
+		// using Environment.getExternalStorageState() before doing this.
 
-	    File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-	              Environment.DIRECTORY_PICTURES), "MyCameraApp");
-	    // This location works best if you want the created images to be shared
-	    // between applications and persist after your app has been uninstalled.
+		File mediaStorageDir = new File(
+				Environment
+						.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM ),
+				"Camera");
+		// This location works best if you want the created images to be shared
+		// between applications and persist after your app has been uninstalled.
 
-	    // Create the storage directory if it does not exist
-	    if (! mediaStorageDir.exists()){
-	        if (! mediaStorageDir.mkdirs()){
-	            Log.d("MyCameraApp", "failed to create directory");
-	            return null;
-	        }
-	    }
+		// Create the storage directory if it does not exist
+		if (!mediaStorageDir.exists()) {
+			if (!mediaStorageDir.mkdirs()) {
+				Log.d("Camera", "failed to create directory");
+				return null;
+			}
+		}
 
-	    // Create a media file name
-	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
-	    File mediaFile;
-	    if (type == MEDIA_TYPE_IMAGE){
-	        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-	        "IMG_"+ timeStamp + ".jpg");
-	    } else if(type == MEDIA_TYPE_VIDEO) {
-	        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-	        "VID_"+ timeStamp + ".mp4");
-	    } else {
-	        return null;
-	    }
-
-	    return mediaFile;
+		// Create a media file name
+		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
+				.format(new java.util.Date());
+		File mediaFile;
+		if (type == MEDIA_TYPE_IMAGE) {
+			mediaFile = new File(mediaStorageDir + File.separator
+					+ "IMG_" + timeStamp + ".jpg");
+		} else if (type == MEDIA_TYPE_VIDEO) {
+			mediaFile = new File(mediaStorageDir + File.separator
+					+ "VID_" + timeStamp + ".mp4");
+		} else {
+			return null;
+		}
+		Log.v("MediaFile getOutput", mediaFile.getPath());
+		Log.v("MediaFile getOutput", mediaFile.getAbsolutePath());
+		return mediaFile;
 	}
+
 	public void prendreSon(View v) {
 	}
 
@@ -179,36 +184,36 @@ public class AjouterEvenementActivity extends Activity {
 	}
 
 	public void prendreVideo(View v) {
+		// create Intent to take a picture and return control to the calling
+		// application
 		Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
-		fileUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);
-
+		fileUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO); // create a file to
+															// save the video
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file
 															// name
+
 		intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video
 															// image quality to
 															// high
 
-		filePath = getOutputMediaFilePath(MEDIA_TYPE_VIDEO);
-
 		// start the Video Capture Intent
 		startActivityForResult(intent, CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE);
+
+		filePath = getOutputMediaFilePath(MEDIA_TYPE_VIDEO);// Intent
 	}
 
 	public void prendrePhoto(View v) {
 		// create Intent to take a picture and return control to the calling
 		// application
-		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to
-															// save the image
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file
-															// name
-		filePath = getOutputMediaFilePath(MEDIA_TYPE_IMAGE);
-		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);// start
-																			// the
-																			// image
-																			// capture
-																			// Intent
+	    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+	    fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
+	    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+
+	    // start the image capture Intent
+	    startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+		filePath = getOutputMediaFilePath(MEDIA_TYPE_IMAGE);// Intent
 	}
 
 	@Override

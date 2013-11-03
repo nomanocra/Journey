@@ -40,6 +40,17 @@ public class GpsAdapter {
 		return myAdresse;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static String gpsToAdresse(Gps location) {
 		return "Fonction pas encore impémenté";
 	}
