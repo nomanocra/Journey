@@ -7,6 +7,7 @@ import fr.m2ihm.journey.R;
 import fr.m2ihm.journey.adapter.GpsAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
+import fr.m2ihm.journey.listener.GPSListener;
 import fr.m2ihm.journey.metier.Date;
 import fr.m2ihm.journey.metier.ElementMap;
 import fr.m2ihm.journey.metier.Gps;
@@ -15,6 +16,10 @@ import fr.m2ihm.journey.metier.Photo;
 import fr.m2ihm.journey.metier.Son;
 import fr.m2ihm.journey.metier.Video;
 import fr.m2ihm.journey.metier.Voyage;
+import fr.m2ihm.journey.settings.Settings;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,6 +32,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 public class AjouterEvenementActivity extends Activity {
@@ -34,18 +40,16 @@ public class AjouterEvenementActivity extends Activity {
 	public static final int MEDIA_TYPE_VIDEO = 2;
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	private static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
-
+	String filePath;
 	private Uri fileUri;
 
-	Gps gps;
 	EditText lieu;
 	EditText commentaire;
 	TextView indicateurMedia;
-	String nomMedia;
 	Voyage voyageCourant;
 	Intent intent;
 	Date date;
-
+	Gps positionElement;
 	boolean ajoutMedia;
 
 	ElementMap newEvent;
@@ -63,32 +67,14 @@ public class AjouterEvenementActivity extends Activity {
 		myDB.open();
 		voyageCourant = myDB.getVoyageCourant();
 		myDB.close();
+		positionElement = new Gps(0, 0);
+		LocationManager objgps = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-		intent = getIntent();
-		if (intent.hasExtra("nomMedia") && intent.hasExtra("typeMedia")) {
-			initWithMedia();
-		}
-	}
-
-	public void init() {
-		ajoutMedia = false;
-		nomMedia = "";
-	}
-
-	public void initWithMedia() {
-		String typeMedia = intent.getExtras().getString("typeMedia");
-		ajoutMedia = true;
-		lieu.setText(intent.getExtras().getString("lieu"));
-		commentaire.setText(intent.getExtras().getString("commentaire"));
-		nomMedia = intent.getExtras().getString("nomMedia");
-		if (typeMedia.equals("photo")) {
-			addPhoto();
-		} else if (typeMedia.equals("video")) {
-			addVideo();
-		} else if (typeMedia.equals("audio")) {
-			addVideo();
-		}
-		Log.v("photoAddPhoto AjouterEvenement", "" + nomMedia);
+		LocationListener objlistener = new Myobjlistener();
+		objgps.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				objlistener);
+		
+		lieu.setText(GpsAdapter.gpsToAdresse(positionElement, this));
 	}
 
 	public void saveNewEvent(View v) {
@@ -119,17 +105,18 @@ public class AjouterEvenementActivity extends Activity {
 		finish();
 	}
 
-	public void prendrePhoto(View v) {
-		// create Intent to take a picture and return control to the calling
-		// application
-		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
-		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);// start the image capture Intent
+	private static Uri getOutputMediaFileUri(int type) {
+		Log.v("getOutputMediaFileUri", "Uri.fromFile :"
+				+ getOutputMediaFile(type));
+		return Uri.fromFile(getOutputMediaFile(type));
 	}
-	private static Uri getOutputMediaFileUri(int type){
-	      return Uri.fromFile(getOutputMediaFile(type));
+
+	private static String getOutputMediaFilePath(int type) {
+		File media = getOutputMediaFile(type);
+		String path = media.getAbsolutePath();
+		return path;
 	}
+
 	private static File getOutputMediaFile(int type){
 	    // To be safe, you should check that the SDCard is mounted
 	    // using Environment.getExternalStorageState() before doing this.
@@ -162,40 +149,22 @@ public class AjouterEvenementActivity extends Activity {
 
 	    return mediaFile;
 	}
-	public void prendreVideo(View v) {
-		Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-
-		fileUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO); // create a file to
-															// save the video
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file
-															// name
-
-		intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video image quality to high
-		// start the Video Capture Intent
-		startActivityForResult(intent, CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE);
-	}
-
 	public void prendreSon(View v) {
 	}
 
-	public void photoAddPhoto() {
-		newEvent = new Photo(voyageCourant, GpsAdapter.getCurrentGps(),
-				Date.dateCourant(), nomMedia, lieu.getText().toString(),
-				commentaire.getText().toString());
-		ajoutMedia = true;
-	}
-
 	public void addPhoto() {
-		newEvent = new Photo(voyageCourant, GpsAdapter.getCurrentGps(),
-				Date.dateCourant(), nomMedia, lieu.getText().toString(),
+
+		newEvent = new Photo(voyageCourant, positionElement,
+				Date.dateCourant(), filePath, lieu.getText().toString(),
 				commentaire.getText().toString());
 		ajoutMedia = true;
 		indicateurMedia.setText("Vous avez ajouté une photo");
 	}
 
 	public void addVideo() {
-		newEvent = new Video(voyageCourant, GpsAdapter.getCurrentGps(),
-				Date.dateCourant(), nomMedia, lieu.getText().toString(),
+
+		newEvent = new Video(voyageCourant, positionElement,
+				Date.dateCourant(), filePath, lieu.getText().toString(),
 				commentaire.getText().toString());
 		ajoutMedia = true;
 		indicateurMedia.setText("Vous avez ajouté une video");
@@ -203,38 +172,92 @@ public class AjouterEvenementActivity extends Activity {
 
 	public void addSon() {
 		newEvent = new Son(voyageCourant, GpsAdapter.getCurrentGps(),
-				Date.dateCourant(), nomMedia, lieu.getText().toString(),
+				Date.dateCourant(), filePath, lieu.getText().toString(),
 				commentaire.getText().toString());
 		ajoutMedia = true;
 		indicateurMedia.setText("Vous avez ajouté un son");
 	}
-	
-	
+
+	public void prendreVideo(View v) {
+		Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+
+		fileUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);
+
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file
+															// name
+		intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video
+															// image quality to
+															// high
+
+		filePath = getOutputMediaFilePath(MEDIA_TYPE_VIDEO);
+
+		// start the Video Capture Intent
+		startActivityForResult(intent, CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE);
+	}
+
+	public void prendrePhoto(View v) {
+		// create Intent to take a picture and return control to the calling
+		// application
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to
+															// save the image
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file
+															// name
+		filePath = getOutputMediaFilePath(MEDIA_TYPE_IMAGE);
+		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);// start
+																			// the
+																			// image
+																			// capture
+																			// Intent
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-	        if (resultCode == RESULT_OK) {
-	            // Image captured and saved to fileUri specified in the Intent
-	            Toast.makeText(this, "Image saved to:\n" +
-	                     data.getData(), Toast.LENGTH_LONG).show();
-	        } else if (resultCode == RESULT_CANCELED) {
-	            // User cancelled the image capture
-	        } else {
-	            // Image capture failed, advise user
-	        }
-	    }
+		Log.v("OnACtivityResult", filePath);
+		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+			if (resultCode == RESULT_OK) {
+				// Image captured and saved to fileUri specified in the Intent
+				addPhoto();
+			} else if (resultCode == RESULT_CANCELED) {
+				// User cancelled the image capture
+			} else {
+				// Image capture failed, advise user
+			}
+		}
 
-	    if (requestCode == CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE) {
-	        if (resultCode == RESULT_OK) {
-	            // Video captured and saved to fileUri specified in the Intent
-	            Toast.makeText(this, "Video saved to:\n" +
-	                     data.getData(), Toast.LENGTH_LONG).show();
-	        } else if (resultCode == RESULT_CANCELED) {
-	            // User cancelled the video capture
-	        } else {
-	            // Video capture failed, advise user
-	        }
-	    }
+		if (requestCode == CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE) {
+			if (resultCode == RESULT_OK) {
+				// Video captured and saved to fileUri specified in the Intent
+				addVideo();
+			} else if (resultCode == RESULT_CANCELED) {
+				// User cancelled the video capture
+			} else {
+				// Video capture failed, advise user
+			}
+		}
 	}
-	
+
+	private class Myobjlistener implements LocationListener {
+
+		public void onProviderDisabled(String provider) {
+			// TODO Auto-generated method stub
+		}
+
+		public void onProviderEnabled(String provider) {
+			// TODO Auto-generated method stub
+		}
+
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// TODO Auto-generated method stub
+		}
+
+		public void onLocationChanged(Location location) {
+
+			// affichage des valeurs dans la les zone de saisie
+			positionElement = new Gps(location.getLatitude(),
+					location.getLongitude());
+		}
+
+	}
+
 }

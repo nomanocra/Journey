@@ -6,12 +6,15 @@ import java.util.List;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.LocationListener;
 import fr.m2ihm.journey.activites.JourneyMainActivity;
+import fr.m2ihm.journey.listener.GPSListener;
 import fr.m2ihm.journey.metier.Gps;
 import fr.m2ihm.journey.services.LocationTrackerService;
 
 public class GpsAdapter {
 
+	
 	public static String gpsToAdresse(Gps location, Context context) {
 		String myAdresse = "L'adresse n'a pu être déterminée";
 		// Le geocoder permet de récupérer ou chercher des adresses
@@ -42,6 +45,7 @@ public class GpsAdapter {
 	}
 
 	public static Gps adresseToGps(String adresse) {
+		// TODO Stub de la méthode généré automatiquement
 		return new Gps(0, 0);
 	}
 

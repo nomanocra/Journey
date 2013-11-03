@@ -366,6 +366,7 @@ public class JournalActivity extends Activity {
 		Intent intent = new Intent(this, JourneyMainActivity.class);
 		startActivity(intent);
 		finish();
+		this.getFragmentManager().beginTransaction().remove(this.mapFragment).commit();
 	}
 	
 	@Override
@@ -373,6 +374,7 @@ public class JournalActivity extends Activity {
 		Intent intent = new Intent(this, JourneyMainActivity.class);
 		startActivity(intent);
 		finish();
+		this.getFragmentManager().beginTransaction().remove(this.mapFragment).commit();
 	}
 
 	// ###################################

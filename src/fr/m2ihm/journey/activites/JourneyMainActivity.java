@@ -37,7 +37,7 @@ public class JourneyMainActivity extends Activity {
 		myDB = new MyBDAdapterImpl(this);
 		
 		loadSettings();
-		TestBD.testBD3(this);
+		//TestBD.testBD3(this);
 		init();
 	}
 
@@ -87,11 +87,9 @@ public class JourneyMainActivity extends Activity {
 		textVoyageEnCours.setText(voyageEnCours.getNom());
 		if(Settings.isTraceurActive()){
 			activeButtonTracerLayout();
-			
 		}else{
 			desactiveButtonTracerLayout();
 		}
-		
 	}
 
 	public void pasDeVoyageLayout() {

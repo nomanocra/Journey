@@ -56,6 +56,11 @@ public class GPSListener implements LocationListener {
 	public GPSListener(Context c){
 		context = c;
 	}
+	
+	public Gps getGps(){
+		return new Gps(location.getLatitude(),location.getLongitude());
+	}
+	
 	private void savePosition(){
 		myDB = new MyBDAdapterImpl(context);
 		myDB.open();
