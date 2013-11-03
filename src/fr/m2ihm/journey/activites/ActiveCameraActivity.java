@@ -1,6 +1,7 @@
 package fr.m2ihm.journey.activites;
 
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -34,7 +36,7 @@ public class ActiveCameraActivity extends Activity implements
 	private SurfaceView surfaceCamera;
 	private Boolean isPreview;
 	private FileOutputStream stream;
-
+	private String nomFile;
 	private String lieu;
 	private String commentaire;
 	@Override
@@ -73,7 +75,7 @@ public class ActiveCameraActivity extends Activity implements
 		// On applique notre layout
 		setContentView(R.layout.camera);
 
-		// On rÃ©cupÃ¨re notre surface pour le preview
+		// On récupère notre surface pour le preview
 		surfaceCamera = (SurfaceView) findViewById(R.id.surfaceViewCamera);
 
 		// Quand on clique sur notre surface
@@ -82,10 +84,12 @@ public class ActiveCameraActivity extends Activity implements
 			public void onClick(View v) {
 				// On prend une photo
 				if (camera != null) {
-					SavePicture();
+					savePicture();
+					onPause();
 				}
-
+				quitPhotoActivity();
 			}
+
 		});
 
 		// Méthode d'initialisation de la caméra
@@ -119,7 +123,7 @@ public class ActiveCameraActivity extends Activity implements
 		}
 	}
 
-	// ImplÃ©mentation du surface holder
+	// Implémentation du surface holder
 
 	// Quand la surface change
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
@@ -134,7 +138,6 @@ public class ActiveCameraActivity extends Activity implements
 		List<Camera.Size> previewSizes = parameters.getSupportedPreviewSizes();
 		// On change la taille
 		Camera.Size previewSize = previewSizes.get(0);
-		
 		parameters.setPreviewSize(previewSize.width, previewSize.height);
 
 		// On applique nos nouveaux parametres
@@ -160,7 +163,7 @@ public class ActiveCameraActivity extends Activity implements
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		// On arrÃªte la camera et on rend la main
+		// On arrête la camera et on rend la main
 		if (camera != null) {
 			camera.stopPreview();
 			isPreview = false;
@@ -169,6 +172,7 @@ public class ActiveCameraActivity extends Activity implements
 	}
 
 	// Callback pour la prise de photo
+	
 	Camera.PictureCallback pictureCallback = new Camera.PictureCallback() {
 
 		public void onPictureTaken(byte[] data, Camera camera) {
@@ -190,7 +194,17 @@ public class ActiveCameraActivity extends Activity implements
 		}
 	};
 
-	private void SavePicture(){
+	private void quitPhotoActivity(){
+		Intent intent = new Intent(this, AjouterEvenementActivity.class);
+		intent.putExtra("nomMedia", ""+ nomFile);
+		intent.putExtra("typeMedia", "photo");
+		intent.putExtra("lieu", lieu);
+		intent.putExtra("commentaire", commentaire);
+		startActivity(intent);
+		finish();
+	}
+
+	private void savePicture(){
 		String fileName = "";
 		try {
 			SimpleDateFormat timeStampFormat = new SimpleDateFormat(
@@ -202,13 +216,7 @@ public class ActiveCameraActivity extends Activity implements
 			
 			
 			
-			Intent intent = new Intent(this, AjouterEvenementActivity.class);
-			intent.putExtra("nomMedia", ""+ Media.EXTERNAL_CONTENT_URI + "\\" + fileName);
-			intent.putExtra("typeMedia", "photo");
-			intent.putExtra("lieu", lieu);
-			intent.putExtra("commentaire", commentaire);
-			startActivity(intent);
-			finish();
+	
 			
 			// Metadata pour la photo
 			ContentValues values = new ContentValues();
@@ -234,6 +242,8 @@ public class ActiveCameraActivity extends Activity implements
 							"! Photo prise ! \n Titre : " + fileName,
 							Toast.LENGTH_LONG);
 			messagePhotoTaken.show();
+			nomFile = ""+Media.EXTERNAL_CONTENT_URI + fileName;
+
 			
 		} catch (Exception e) {
 			// TODO: handle exception
