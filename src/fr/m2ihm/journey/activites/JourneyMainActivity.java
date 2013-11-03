@@ -20,6 +20,7 @@ import fr.m2ihm.journey.adapter.MyBDAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
 import fr.m2ihm.journey.metier.Voyage;
 import fr.m2ihm.journey.services.LocationTrackerService;
+import fr.m2ihm.journey.settings.Settings;
 
 
 public class JourneyMainActivity extends Activity {
@@ -27,7 +28,6 @@ public class JourneyMainActivity extends Activity {
 	public static final String PREFS_NAME = "MyPrefsFile";
 	private TextView textVoyageEnCours;
 	private Voyage voyageEnCours;
-	private boolean traceurActive;
 	MyBDAdapter myDB;
 	Button traceurButton;
 	@Override
@@ -36,9 +36,6 @@ public class JourneyMainActivity extends Activity {
 		myDB = new MyBDAdapterImpl(this);
 		
 		loadSettings();
-		//TestBD.testBD2(this);
-//		TestBD.testBD(this);
-		//TestBD.testBD3(this);
 		init();
 	}
 
@@ -61,18 +58,24 @@ public class JourneyMainActivity extends Activity {
 	}
 	public void loadSettings(){
 	       SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-	       traceurActive = settings.getBoolean("traceurMode", true);
-	       
+	       Settings.setTraceurActive(settings.getBoolean("traceurMode", false));
+	       Settings.setDelayTraceur(settings.getInt("delayTracer", 1000));
+	       Settings.setDistanceTraceur(settings.getInt("distanceTracer", 0));
+	       Log.v("settings","active : "+Settings.isTraceurActive());
+	       Log.v("settings","delay " + Settings.getDelayTraceur());
+	       Log.v("settings","distance " + Settings.getDistanceTraceur());
 	}
 	
 	public void saveSettings(){
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 	    SharedPreferences.Editor editor = settings.edit();
-	    editor.putBoolean("traceurMode", traceurActive);
+	    editor.putBoolean("traceurMode", Settings.isTraceurActive());
+	    editor.putInt("delayTracer", Settings.getDelayTraceur());
+	    editor.putInt("distanceTracer", Settings.getDistanceTraceur());
 	    editor.commit();
 	}
-	public void enVoyageLayout() {
-		
+	
+	public void enVoyageLayout() {	
 		setContentView(R.layout.acceuil2);
 		myDB.open();
 		voyageEnCours = myDB.getVoyageCourant();
@@ -80,13 +83,13 @@ public class JourneyMainActivity extends Activity {
 		traceurButton = (Button) findViewById(R.id.traceur);
 		textVoyageEnCours = (TextView) findViewById(R.id.voyageEnCoursText);
 		textVoyageEnCours.setText(voyageEnCours.getNom());
-		traceurActive = false;
-		if (traceurActive){
+		if(Settings.isTraceurActive()){
 			activeButtonTracerLayout();
+			
 		}else{
 			desactiveButtonTracerLayout();
 		}
-			
+		
 	}
 
 	public void pasDeVoyageLayout() {
@@ -155,8 +158,7 @@ public class JourneyMainActivity extends Activity {
 	}
 	public void startLocationTracerService(){
 		Intent monService = new Intent(JourneyMainActivity.this, LocationTrackerService.class);
-		startService(monService);
-		Log.v("startLocationService", "startLocationService");
+		startService(monService);	
 	}
 	
 	public void stopLocationTracerService(){
@@ -164,14 +166,14 @@ public class JourneyMainActivity extends Activity {
 	}
 	
 	public void clickOnTraceurButton(View c){
-		if(traceurActive){
+		if(Settings.isTraceurActive()){
 			desactiveButtonTracerLayout();
 			stopLocationTracerService();
-			traceurActive = false;
+			Settings.setTraceurActive(false);
 		}else{
 			activeButtonTracerLayout();
 			startLocationTracerService();
-			traceurActive = true;
+			Settings.setTraceurActive(true);
 		}
 		saveSettings();
 	}
@@ -188,6 +190,7 @@ public class JourneyMainActivity extends Activity {
 		myDB.open();
 		myDB.terminerVoyage(voyageEnCours.getId());
 		myDB.close();
+		stopLocationTracerService();
 	}
 
 	@Override

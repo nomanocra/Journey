@@ -49,10 +49,7 @@ public class GPSListener implements LocationListener {
 	@Override
 	public void onLocationChanged(Location location) {
 		this.location = location;
-		Log.v("Mise à jour de la Localisation", "Lat : " + location.getLatitude() + "| Lon : " + location.getLongitude());
-		Toast message = Toast.makeText(context,"Lat : " + location.getLatitude() + "| Lon : " + location.getLongitude(), Toast.LENGTH_SHORT);
-		message.setGravity(1, 400, -400);
-		message.show();
+		Log.v("Maj Localisation (Journey)", "Lat : " + location.getLatitude() + "| Lon : " + location.getLongitude());
 		savePosition();
 	}
 	
@@ -69,7 +66,7 @@ public class GPSListener implements LocationListener {
 	
 	@Override
 	public void onProviderDisabled(String provider) {
-		
+		Log.v("Géolocalisation", "La source a été désactivé.");
 	}
 	@Override
 	public void onProviderEnabled(String provider) {
@@ -78,27 +75,7 @@ public class GPSListener implements LocationListener {
 	}
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		/*
-        switch (status) {
-        case LocationProvider.AVAILABLE:
-			Toast message = Toast.makeText(JourneyMainActivity.class,"Network location available again", Toast.LENGTH_SHORT);
-			message.setGravity(1, 400, -400);
-			message.show();
-            break;
-        case LocationProvider.OUT_OF_SERVICE:
-			Toast message = Toast.makeText(,"Network location out of service", Toast.LENGTH_SHORT);
-			message.setGravity(1, 400, -400);
-			message.show();
-            textView.setText(tvTxt + "Network location out of service\n");
-            break;
-        case LocationProvider.TEMPORARILY_UNAVAILABLE:
-			Toast message = Toast.makeText(getApplicationContext(),"Network location temporarily unavailable", Toast.LENGTH_SHORT);
-			message.setGravity(1, 400, -400);
-			message.show();
 
-            break;
-        }		
-        */
 	}
 	
 }
