@@ -28,9 +28,13 @@ import android.view.ViewGroup;
 
 public class JournalMapFragment extends Fragment {
 
+	JournalActivity context;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		this.context = (JournalActivity) container.getContext();
+		
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.journal_map, null);
 
@@ -39,7 +43,7 @@ public class JournalMapFragment extends Fragment {
 		return v;
 	}
 
-	public void fillMap(Context context, int voyageFocusedId) {
+	public void fillMap() {
 
 		// We get the map ref
 		GoogleMap googleMap = ((MapFragment) getFragmentManager()
@@ -52,9 +56,9 @@ public class JournalMapFragment extends Fragment {
 		MyBDAdapter bdAdapter = new MyBDAdapterImpl(context);
 
 		bdAdapter.open();
-		List<Position> positionList = bdAdapter.getAllPosition(voyageFocusedId);
+		List<Position> positionList = bdAdapter.getAllPosition(context.getSelectedVoyageId());
 		Log.v("Position List", "POSITION LIST SIZE : " + positionList.size());
-		List<ElementMap> elementList = bdAdapter.getAllMedia(voyageFocusedId);
+		List<ElementMap> elementList = bdAdapter.getAllMedia(context.getSelectedVoyageId());
 		Log.v("ELEMENT List", "ELEMENT LIST SIZE : " + elementList.size());
 		bdAdapter.close();
 

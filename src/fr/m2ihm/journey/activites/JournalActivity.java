@@ -13,9 +13,7 @@ import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
 import fr.m2ihm.journey.metier.Voyage;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,12 +36,17 @@ public class JournalActivity extends Activity {
 	private JournalAlbumFragment albumFragment;
 	private JournalListFragment listFragment;
 	private JournalStatsFragment statsFragment;
+	
+	private int selectedVoyageId;
+	private boolean listChecked;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.journal_de_voyage);
 
+		this.listChecked = false;
+		
 		/* We deactivate the map button */
 
 		Button currentButton = (Button) findViewById(R.id.Journal_map_button);
@@ -92,12 +95,6 @@ public class JournalActivity extends Activity {
 		/* We invert it - older at the end */
 		Collections.reverse(listeVoyages);
 
-		Log.v("LISTE VOYAGES ", "Nombre de voyages : " + listeVoyages.size());
-		Log.v("LISTE VOYAGES ", "Nom du premier voyage : "
-				+ listeVoyages.get(0).getNom());
-		Log.v("LISTE VOYAGES ", "Nom du second voyage : "
-				+ listeVoyages.get(1).getNom());
-
 		final ListeVoyagesAdapter lvAdapter = new ListeVoyagesAdapter(this.getBaseContext(),
 				listeVoyages);
 
@@ -122,7 +119,8 @@ public class JournalActivity extends Activity {
 				JournalActivity context = (JournalActivity) listView
 						.getContext();
 
-				final View viewSelectedFromList = view;
+				context.selectedVoyageId = view.getId();
+				context.listChecked = true;
 
 				/* We indicate that the new focused element has changed */
 				Log.v("CLICK_LISTENER", "ID Clicked : " + view.getId());
@@ -130,11 +128,11 @@ public class JournalActivity extends Activity {
 				/* Then we change content */
 				switch (context.getCurrentFragmentName()) {
 				case map:
-					context.getMapFragment().fillMap(context, view.getId());
+					context.getMapFragment().fillMap();
 					break;
 
 				case album:
-					// TODO
+					context.getAlbumFragment().fillAlbum();
 					break;
 
 				case list:
@@ -160,7 +158,6 @@ public class JournalActivity extends Activity {
 					public void onClick(View v) {
 
 						final JournalActivity context = (JournalActivity) v.getContext();
-						final View viewSelectedFromListAgain = viewSelectedFromList;
 						final ListeVoyagesAdapter lvAdapterAgain = lvAdapter;
 						
 						// Use the Builder class for convenient dialog construction
@@ -172,7 +169,7 @@ public class JournalActivity extends Activity {
 										// Delete from DB
 										MyBDAdapterImpl myDB = new MyBDAdapterImpl(context);
 										myDB.open();
-										myDB.supprimerVoyage(viewSelectedFromListAgain.getId());
+										myDB.supprimerVoyage(context.selectedVoyageId);
 										myDB.close();
 
 										// Delete from view
@@ -180,7 +177,7 @@ public class JournalActivity extends Activity {
 										lvAdapterAgain
 												.removeCurrentFromView(
 														(ListView) findViewById(R.id.journal_journeys_list),
-														viewSelectedFromListAgain.getId());
+														context.selectedVoyageId);
 										
 										/* Then we change content */
 										switch (context.getCurrentFragmentName()) {
@@ -252,6 +249,11 @@ public class JournalActivity extends Activity {
 	public JournalListFragment getListFragment() {
 		return this.listFragment;
 	}
+	
+	public int getSelectedVoyageId()
+	{
+		return this.selectedVoyageId;
+	}
 
 	// ###################################
 	// END GETTERS
@@ -283,6 +285,11 @@ public class JournalActivity extends Activity {
 		currentButton.setEnabled(false);
 
 		currentFragmentName = OurFragments.album;
+		
+		if(this.listChecked)
+		{
+			fg.fillAlbum();
+		}
 	}
 
 	public void mapButton_Click(View v) {

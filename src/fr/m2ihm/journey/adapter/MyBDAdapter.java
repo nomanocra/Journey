@@ -31,7 +31,7 @@ public interface MyBDAdapter {
 
 	public ArrayList<Son> getAllSon(int idVoyage);
 
-	public ArrayList<ElementMap> getAllPhoto(int idVoyage);
+	public ArrayList<Photo> getAllPhoto(int idVoyage);
 
 	public ArrayList<Video> getAllVideo(int idVoyage);
 

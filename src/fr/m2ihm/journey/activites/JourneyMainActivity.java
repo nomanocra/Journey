@@ -70,7 +70,7 @@ public class JourneyMainActivity extends Activity {
 		tracerManagerButton = (ToggleButton) findViewById(R.id.activationTracker);
 //		TestBD.testBD2(this);
 //		TestBD.testBD(this);
-		//TestBD.testBD3(this);
+		TestBD.testBD3(this);
 		init();
 	}
 
