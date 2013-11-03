@@ -2,15 +2,7 @@ package fr.m2ihm.journey.activites;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
-import fr.m2ihm.journey.R;
-import fr.m2ihm.journey.adapter.Journal_Album_GridAdapter;
-import fr.m2ihm.journey.adapter.MyBDAdapter;
-import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
-import fr.m2ihm.journey.metier.ElementMap;
-import fr.m2ihm.journey.metier.Photo;
-import fr.m2ihm.journey.metier.Position;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -20,12 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
+import fr.m2ihm.journey.R;
+import fr.m2ihm.journey.adapter.Journal_Album_GridAdapter;
+import fr.m2ihm.journey.adapter.MyBDAdapter;
+import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
+import fr.m2ihm.journey.metier.Photo;
 
 public class JournalAlbumFragment extends Fragment {
 	private GridView gridView;
