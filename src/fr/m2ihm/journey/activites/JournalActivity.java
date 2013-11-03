@@ -288,7 +288,8 @@ public class JournalActivity extends Activity {
 		
 		if(this.listChecked)
 		{
-			fg.fillAlbum();
+			ListView listView = (ListView) findViewById(R.id.journal_journeys_list);
+//			fg.fillAlbum();
 		}
 	}
 

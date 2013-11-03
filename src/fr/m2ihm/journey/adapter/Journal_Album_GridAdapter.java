@@ -6,8 +6,7 @@ import fr.m2ihm.journey.R;
 import fr.m2ihm.journey.metier.Photo;
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
-import android.provider.MediaStore.Images.Media;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +26,21 @@ public class Journal_Album_GridAdapter extends ArrayAdapter<Photo> {
 		this.context = context;
 		this.data = data;
 	}
+	
+	@Override
+	public int getCount()
+	{
+		return this.data.size();
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
 		ViewHolder holder = null;
 
+		Log.v("GridAdapter - getView", "Position : " + position);
+		Log.v("GridAdapter - getView", "Size : " + data.size());
+		
 		if (row == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			row = inflater.inflate(layoutResourceId, parent, false);
@@ -56,5 +64,11 @@ public class Journal_Album_GridAdapter extends ArrayAdapter<Photo> {
 	static class ViewHolder {
 		TextView imageTitle;
 		ImageView image;
+	}
+	
+	public void updateContent(ArrayList<Photo> listePhoto)
+	{
+		data = listePhoto;
+		this.notifyDataSetChanged();
 	}
 }

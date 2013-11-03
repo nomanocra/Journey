@@ -45,7 +45,7 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/centralPicture"
         android:layout_width="679dp"
         android:layout_height="171dp"
         android:layout_x="130dp"

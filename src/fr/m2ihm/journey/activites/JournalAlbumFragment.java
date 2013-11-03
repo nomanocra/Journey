@@ -12,6 +12,8 @@ import fr.m2ihm.journey.metier.ElementMap;
 import fr.m2ihm.journey.metier.Photo;
 import fr.m2ihm.journey.metier.Position;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,32 +38,54 @@ public class JournalAlbumFragment extends Fragment {
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.journal_album, null);
 
-		this.context = (JournalActivity) container.getContext();
-
-		this.gridView = (GridView) context.findViewById(R.id.gridView);
-		Log.v("AlbumFragment-OnCreateView","gridView null ? " + (this.gridView == null));
-
-		Log.v("AlbumFragment-OnCreateView","We are here");
-		
 		return v;
 	}
 
 	public void fillAlbum() {
 
-		Log.v("AlbumFragment-fillAlbum","We are here");
-		Log.v("AlbumFragment-fillAlbum","gridView null ? " + (this.gridView == null));
+		// We get the context and the gridview
+		if (this.context == null)
+		{
+			this.context = (JournalActivity) this.getActivity();
+			this.gridView = (GridView) this.getActivity().findViewById(
+					R.id.gridView);
+		}
 		
-		this.customGridAdapter = new Journal_Album_GridAdapter(this.context,
-				R.layout.row_grid, getData());
-		Log.v("AlbumFragment-fillAlbum","customGridAdapter null ? " + (this.customGridAdapter == null));
-		this.gridView.setAdapter(customGridAdapter);
+		// We initialize the adapter and fill it with our data
+		if (this.customGridAdapter == null) {
+			// We give the adapter an empty list
+			this.customGridAdapter = new Journal_Album_GridAdapter(this.context,
+					R.layout.row_grid, this.getData());
+			this.gridView.setAdapter(customGridAdapter);
+		}
+		else
+		{
+			// The adapter will empty the gridView and fill it with the new pictures
+			ArrayList<Photo> listePhotos = this.getData();
+			Log.v("fillAlbum", "listePhoto size : " + listePhotos.size());
+			this.customGridAdapter.updateContent(this.getData());
+		}
+		
 
 		this.gridView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				//TODO => FULLSCREEN
+				
+				Log.v("OUIIII", "ON EST ICIIIII");
+				
+				JournalActivity context = (JournalActivity) v.getContext();
+				
+				Intent intent = new Intent(context, Fullscreen_Activity.class);
+				
+				// We give the current Voyage
+				intent.putExtra("currentVoyageId", context.getSelectedVoyageId());
+				
+				// And the photo selected
+				intent.putExtra("photoPosition", position);
+				
+				startActivity(intent);
+				context.finish();
 			}
-
 		});
 	}
 
@@ -70,10 +94,15 @@ public class JournalAlbumFragment extends Fragment {
 		MyBDAdapter bdAdapter = new MyBDAdapterImpl(this.context);
 
 		bdAdapter.open();
-		ArrayList<Photo> photoList = bdAdapter.getAllPhoto(this.context.getSelectedVoyageId());
+		ArrayList<Photo> photoList = bdAdapter.getAllPhoto(this.context
+				.getSelectedVoyageId());
+		Log.v("getData","selectedVoyageId : " + this.context
+				.getSelectedVoyageId());
 		bdAdapter.close();
-		
+
 		Collections.sort(photoList);
+
+		Log.v("getData", "size : " + photoList.size());
 		
 		return (ArrayList<Photo>) photoList;
 	}

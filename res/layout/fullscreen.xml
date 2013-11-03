@@ -23,7 +23,7 @@
                 android:src="@drawable/ic_launcher" />
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/fullscreen_centralPicture"
                 android:layout_width="800dp"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/imageButton2"
-                android:layout_toRightOf="@+id/imageView1"
+                android:layout_toRightOf="@+id/centralPicture"
                 android:src="@drawable/ic_launcher" />
         </RelativeLayout>
     </LinearLayout>
