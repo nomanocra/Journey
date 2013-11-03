@@ -6,6 +6,7 @@ import fr.m2ihm.journey.R;
 import fr.m2ihm.journey.metier.Photo;
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,8 +56,9 @@ public class Journal_Album_GridAdapter extends ArrayAdapter<Photo> {
 		Photo photo = data.get(position);
 		holder.imageTitle.setText(photo.getLieu());
 		// TODO CHANGE THIS
-//		holder.image.setImageURI(Uri.parse(photo.getNomMedia()));
-		holder.image.setImageResource(R.drawable.ic_launcher);
+		Log.v("getView", "Path : " + photo.getNomMedia());
+		holder.image.setImageURI(Uri.parse(photo.getNomMedia()));
+//		holder.image.setImageResource(R.drawable.ic_launcher);
 		
 		return row;
 	}
