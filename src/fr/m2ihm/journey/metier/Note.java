@@ -23,6 +23,6 @@ public class Note extends ElementMap{
 	
 	@Override
 	public int getIconResource(){
-		return R.drawable.ic_launcher;
+		return R.drawable.icon_note;
 	}
 }

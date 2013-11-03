@@ -3,11 +3,25 @@ package fr.m2ihm.journey.activites;
 import java.io.File;
 import java.text.SimpleDateFormat;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 import fr.m2ihm.journey.R;
 import fr.m2ihm.journey.adapter.GpsAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
-import fr.m2ihm.journey.listener.GPSListener;
 import fr.m2ihm.journey.metier.Date;
 import fr.m2ihm.journey.metier.ElementMap;
 import fr.m2ihm.journey.metier.Gps;
@@ -16,24 +30,6 @@ import fr.m2ihm.journey.metier.Photo;
 import fr.m2ihm.journey.metier.Son;
 import fr.m2ihm.journey.metier.Video;
 import fr.m2ihm.journey.metier.Voyage;
-import fr.m2ihm.journey.settings.Settings;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.provider.MediaStore.Images.Media;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 
 public class AjouterEvenementActivity extends Activity {
 	public static final int MEDIA_TYPE_IMAGE = 1;
@@ -51,6 +47,7 @@ public class AjouterEvenementActivity extends Activity {
 	Date date;
 	Gps positionElement;
 	boolean ajoutMedia;
+	Button ajouterElementMap;
 
 	ElementMap newEvent;
 	MyBDAdapter myDB;
@@ -64,17 +61,17 @@ public class AjouterEvenementActivity extends Activity {
 		commentaire = (EditText) findViewById(R.id.champCommentaireEvenement);
 		lieu = (EditText) findViewById(R.id.champLieuEvenement);
 		indicateurMedia = (TextView) findViewById(R.id.indicateurMedia);
+		ajouterElementMap = (Button) findViewById(R.id.confirmerAjoutEvenement);
 		myDB.open();
 		voyageCourant = myDB.getVoyageCourant();
 		myDB.close();
 		positionElement = new Gps(0, 0);
+		ajouterElementMap.setEnabled(false);
+		setProgressBarIndeterminateVisibility(true);
 		LocationManager objgps = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-		LocationListener objlistener = new Myobjlistener();
-		objgps.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+		LocationListener objlistener = new Myobjlistener(this);
+		objgps.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 10000000,
 				objlistener);
-
-		lieu.setText(GpsAdapter.gpsToAdresse(positionElement, this));
 	}
 
 	public void saveNewEvent(View v) {
@@ -92,6 +89,7 @@ public class AjouterEvenementActivity extends Activity {
 						Date.dateCourant(), lieu.getText().toString(),
 						commentaire.getText().toString());
 			}
+			newEvent.setGps(positionElement);
 			myDB.open();
 			myDB.ajouterElementMap(newEvent);
 			myDB.close();
@@ -106,8 +104,6 @@ public class AjouterEvenementActivity extends Activity {
 	}
 
 	private static Uri getOutputMediaFileUri(int type) {
-		Log.v("getOutputMediaFileUri", "Uri.fromFile :"
-				+ getOutputMediaFile(type));
 		return Uri.fromFile(getOutputMediaFile(type));
 	}
 
@@ -123,7 +119,7 @@ public class AjouterEvenementActivity extends Activity {
 
 		File mediaStorageDir = new File(
 				Environment
-						.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM ),
+						.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
 				"Camera");
 		// This location works best if you want the created images to be shared
 		// between applications and persist after your app has been uninstalled.
@@ -131,7 +127,6 @@ public class AjouterEvenementActivity extends Activity {
 		// Create the storage directory if it does not exist
 		if (!mediaStorageDir.exists()) {
 			if (!mediaStorageDir.mkdirs()) {
-				Log.d("Camera", "failed to create directory");
 				return null;
 			}
 		}
@@ -141,19 +136,16 @@ public class AjouterEvenementActivity extends Activity {
 				.format(new java.util.Date());
 		File mediaFile;
 		if (type == MEDIA_TYPE_IMAGE) {
-			mediaFile = new File(mediaStorageDir + File.separator
-					+ "IMG_" + timeStamp + ".jpg");
+			mediaFile = new File(mediaStorageDir + File.separator + "IMG_"
+					+ timeStamp + ".jpg");
 		} else if (type == MEDIA_TYPE_VIDEO) {
-			mediaFile = new File(mediaStorageDir + File.separator
-					+ "VID_" + timeStamp + ".mp4");
+			mediaFile = new File(mediaStorageDir + File.separator + "VID_"
+					+ timeStamp + ".mp4");
 		} else {
 			return null;
 		}
-		Log.v("MediaFile getOutput", mediaFile.getPath());
-		Log.v("MediaFile getOutput", mediaFile.getAbsolutePath());
 		return mediaFile;
 	}
-
 	public void prendreSon(View v) {
 	}
 
@@ -206,19 +198,20 @@ public class AjouterEvenementActivity extends Activity {
 	public void prendrePhoto(View v) {
 		// create Intent to take a picture and return control to the calling
 		// application
-	    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-	    fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
-	    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+		fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to
+															// save the image
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file
+															// name
 
-	    // start the image capture Intent
-	    startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+		// start the image capture Intent
+		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 		filePath = getOutputMediaFilePath(MEDIA_TYPE_IMAGE);// Intent
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.v("OnACtivityResult", filePath);
 		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
 				// Image captured and saved to fileUri specified in the Intent
@@ -243,6 +236,11 @@ public class AjouterEvenementActivity extends Activity {
 	}
 
 	private class Myobjlistener implements LocationListener {
+		private Context c;
+
+		public Myobjlistener(Context c) {
+			this.c = c;
+		}
 
 		public void onProviderDisabled(String provider) {
 			// TODO Auto-generated method stub
@@ -261,6 +259,10 @@ public class AjouterEvenementActivity extends Activity {
 			// affichage des valeurs dans la les zone de saisie
 			positionElement = new Gps(location.getLatitude(),
 					location.getLongitude());
+			lieu.setText(GpsAdapter.gpsToAdresse(positionElement, c));
+			setProgressBarIndeterminateVisibility(false);
+			ajouterElementMap.setEnabled(true);
+			
 		}
 
 	}

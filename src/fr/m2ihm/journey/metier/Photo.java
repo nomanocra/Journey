@@ -23,6 +23,6 @@ public class Photo extends ElementMap{
 	
 	@Override
 	public int getIconResource(){
-		return R.drawable.ic_launcher;
+		return R.drawable.icon_photo;
 	}
 }

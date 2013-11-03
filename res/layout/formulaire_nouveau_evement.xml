@@ -115,7 +115,7 @@
         android:layout_alignLeft="@+id/relativeLayout2"
         android:layout_marginBottom="29dp"
         android:ems="10"
-        android:text="12 rue Tsamere, Toulouse"
+        android:text="Recherche d'adresse en cours..."
         android:textSize="25dp" >
 
         <requestFocus />

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.Toast;
 import fr.m2ihm.journey.R;
 import fr.m2ihm.journey.adapter.Journal_Album_GridAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapter;
@@ -22,7 +23,6 @@ public class JournalAlbumFragment extends Fragment {
 	private GridView gridView;
 	private Journal_Album_GridAdapter customGridAdapter;
 	private JournalActivity context;
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -35,7 +35,16 @@ public class JournalAlbumFragment extends Fragment {
 		Log.v("AlbumFragment-OnCreateView","gridView null ? " + (this.gridView == null));
 
 		Log.v("AlbumFragment-OnCreateView","We are here");
-		
+		/*
+		gridView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View v,
+				int position, long id) {
+				Photo photo = (Photo) gridView.getItemAtPosition(position);
+			   Toast.makeText(context,
+				"Image Name : " + photo.getNomMedia(), Toast.LENGTH_SHORT).show();
+			}
+		});
+		*/
 		return v;
 	}
 

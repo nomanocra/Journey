@@ -16,7 +16,7 @@ public class GpsAdapter {
 
 	
 	public static String gpsToAdresse(Gps location, Context context) {
-		String myAdresse = "L'adresse n'a pu être déterminée";
+		String myAdresse = "Adresse non trouvée";
 		// Le geocoder permet de récupérer ou chercher des adresses
 		// gràce à un mot clé ou une position
 		Geocoder geo = new Geocoder(context);

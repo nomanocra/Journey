@@ -8,8 +8,8 @@ public class Gps{
 	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(long latitude) {
-		this.latitude = latitude;
+	public void setLatitude(double d) {
+		this.latitude = d;
 	}
 	public double getLongitude() {
 		return longitude;
