@@ -21,6 +21,7 @@ import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
 import fr.m2ihm.journey.metier.Voyage;
 import fr.m2ihm.journey.services.LocationTrackerService;
 import fr.m2ihm.journey.settings.Settings;
+import fr.m2ihm.journey.test.TestBD;
 
 
 public class JourneyMainActivity extends Activity {
@@ -36,6 +37,7 @@ public class JourneyMainActivity extends Activity {
 		myDB = new MyBDAdapterImpl(this);
 		
 		loadSettings();
+		TestBD.testBD3(this);
 		init();
 	}
 

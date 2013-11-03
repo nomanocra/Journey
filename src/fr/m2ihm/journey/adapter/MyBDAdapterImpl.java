@@ -292,9 +292,6 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 				}, COL_E_ID_VOYAGE + " = " + idVoyage, null, null, null, null);
 		cursor.moveToFirst();
 		
-		Log.v("base de donnees _ getAllMedia", "GET COUNT : " + cursor.getCount());
-		Log.v("base de donnees _ getAllMedia", "GET MEDIA : " + cursor.getString(13));
-		
 		if (cursor.getCount() != 0) {
 			Voyage v = getVoyage(cursor.getInt(1));
 			String typeMedia;
@@ -379,7 +376,7 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 				COL_E_COMMENTAIRE, // 11
 				COL_E_MEDIA_NOM, // 12
 				COL_E_MEDIA_TYPE }, COL_E_ID_VOYAGE + " = " + idVoyage
-				+ " AND " + COL_E_MEDIA_TYPE + " = " + "Son", null, null, null,
+				+ " AND " + COL_E_MEDIA_TYPE + " = " + "'Son'", null, null, null,
 				null);
 		cursor.moveToFirst();
 
@@ -406,8 +403,8 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 		return allSong;
 	}
 
-	public ArrayList<ElementMap> getAllPhoto(int idVoyage) {
-		ArrayList<ElementMap> allPhoto = new ArrayList<ElementMap>();
+	public ArrayList<Photo> getAllPhoto(int idVoyage) {
+		ArrayList<Photo> allPhoto = new ArrayList<Photo>();
 		Cursor cursor = mDB.query(TABLE_EVENEMENT, new String[] { COL_E_ID, // 0
 				COL_E_ID_VOYAGE, // 1
 				COL_E_LAT, // 2
@@ -420,15 +417,16 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 				COL_E_YEAR, // 9
 				COL_E_LIEU, // 10
 				COL_E_COMMENTAIRE, // 11
-				COL_E_MEDIA_NOM }, // 13
+				COL_E_MEDIA_NOM, // 13
+				COL_E_MEDIA_TYPE}, 
 				COL_E_ID_VOYAGE + " = " + idVoyage + " AND " + COL_E_MEDIA_TYPE
-						+ " = " + "Photo", null, null, null, null);
+						+ " = " + "'Photo'", null, null, null, null);
 		cursor.moveToFirst();
 		
 		if (cursor.getCount() != 0) {
 			Voyage v = getVoyage(cursor.getInt(1));
 			for (int i = 0; i < cursor.getCount(); i++) {
-				ElementMap e = new Photo(v, new Gps(cursor.getFloat(2),
+				Photo e = new Photo(v, new Gps(cursor.getFloat(2),
 						cursor.getFloat(3)), new Date(cursor.getInt(4),
 						cursor.getInt(5), cursor.getInt(6), cursor.getInt(7),
 						cursor.getInt(8), cursor.getInt(9)), cursor.getString(12),
@@ -464,7 +462,7 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 				COL_E_MEDIA_TYPE, // 12
 				COL_E_MEDIA_NOM }, // 13
 				COL_E_ID_VOYAGE + " = " + idVoyage + " AND " + COL_E_MEDIA_TYPE
-						+ " = " + "Video", null, null, null, null);
+						+ " = " + "'Video'", null, null, null, null);
 		cursor.moveToFirst();
 
 		if (cursor.getCount() != 0) {
