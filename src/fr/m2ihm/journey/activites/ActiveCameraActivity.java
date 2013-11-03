@@ -203,7 +203,7 @@ public class ActiveCameraActivity extends Activity implements
 			
 			
 			Intent intent = new Intent(this, AjouterEvenementActivity.class);
-			intent.putExtra("nomMedia", fileName);
+			intent.putExtra("nomMedia", ""+ Media.EXTERNAL_CONTENT_URI + "\\" + fileName);
 			intent.putExtra("typeMedia", "photo");
 			intent.putExtra("lieu", lieu);
 			intent.putExtra("commentaire", commentaire);

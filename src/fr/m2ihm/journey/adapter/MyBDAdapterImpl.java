@@ -30,6 +30,7 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 	private MyOpenHelper mOpenHelper;
 	private Calendar calendar;
 
+	
 	// -------------------------------------------------------------------------
 
 	private static final String TABLE_VOYAGE = "table_voyage";
