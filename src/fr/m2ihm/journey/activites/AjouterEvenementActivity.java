@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -270,6 +271,7 @@ public class AjouterEvenementActivity extends Activity {
 			positionElement = new Gps(location.getLatitude(),
 					location.getLongitude());
 			lieu.setText(GpsAdapter.gpsToAdresse(positionElement, c));
+			lieu.setTextColor(Color.BLACK);
 			progressBar.setVisibility(View.INVISIBLE);
 			ajouterElementMap.setEnabled(true);	
 		}
