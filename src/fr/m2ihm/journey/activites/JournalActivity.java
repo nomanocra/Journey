@@ -22,8 +22,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class JournalActivity extends Activity {
 
@@ -39,6 +41,8 @@ public class JournalActivity extends Activity {
 	
 	private int selectedVoyageId;
 	private boolean listChecked;
+	
+	private ListeVoyagesAdapter lvAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +68,25 @@ public class JournalActivity extends Activity {
 		deleteButton.setEnabled(false);
 
 		ImageButton settingsButton = (ImageButton) findViewById(R.id.journal_settings_button);
-		settingsButton.setEnabled(false);
 
+		settingsButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				JournalActivity context = (JournalActivity) v.getContext();
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		        builder.setMessage("Fonction indisponible sur la version d'essai")
+		               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+							// TODO Auto-generated method stub
+						}
+		                   
+		               });
+
+		        builder.show();
+			}
+		});
+		
 		/* Then we add the map fragment */
 
 		this.mapFragment = new JournalMapFragment();
@@ -76,11 +97,9 @@ public class JournalActivity extends Activity {
 		Log.v("JOURNAL", "14");
 	}
 
-	// public void listeVoyages_Click(View v)
-	// {
-	// v.setBackgroundColor(Color.WHITE);
-	// }
-
+	/**
+	 * Initialize the list by filling it and handling click events
+	 */
 	private void listInitialization() {
 		/* We fill the list */
 
@@ -95,8 +114,9 @@ public class JournalActivity extends Activity {
 		/* We invert it - older at the end */
 		Collections.reverse(listeVoyages);
 
-		final ListeVoyagesAdapter lvAdapter = new ListeVoyagesAdapter(this.getBaseContext(),
+		this.lvAdapter = new ListeVoyagesAdapter(this.getBaseContext(),
 				listeVoyages);
+		final ListeVoyagesAdapter lvAdapter = this.lvAdapter;
 
 		/**
 		 * FOCUS MANAGEMENT
@@ -154,6 +174,10 @@ public class JournalActivity extends Activity {
 				ImageButton settingsButton = (ImageButton) findViewById(R.id.journal_settings_button);
 				settingsButton.setEnabled(true);
 
+				//##################
+				// Delete management
+				//##################
+				
 				deleteButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 
@@ -173,7 +197,6 @@ public class JournalActivity extends Activity {
 										myDB.close();
 
 										// Delete from view
-
 										lvAdapterAgain
 												.removeCurrentFromView(
 														(ListView) findViewById(R.id.journal_journeys_list),
@@ -182,13 +205,12 @@ public class JournalActivity extends Activity {
 										/* Then we change content */
 										switch (context.getCurrentFragmentName()) {
 										case map:
-											GoogleMap googleMap = ((MapFragment) getFragmentManager()
-													.findFragmentById(R.id.map)).getMap();
-											googleMap.clear();
+											context.mapFragment.clearMap();
 											break;
 
 										case album:
 											// TODO
+											context.albumFragment.clearAlbum();
 											break;
 
 										case list:
@@ -202,7 +224,16 @@ public class JournalActivity extends Activity {
 										default:
 											// throw new Exception("Switch case error");
 										}
+										
+						                   Toast messageAcceuil = Toast
+						       					.makeText(
+						       							JournalActivity.this,
+						       							"Voyage supprimé !",
+						       							Toast.LENGTH_LONG);
+						       				messageAcceuil.setGravity(0, 0, 0);
+						       				messageAcceuil.show();
 				                   }
+				                   
 				               })
 				               .setNegativeButton("Non", new DialogInterface.OnClickListener() {
 				                   public void onClick(DialogInterface dialog, int id) {
@@ -263,8 +294,12 @@ public class JournalActivity extends Activity {
 	// HANDLERS
 	// ###################################
 
+	/**
+	 * Handles the "album" tab click
+	 * @param v
+	 */
 	public void albumButton_Click(View v) {
-
+		
 		JournalAlbumFragment fg = new JournalAlbumFragment();
 
 		// We store the fragment to adapt the behaviour when changing the
@@ -292,7 +327,11 @@ public class JournalActivity extends Activity {
 //			fg.fillAlbum();
 		}
 	}
-
+	
+	/**
+	 * Handles the map "tab" click
+	 * @param v
+	 */
 	public void mapButton_Click(View v) {
 		JournalMapFragment fg = new JournalMapFragment();
 
@@ -317,52 +356,102 @@ public class JournalActivity extends Activity {
 		currentFragmentName = OurFragments.map;
 	}
 
+	/**
+	 * Handles the map "tab" click
+	 * @param v
+	 */
 	public void listButton_Click(View v) {
-		JournalListFragment fg = new JournalListFragment();
+		
+		/**
+		 * TODO
+		 */
+		
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Fonction indisponible sur la version d'essai")
+               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-		// We store the fragment to adapt the behaviour when changing the
-		// current Voyage
-		this.listFragment = fg;
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					// TODO Auto-generated method stub
+				}
+                   
+               });
 
-		FragmentTransaction transaction = getFragmentManager()
-				.beginTransaction();
-
-		transaction.replace(R.id.journal_content, fg);
-		transaction.addToBackStack(null);
-		transaction.commit();
-
-		// Buttons renderer
-		this.activateExCurrentButton();
-
-		Button currentButton = (Button) findViewById(R.id.Journal_list_button);
-		currentButton.setEnabled(false);
-
-		currentFragmentName = OurFragments.list;
+        builder.show();
+		
+		
+		
+//		JournalListFragment fg = new JournalListFragment();
+//
+//		// We store the fragment to adapt the behaviour when changing the
+//		// current Voyage
+//		this.listFragment = fg;
+//
+//		FragmentTransaction transaction = getFragmentManager()
+//				.beginTransaction();
+//
+//		transaction.replace(R.id.journal_content, fg);
+//		transaction.addToBackStack(null);
+//		transaction.commit();
+//
+//		// Buttons renderer
+//		this.activateExCurrentButton();
+//
+//		Button currentButton = (Button) findViewById(R.id.Journal_list_button);
+//		currentButton.setEnabled(false);
+//
+//		currentFragmentName = OurFragments.list;
 	}
 
+	/**
+	 * Handles the map "tab" click
+	 * @param v
+	 */
 	public void statsButton_Click(View v) {
-		JournalStatsFragment fg = new JournalStatsFragment();
+		
+		/**
+		 * TODO
+		 */
+		
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Fonction indisponible sur la version d'essai")
+               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-		// We store the fragment to adapt the behaviour when changing the
-		// current Voyage
-		this.statsFragment = fg;
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					// TODO Auto-generated method stub
+				}
+                   
+               });
 
-		FragmentTransaction transaction = getFragmentManager()
-				.beginTransaction();
-
-		transaction.replace(R.id.journal_content, fg);
-		transaction.addToBackStack(null);
-		transaction.commit();
-
-		// Buttons renderer
-		this.activateExCurrentButton();
-
-		Button currentButton = (Button) findViewById(R.id.Journal_stats_button);
-		currentButton.setEnabled(false);
-
-		currentFragmentName = OurFragments.stats;
+        builder.show();
+		
+//		JournalStatsFragment fg = new JournalStatsFragment();
+//
+//		// We store the fragment to adapt the behaviour when changing the
+//		// current Voyage
+//		this.statsFragment = fg;
+//
+//		FragmentTransaction transaction = getFragmentManager()
+//				.beginTransaction();
+//
+//		transaction.replace(R.id.journal_content, fg);
+//		transaction.addToBackStack(null);
+//		transaction.commit();
+//
+//		// Buttons renderer
+//		this.activateExCurrentButton();
+//
+//		Button currentButton = (Button) findViewById(R.id.Journal_stats_button);
+//		currentButton.setEnabled(false);
+//
+//		currentFragmentName = OurFragments.stats;
 	}
 	
+	/**
+	 * Handles the "return" button click
+	 * @param v
+	 */
 	public void returnButton_Click(View v) {
 		Intent intent = new Intent(this, JourneyMainActivity.class);
 		startActivity(intent);
@@ -370,6 +459,9 @@ public class JournalActivity extends Activity {
 		this.getFragmentManager().beginTransaction().remove(this.mapFragment).commit();
 	}
 	
+	/**
+	 * Handles when the default back button of Android is clicked
+	 */
 	@Override
 	public void onBackPressed() {
 		Intent intent = new Intent(this, JourneyMainActivity.class);
@@ -382,6 +474,9 @@ public class JournalActivity extends Activity {
 	// END HANDLERS
 	// ###################################
 
+	/**
+	 * Manage tabs activation/deactivation when we change the current Fragment
+	 */
 	private void activateExCurrentButton() {
 		Button currentButton;
 

@@ -25,6 +25,7 @@ public class JournalAlbumFragment extends Fragment {
 	private GridView gridView;
 	private Journal_Album_GridAdapter customGridAdapter;
 	private JournalActivity context;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -50,12 +51,18 @@ public class JournalAlbumFragment extends Fragment {
 		return v;
 	}
 
+	/**
+	 * Fill the album with all photos taken for this Voyage
+	 */
 	public void fillAlbum() {
 
 		// We get the context and the gridview
 		if (this.context == null)
 		{
 			this.context = (JournalActivity) this.getActivity();
+		}
+		if (this.gridView == null)
+		{
 			this.gridView = (GridView) this.getActivity().findViewById(
 					R.id.gridView);
 		}
@@ -98,6 +105,10 @@ public class JournalAlbumFragment extends Fragment {
 		});
 	}
 
+	/**
+	 * Get all Photos from the DB
+	 * @return an ArrayList containing all the photos
+	 */
 	private ArrayList<Photo> getData() {
 		// We get data from DB
 		MyBDAdapter bdAdapter = new MyBDAdapterImpl(this.context);
@@ -116,4 +127,11 @@ public class JournalAlbumFragment extends Fragment {
 		return (ArrayList<Photo>) photoList;
 	}
 
+	/**
+	 * Called when user delete a Voyage
+	 */
+	public void clearAlbum()
+	{
+		this.customGridAdapter.removeContent();
+	}
 }
