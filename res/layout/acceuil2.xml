@@ -63,7 +63,7 @@
         android:textSize="90dp" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/centralPicture"
         android:layout_width="792dp"
         android:layout_height="95dp"
         android:layout_x="90dp"

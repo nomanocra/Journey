@@ -113,6 +113,7 @@ public class AjouterEvenementActivity extends Activity {
 		return path;
 	}
 
+<<<<<<< HEAD
 	private static File getOutputMediaFile(int type) {
 		// To be safe, you should check that the SDCard is mounted
 		// using Environment.getExternalStorageState() before doing this.
@@ -145,6 +146,39 @@ public class AjouterEvenementActivity extends Activity {
 			return null;
 		}
 		return mediaFile;
+=======
+	private static File getOutputMediaFile(int type){
+	    // To be safe, you should check that the SDCard is mounted
+	    // using Environment.getExternalStorageState() before doing this.
+
+	    File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+	              Environment.DIRECTORY_PICTURES),"");
+	    // This location works best if you want the created images to be shared
+	    // between applications and persist after your app has been uninstalled.
+
+	    // Create the storage directory if it does not exist
+//	    if (! mediaStorageDir.exists()){
+//	        if (! mediaStorageDir.mkdirs()){
+//	            Log.d("MyCameraApp", "failed to create directory");
+//	            return null;
+//	        }
+//	    }
+
+	    // Create a media file name
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+	    File mediaFile;
+	    if (type == MEDIA_TYPE_IMAGE){
+	        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+	        "IMG_"+ timeStamp + ".jpg");
+	    } else if(type == MEDIA_TYPE_VIDEO) {
+	        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+	        "VID_"+ timeStamp + ".mp4");
+	    } else {
+	        return null;
+	    }
+
+	    return mediaFile;
+>>>>>>> 84db545f63a471128ed946099cc7f8e5636b5d2e
 	}
 	public void prendreSon(View v) {
 	}

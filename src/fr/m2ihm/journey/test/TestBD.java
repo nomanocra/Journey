@@ -116,12 +116,16 @@ public class TestBD {
 		Position pos2 = new Position(courant, new Gps(14, 14));
 		
 		ElementMap v = new Video(courant, new Gps(10, 35.5) , "Video test", "ENAC", "Ce commentaire est inutile");
-		ElementMap p = new Photo(courant, new Gps(10, 30.5), "Photo test", "ENAC", "Ce commentaire est inutile");
+		ElementMap p = new Photo(courant, new Gps(10, 30.5), "Photo test", "Ailleurs", "Ce commentaire est inutile");
+		ElementMap p2 = new Photo(courant, new Gps(14, 30.5), "Photo test2", "Ailleurs2", "Ce commentaire est inutile");
+		ElementMap p3 = new Photo(courant, new Gps(13, 30.5), "Photo test3", "Ailleurs3", "Ce commentaire est inutile");
 		ElementMap n = new Note(courant, new Gps(15, 35.5),"ENAC", "Ce commentaire est inutile");
 
 		myDB.ajouterElementMap(pos);
 		myDB.ajouterElementMap(v);
 		myDB.ajouterElementMap(p);
+		myDB.ajouterElementMap(p2);
+		myDB.ajouterElementMap(p3);
 		myDB.ajouterElementMap(n);
 		myDB.ajouterElementMap(pos2);
 
