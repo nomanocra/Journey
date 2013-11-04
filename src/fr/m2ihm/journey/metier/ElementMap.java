@@ -1,5 +1,6 @@
 package fr.m2ihm.journey.metier;
 
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 public abstract class ElementMap implements Comparable<ElementMap> {
@@ -121,4 +122,6 @@ public abstract class ElementMap implements Comparable<ElementMap> {
 			return -1;
 		}
 	}
+
+
 }

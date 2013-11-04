@@ -149,6 +149,7 @@ public class JournalActivity extends Activity {
 
 				case list:
 					// TODO
+					context.getListFragment().fillList();
 					break;
 
 				case stats:
@@ -351,7 +352,7 @@ public class JournalActivity extends Activity {
 		/**
 		 * TODO
 		 */
-		
+		/*
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Fonction indisponible sur la version d'essai")
                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -364,29 +365,29 @@ public class JournalActivity extends Activity {
                });
 
         builder.show();
+		*/
 		
 		
-		
-//		JournalListFragment fg = new JournalListFragment();
-//
-//		// We store the fragment to adapt the behaviour when changing the
-//		// current Voyage
-//		this.listFragment = fg;
-//
-//		FragmentTransaction transaction = getFragmentManager()
-//				.beginTransaction();
-//
-//		transaction.replace(R.id.journal_content, fg);
-//		transaction.addToBackStack(null);
-//		transaction.commit();
-//
-//		// Buttons renderer
-//		this.activateExCurrentButton();
-//
-//		Button currentButton = (Button) findViewById(R.id.Journal_list_button);
-//		currentButton.setEnabled(false);
-//
-//		currentFragmentName = OurFragments.list;
+		JournalListFragment fg = new JournalListFragment();
+
+		// We store the fragment to adapt the behaviour when changing the
+		// current Voyage
+		this.listFragment = fg;
+
+		FragmentTransaction transaction = getFragmentManager()
+				.beginTransaction();
+
+		transaction.replace(R.id.journal_content, fg);
+		transaction.addToBackStack(null);
+		transaction.commit();
+
+		// Buttons renderer
+		this.activateExCurrentButton();
+
+		Button currentButton = (Button) findViewById(R.id.Journal_list_button);
+		currentButton.setEnabled(false);
+
+		currentFragmentName = OurFragments.list;
 	}
 
 	/**

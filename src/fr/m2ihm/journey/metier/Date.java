@@ -97,7 +97,9 @@ public class Date {
 	public String toString(){
 		return this.day + "/" + this.month + "/" + this.year;
 	}
-	
+	public String toStringHeure(){
+		return this.hour + ":" + this.minute;
+	}
 	/**
 	 * Compare two dates, give if the current is more actual than the one given
 	 */
