@@ -237,6 +237,8 @@ public class JourneyMainActivity extends Activity {
 		myDB.terminerVoyage(voyageEnCours.getId());
 		myDB.close();
 		stopLocationTracerService();
+		Settings.setTraceurActive(false);
+		saveSettings();
 	}
 
 	@Override
