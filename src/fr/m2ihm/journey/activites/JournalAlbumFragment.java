@@ -31,7 +31,6 @@ public class JournalAlbumFragment extends Fragment {
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.journal_album, null);
 
-<<<<<<< HEAD
 		this.context = (JournalActivity) container.getContext();
 
 		this.gridView = (GridView) context.findViewById(R.id.gridView);
@@ -48,8 +47,6 @@ public class JournalAlbumFragment extends Fragment {
 			}
 		});
 		*/
-=======
->>>>>>> 84db545f63a471128ed946099cc7f8e5636b5d2e
 		return v;
 	}
 
