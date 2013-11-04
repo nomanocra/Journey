@@ -138,7 +138,7 @@ public class JournalMapFragment extends Fragment {
 		    //set bounds with all the map points
 //			googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 50));
 			
-			googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlngList.get(0), 8.0f));
+			googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlngList.get(0), 18.0f));
 		}
 	}
 
