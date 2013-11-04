@@ -58,7 +58,6 @@ public class Journal_Album_GridAdapter extends ArrayAdapter<Photo> {
 		// TODO CHANGE THIS
 		Log.v("getView", "Path : " + photo.getNomMedia());
 		holder.image.setImageURI(Uri.parse(photo.getNomMedia()));
-//		holder.image.setImageResource(R.drawable.ic_launcher);
 		
 		return row;
 	}
@@ -68,9 +67,22 @@ public class Journal_Album_GridAdapter extends ArrayAdapter<Photo> {
 		ImageView image;
 	}
 	
+	/**
+	 * Change the list of photos contained in the gridview
+	 * @param listePhoto
+	 */
 	public void updateContent(ArrayList<Photo> listePhoto)
 	{
 		data = listePhoto;
+		this.notifyDataSetChanged();
+	}
+	
+	/**
+	 * Remove all photos from the gridview
+	 */
+	public void removeContent()
+	{
+		data.clear();
 		this.notifyDataSetChanged();
 	}
 }

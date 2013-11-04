@@ -62,7 +62,7 @@ public class ListeVoyagesAdapter extends ArrayAdapter<Voyage> {
 
 		return rowView;
 	}
-
+	
 	public void removeCurrentFromView(ListView listView, int voyageID) {
 
 		int listIDToRemove = 0;
