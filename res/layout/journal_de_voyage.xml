@@ -17,18 +17,6 @@
             android:layout_height="80dp"
             android:background="@color/Black" >
 
-            <TextView
-                android:id="@+id/journal_stats_km"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/confirmerAjoutEvenement"
-                android:layout_marginLeft="340dp"
-                android:layout_toRightOf="@+id/confirmerAjoutEvenement"
-                android:text="@string/journal"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/White"
-                android:textSize="40sp" />
-
             <Button
                 android:id="@+id/retourAcceuil"
                 android:layout_width="wrap_content"
@@ -40,6 +28,20 @@
                 android:onClick="returnButton_Click"
                 android:text=" "
                 android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/journal_stats_km"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/retourAcceuil"
+                android:layout_alignBottom="@+id/retourAcceuil"
+                android:layout_marginLeft="339dp"
+                android:layout_toRightOf="@+id/retourAcceuil"
+                android:text="@string/journal"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/White"
+                android:textSize="40sp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
@@ -60,7 +62,7 @@
                     android:gravity="center"
                     android:text="@string/voyages"
                     android:textColor="@color/White"
-                    android:textSize="15sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <RelativeLayout
@@ -70,7 +72,7 @@
                     <ImageView
                         android:id="@+id/journal_arrowPicture"
                         android:layout_width="fill_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="73dp"
                         android:layout_alignParentTop="true"
                         android:contentDescription="No Content Description Needed"
                         android:src="@drawable/list_arrow" />
@@ -80,7 +82,10 @@
                     android:id="@+id/journal_journeys_list"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:background="@color/Gris1" >
+                    android:background="@color/Gris1"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="10dp" >
+
                 </ListView>
 
                 <Space
@@ -92,48 +97,17 @@
                 android:id="@+id/journal_content"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="@color/Gris4"
+                android:background="@color/Gris1"
                 android:orientation="vertical" >
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="133dp" >
-
-                    <ImageButton
-                        android:id="@+id/journal_close_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginLeft="23dp"
-                        android:layout_marginTop="23dp"
-                        android:onClick="onDeleteButton_Click"
-                        android:src="@drawable/cross_icon" />
-
-                    <ImageButton
-                        android:id="@+id/journal_settings_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/journal_close_button"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="33dp"
-                        android:src="@drawable/settings_icon" />
-
-                    <Button
-                        android:id="@+id/Journal_map_button"
-                        android:layout_width="100dp"
-                        android:layout_height="80dp"
-                        android:layout_alignTop="@+id/journal_close_button"
-                        android:layout_marginLeft="198dp"
-                        android:layout_toRightOf="@+id/journal_close_button"
-                        android:onClick="mapButton_Click"
-                        android:padding="0dp"
-                        android:text="Carte"
-                        android:textSize="25sp" />
+                    android:layout_height="133dp"
+                    android:background="@color/Black" >
 
                     <Button
                         android:id="@+id/Journal_album_button"
-                        android:layout_width="100dp"
+                        android:layout_width="200dp"
                         android:layout_height="80dp"
                         android:layout_alignBaseline="@+id/Journal_map_button"
                         android:layout_alignBottom="@+id/Journal_map_button"
@@ -144,12 +118,35 @@
                         android:textSize="25sp" />
 
                     <Button
+                        android:id="@+id/Journal_map_button"
+                        android:layout_width="200dp"
+                        android:layout_height="80dp"
+                        android:layout_alignTop="@+id/journal_close_button"
+                        android:layout_toLeftOf="@+id/Journal_album_button"
+                        android:onClick="mapButton_Click"
+                        android:padding="0dp"
+                        android:text="Carte"
+                        android:textSize="25sp" />
+
+                    <ImageButton
+                        android:id="@+id/journal_close_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="29dp"
+                        android:layout_marginTop="22dp"
+                        android:onClick="onDeleteButton_Click"
+                        android:src="@drawable/cross_icon" />
+
+                    <Button
                         android:id="@+id/Journal_list_button"
-                        android:layout_width="100dp"
+                        android:layout_width="200dp"
                         android:layout_height="80dp"
                         android:layout_alignBaseline="@+id/Journal_album_button"
                         android:layout_alignBottom="@+id/Journal_album_button"
-                        android:layout_centerHorizontal="true"
+                        android:layout_marginRight="296dp"
+                        android:layout_toLeftOf="@+id/journal_close_button"
                         android:onClick="listButton_Click"
                         android:padding="0dp"
                         android:text="Liste"
@@ -157,16 +154,28 @@
 
                     <Button
                         android:id="@+id/Journal_stats_button"
-                        android:layout_width="100dp"
+                        android:layout_width="200dp"
                         android:layout_height="80dp"
                         android:layout_alignBaseline="@+id/Journal_list_button"
                         android:layout_alignBottom="@+id/Journal_list_button"
-                        android:layout_toRightOf="@id/Journal_list_button"
+                        android:layout_alignLeft="@+id/Journal_list_button"
+                        android:layout_marginLeft="198dp"
                         android:onClick="statsButton_Click"
                         android:padding="0dp"
                         android:text="Stats"
                         android:textSize="25sp" />
+
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/journal_content_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:background="@color/Black"
+                    android:orientation="vertical" >
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
