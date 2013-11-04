@@ -636,8 +636,21 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 	}
 
 	public int terminerVoyage(long id) {
+		calendar = Calendar.getInstance();
+		int secondes = calendar.get(Calendar.SECOND);
+		int minutes = calendar.get(Calendar.MINUTE);
+		int heures = calendar.get(Calendar.HOUR_OF_DAY);
+		int day = calendar.get(Calendar.DAY_OF_MONTH);
+		int month = calendar.get(Calendar.MONTH) + 1;
+		int year = calendar.get(Calendar.YEAR);
 		ContentValues values = new ContentValues();
 		values.put(COL_V_EN_COURS, 0);
+		values.put(COL_E_SECONDES, secondes);
+		values.put(COL_E_MINUTES, minutes);
+		values.put(COL_E_HOUR, heures);
+		values.put(COL_E_DAY, day);
+		values.put(COL_E_MONTH, month);
+		values.put(COL_E_YEAR, year);
 		return mDB.update(TABLE_VOYAGE, values, COL_V_ID + "==" + id, null);
 	}
 
