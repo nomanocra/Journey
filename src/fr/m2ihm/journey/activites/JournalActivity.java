@@ -59,17 +59,15 @@ public class JournalActivity extends Activity {
 		 */
 		ImageButton deleteButton = (ImageButton) findViewById(R.id.journal_close_button);
 		deleteButton.setEnabled(false);
-
-
 		
 		/* Then we add the map fragment */
 
 		this.mapFragment = new JournalMapFragment();
 		getFragmentManager().beginTransaction()
 				.add(R.id.journal_content_container, this.mapFragment).commit();
-		Log.v("JOURNAL", "13");
+
 		currentFragmentName = OurFragments.map;
-		Log.v("JOURNAL", "14");
+
 	}
 
 	/**
@@ -143,7 +141,6 @@ public class JournalActivity extends Activity {
 				ImageButton deleteButton = (ImageButton) findViewById(R.id.journal_close_button);
 				deleteButton.setEnabled(true);
 
-
 				//##################
 				// Delete management
 				//##################
@@ -184,7 +181,7 @@ public class JournalActivity extends Activity {
 											break;
 
 										case list:
-											// TODO
+											context.listFragment.clearList();
 											break;
 
 										case stats:
@@ -311,10 +308,9 @@ public class JournalActivity extends Activity {
 		transaction.commit();
 
 		// Buttons renderer
-		Button currentButton = (Button) findViewById(R.id.Journal_album_button);
-		currentButton.setEnabled(true);
+		this.activateExCurrentButton();
 
-		currentButton = (Button) findViewById(R.id.Journal_map_button);
+		Button currentButton = (Button) findViewById(R.id.Journal_map_button);
 		currentButton.setEnabled(false);
 
 		currentFragmentName = OurFragments.map;
@@ -344,8 +340,6 @@ public class JournalActivity extends Activity {
         builder.show();
 		*/
 		
-		
-
 		JournalListFragment fg = new JournalListFragment();
 
 		// We store the fragment to adapt the behaviour when changing the
@@ -355,7 +349,7 @@ public class JournalActivity extends Activity {
 		FragmentTransaction transaction = getFragmentManager()
 				.beginTransaction();
 
-		transaction.replace(R.id.journal_content, fg);
+		transaction.replace(R.id.journal_content_container, fg);
 		transaction.addToBackStack(null);
 		transaction.commit();
 
