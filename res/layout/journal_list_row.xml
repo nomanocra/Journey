@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:clickable="false"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    android:orientation="horizontal"
+    android:padding="5dp" >
+
+    <ImageView
+        android:id="@+id/liste_element_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" >
+
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="50dp"
+        android:layout_weight="11.53"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/dateListe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/heureListe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Heure"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+    
+        <TextView
+            android:id="@+id/lieuListe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lieu"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+</LinearLayout>
