@@ -38,6 +38,7 @@ public class JournalListFragment extends Fragment {
         return v;
     }
 	public void initListeElement(){
+		
 		bdAdapter = new MyBDAdapterImpl(this.getActivity());
 		ListView listView = (ListView) context.findViewById(R.id.listElementVoyage);
 		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -48,8 +49,6 @@ public class JournalListFragment extends Fragment {
 		listeElement = bdAdapter.getAllMedia(idVoyageSelected);
 		bdAdapter.close();
 		leAdapter = new ListeElementVoyageAdapter(context, listeElement);
-		
-		
 	}
 	
 	public void fillList() {
