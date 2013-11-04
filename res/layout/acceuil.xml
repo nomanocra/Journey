@@ -22,25 +22,25 @@
             android:text=" " />
 
         <Button
-            android:id="@+id/boutonJeParsEnVoyage"
-            android:layout_width="300dp"
-            android:layout_height="153dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="72dp"
-            android:background="@drawable/button_nouveau_voyage_selector"
-            android:onClick="actionBoutonAjoutVoyage"
-            android:text=" " />
-
-        <Button
             android:id="@+id/boutonParametre"
             android:layout_width="300dp"
             android:layout_height="153dp"
-            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="63dp"
+            android:layout_marginLeft="78dp"
+            android:layout_toRightOf="@+id/boutonCarnetVoyage"
             android:background="@drawable/button_setting_selector"
             android:onClick="actionBoutonSettings"
+            android:text=" " />
+
+        <Button
+            android:id="@+id/boutonJeParsEnVoyage"
+            android:layout_width="300dp"
+            android:layout_height="153dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="73dp"
+            android:layout_toLeftOf="@+id/boutonCarnetVoyage"
+            android:background="@drawable/button_nouveau_voyage_selector"
+            android:onClick="actionBoutonAjoutVoyage"
             android:text=" " />
 
     </RelativeLayout>

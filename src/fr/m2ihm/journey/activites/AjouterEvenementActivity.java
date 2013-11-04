@@ -67,7 +67,7 @@ public class AjouterEvenementActivity extends Activity {
 		commentaire = (EditText) findViewById(R.id.champCommentaireEvenement);
 		lieu = (EditText) findViewById(R.id.champLieuEvenement);
 		indicateurMedia = (TextView) findViewById(R.id.indicateurMedia);
-		ajouterElementMap = (Button) findViewById(R.id.confirmerAjoutEvenement);
+		ajouterElementMap = (Button) findViewById(R.id.retourMenuPrincipal);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		myDB.open();
 		voyageCourant = myDB.getVoyageCourant();
@@ -276,5 +276,9 @@ public class AjouterEvenementActivity extends Activity {
 			ajouterElementMap.setEnabled(true);	
 		}
 	}
-
+	public void onBackPressed() {
+		Intent intent = new Intent(this, JourneyMainActivity.class);
+		startActivity(intent);
+		finish();
+		}
 }

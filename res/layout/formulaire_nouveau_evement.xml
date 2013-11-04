@@ -134,7 +134,7 @@
         android:textSize="30dp" />
 
     <Button
-        android:id="@+id/confirmerAjoutEvenement"
+        android:id="@+id/retourMenuPrincipal"
         android:layout_width="600dp"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/annulerNouveauEvenement"
