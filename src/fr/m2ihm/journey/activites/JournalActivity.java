@@ -116,9 +116,6 @@ public class JournalActivity extends Activity {
 
 				context.selectedVoyageId = view.getId();
 
-				/* We indicate that the new focused element has changed */
-				Log.v("CLICK_LISTENER", "ID Clicked : " + view.getId());
-
 				/* Then we change content */
 				switch (context.getCurrentFragmentName()) {
 				case map:
