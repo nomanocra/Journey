@@ -47,7 +47,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/button_setting_selector"
+            android:onClick="actionBoutonSettings"
             android:text=" " />
+
     </LinearLayout>
 
     <TextView

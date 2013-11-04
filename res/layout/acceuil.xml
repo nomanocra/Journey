@@ -40,6 +40,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="63dp"
             android:background="@drawable/button_setting_selector"
+            android:onClick="actionBoutonSettings"
             android:text=" " />
 
     </RelativeLayout>

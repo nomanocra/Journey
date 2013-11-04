@@ -13,9 +13,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import fr.m2ihm.journey.R;
@@ -48,6 +51,7 @@ public class AjouterEvenementActivity extends Activity {
 	Gps positionElement;
 	boolean ajoutMedia;
 	Button ajouterElementMap;
+	ProgressBar progressBar;
 
 	ElementMap newEvent;
 	MyBDAdapter myDB;
@@ -56,21 +60,24 @@ public class AjouterEvenementActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.formulaire_nouveau_evement);
+		//this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		intent = getIntent();
 		myDB = new MyBDAdapterImpl(this);
 		commentaire = (EditText) findViewById(R.id.champCommentaireEvenement);
 		lieu = (EditText) findViewById(R.id.champLieuEvenement);
 		indicateurMedia = (TextView) findViewById(R.id.indicateurMedia);
 		ajouterElementMap = (Button) findViewById(R.id.confirmerAjoutEvenement);
+		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		myDB.open();
 		voyageCourant = myDB.getVoyageCourant();
 		myDB.close();
 		positionElement = new Gps(0, 0);
 		ajouterElementMap.setEnabled(false);
-		setProgressBarIndeterminateVisibility(true);
+		
+		progressBar.animate();
 		LocationManager objgps = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		LocationListener objlistener = new Myobjlistener(this);
-		objgps.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 10000000,
+		objgps.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100000000, 1000000,
 				objlistener);
 	}
 
@@ -259,14 +266,13 @@ public class AjouterEvenementActivity extends Activity {
 		public void onLocationChanged(Location location) {
 
 			// affichage des valeurs dans la les zone de saisie
+			
 			positionElement = new Gps(location.getLatitude(),
 					location.getLongitude());
 			lieu.setText(GpsAdapter.gpsToAdresse(positionElement, c));
-			setProgressBarIndeterminateVisibility(false);
-			ajouterElementMap.setEnabled(true);
-			
+			progressBar.setVisibility(View.INVISIBLE);
+			ajouterElementMap.setEnabled(true);	
 		}
-
 	}
 
 }
