@@ -137,7 +137,7 @@
                         android:layout_marginRight="29dp"
                         android:layout_marginTop="22dp"
                         android:onClick="onDeleteButton_Click"
-                        android:src="@drawable/cross_icon" />
+                        android:src="@drawable/bean_icon" />
 
                     <Button
                         android:id="@+id/Journal_list_button"
