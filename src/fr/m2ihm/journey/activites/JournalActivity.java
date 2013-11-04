@@ -60,31 +60,13 @@ public class JournalActivity extends Activity {
 		ImageButton deleteButton = (ImageButton) findViewById(R.id.journal_close_button);
 		deleteButton.setEnabled(false);
 
-		ImageButton settingsButton = (ImageButton) findViewById(R.id.journal_settings_button);
 
-		settingsButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				JournalActivity context = (JournalActivity) v.getContext();
-				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		        builder.setMessage("Fonction indisponible sur la version d'essai")
-		               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface arg0, int arg1) {
-							// TODO Auto-generated method stub
-						}
-		                   
-		               });
-
-		        builder.show();
-			}
-		});
 		
 		/* Then we add the map fragment */
 
 		this.mapFragment = new JournalMapFragment();
 		getFragmentManager().beginTransaction()
-				.add(R.id.journal_content, this.mapFragment).commit();
+				.add(R.id.journal_content_container, this.mapFragment).commit();
 		Log.v("JOURNAL", "13");
 		currentFragmentName = OurFragments.map;
 		Log.v("JOURNAL", "14");
@@ -163,8 +145,6 @@ public class JournalActivity extends Activity {
 				ImageButton deleteButton = (ImageButton) findViewById(R.id.journal_close_button);
 				deleteButton.setEnabled(true);
 
-				ImageButton settingsButton = (ImageButton) findViewById(R.id.journal_settings_button);
-				settingsButton.setEnabled(true);
 
 				//##################
 				// Delete management
@@ -301,7 +281,7 @@ public class JournalActivity extends Activity {
 		FragmentTransaction transaction = getFragmentManager()
 				.beginTransaction();
 
-		transaction.replace(R.id.journal_content, fg);
+		transaction.replace(R.id.journal_content_container, fg);
 		transaction.addToBackStack(null);
 		transaction.commit();
 
@@ -328,7 +308,7 @@ public class JournalActivity extends Activity {
 		FragmentTransaction transaction = getFragmentManager()
 				.beginTransaction();
 
-		transaction.replace(R.id.journal_content, fg);
+		transaction.replace(R.id.journal_content_container, fg);
 		transaction.addToBackStack(null);
 		transaction.commit();
 
@@ -376,7 +356,7 @@ public class JournalActivity extends Activity {
 //		FragmentTransaction transaction = getFragmentManager()
 //				.beginTransaction();
 //
-//		transaction.replace(R.id.journal_content, fg);
+//		transaction.replace(R.id.journal_content_container, fg);
 //		transaction.addToBackStack(null);
 //		transaction.commit();
 //
@@ -421,7 +401,7 @@ public class JournalActivity extends Activity {
 //		FragmentTransaction transaction = getFragmentManager()
 //				.beginTransaction();
 //
-//		transaction.replace(R.id.journal_content, fg);
+//		transaction.replace(R.id.journal_content_container, fg);
 //		transaction.addToBackStack(null);
 //		transaction.commit();
 //
