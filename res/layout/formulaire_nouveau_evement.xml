@@ -115,7 +115,8 @@
         android:layout_alignLeft="@+id/relativeLayout2"
         android:layout_marginBottom="29dp"
         android:ems="10"
-        android:text="Recherche d'adresse en cours..."
+        android:text="Recherche d&apos;adresse en cours..."
+        android:textColor="@color/Gris3"
         android:textSize="25dp" >
 
         <requestFocus />
@@ -133,7 +134,7 @@
         android:textSize="30dp" />
 
     <Button
-        android:id="@+id/confirmerAjoutEvenement"
+        android:id="@+id/retourMenuPrincipal"
         android:layout_width="600dp"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/annulerNouveauEvenement"
@@ -196,5 +197,14 @@
         android:text="Vous n&apos;avez pas encore ajouté de média"
         android:textColor="@color/Gris4"
         android:textSize="25dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/relativeLayout2"
+        android:layout_alignRight="@+id/relativeLayout2"
+        android:layout_alignTop="@+id/relativeLayout2" />
 
 </RelativeLayout>

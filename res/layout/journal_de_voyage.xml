@@ -17,17 +17,6 @@
             android:layout_height="80dp"
             android:background="@color/Black" >
 
-            <Button
-                android:id="@+id/confirmerAjoutEvenement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="40dp"
-                android:onClick="returnButton_Click"
-                android:text="@string/retour"
-                android:textSize="30sp" />
-
             <TextView
                 android:id="@+id/journal_stats_km"
                 android:layout_width="wrap_content"
@@ -39,6 +28,19 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/White"
                 android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/retourAcceuil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="31dp"
+                android:background="@drawable/button_retour_selector"
+                android:onClick="returnButton_Click"
+                android:text=" "
+                android:textSize="30sp" />
+
         </RelativeLayout>
 
         <LinearLayout
@@ -164,9 +166,7 @@
                         android:padding="0dp"
                         android:text="Stats"
                         android:textSize="25sp" />
-
                 </RelativeLayout>
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

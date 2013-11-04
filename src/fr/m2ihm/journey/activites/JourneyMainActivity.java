@@ -74,7 +74,8 @@ public class JourneyMainActivity extends Activity {
 	    editor.putBoolean("traceurMode", Settings.isTraceurActive());
 	    editor.putInt("delayTracer", Settings.getDelayTraceur());
 	    editor.putInt("distanceTracer", Settings.getDistanceTraceur());
-	    editor.commit();
+		editor.commit();
+
 	}
 	
 	public void enVoyageLayout() {	
@@ -146,15 +147,59 @@ public class JourneyMainActivity extends Activity {
 	}
 
 	public void actionBoutonCarnetVoyage(View v) {
+		
+		myDB.open();
+		int nbVoyage = myDB.getAllVoyages().size(); 
+		myDB.close();
+		if (nbVoyage == 0){
+			Toast messageAcceuil = Toast
+					.makeText(
+							JourneyMainActivity.this,
+							"Vous n'avez pas encore de voyage.",
+							Toast.LENGTH_LONG);
+			messageAcceuil.setGravity(0, 0, 200);
+			messageAcceuil.show();
+		}else{
 		Intent intent = new Intent(this, JournalActivity.class);
 		startActivity(intent);
 		finish();
+		}
 	}
 
 	public void actionBoutonSettings(View v) {
-		Intent intent = new Intent(this, SettingActivity.class);
-		startActivity(intent);
-		finish();
+		LayoutInflater factory = LayoutInflater.from(this);
+		final View alertDialogView = factory.inflate(
+				R.layout.settings_gps, null);
+		AlertDialog.Builder nouveauVoyageDialogue = new AlertDialog.Builder(
+				JourneyMainActivity.this);
+		nouveauVoyageDialogue.setView(alertDialogView);
+		nouveauVoyageDialogue.setTitle("Settings");
+		nouveauVoyageDialogue.setPositiveButton("Enregistrer",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						Log.v("ActionButtonSetting","delay " + Settings.getDelayTraceur());
+						
+						EditText champDelai = (EditText)  alertDialogView.findViewById(R.id.delaiEditText); 
+						EditText champDistance = (EditText)  alertDialogView.findViewById(R.id.distanceEditText);
+						String delai = champDelai.getText().toString();
+						String distance = champDistance.getText().toString();
+						if (delai.equals("")) {
+							delai = "5";
+						} 
+						if (distance.equals("")){
+							distance = "5";
+						}
+						Settings.setDelayTraceur(Integer.parseInt(delai) * 1000);
+						Settings.setDelayTraceur(Integer.parseInt(distance));
+						saveSettings();
+					}
+				});
+		nouveauVoyageDialogue.setNegativeButton("Annuler",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				});
+		nouveauVoyageDialogue.show();
 	}
 	public void startLocationTracerService(){
 		Intent monService = new Intent(JourneyMainActivity.this, LocationTrackerService.class);
@@ -177,6 +222,7 @@ public class JourneyMainActivity extends Activity {
 		}
 		saveSettings();
 	}
+	
 	public void activeButtonTracerLayout(){
 		traceurButton.setText("Traceur activé");
 		traceurButton.setTextColor(Color.BLUE);
@@ -191,6 +237,8 @@ public class JourneyMainActivity extends Activity {
 		myDB.terminerVoyage(voyageEnCours.getId());
 		myDB.close();
 		stopLocationTracerService();
+		Settings.setTraceurActive(false);
+		saveSettings();
 	}
 
 	@Override
