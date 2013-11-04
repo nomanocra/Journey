@@ -154,8 +154,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:onClick="returnbutton_click"
-                android:src="@drawable/ic_launcher" />
+                android:background="@drawable/button_retour_selector"
+                android:onClick="returnbutton_click" />
 
         </RelativeLayout>
     </LinearLayout>
