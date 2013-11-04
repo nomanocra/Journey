@@ -3,9 +3,6 @@ package fr.m2ihm.journey.activites;
 import java.util.Collections;
 import java.util.List;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-
 import fr.m2ihm.journey.R;
 import fr.m2ihm.journey.adapter.ListeVoyagesAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapter;
@@ -22,7 +19,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -40,7 +36,6 @@ public class JournalActivity extends Activity {
 	private JournalStatsFragment statsFragment;
 	
 	private int selectedVoyageId;
-	private boolean listChecked;
 	
 	private ListeVoyagesAdapter lvAdapter;
 
@@ -49,8 +44,6 @@ public class JournalActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.journal_de_voyage);
 
-		this.listChecked = false;
-		
 		/* We deactivate the map button */
 
 		Button currentButton = (Button) findViewById(R.id.Journal_map_button);
@@ -140,7 +133,6 @@ public class JournalActivity extends Activity {
 						.getContext();
 
 				context.selectedVoyageId = view.getId();
-				context.listChecked = true;
 
 				/* We indicate that the new focused element has changed */
 				Log.v("CLICK_LISTENER", "ID Clicked : " + view.getId());
@@ -320,12 +312,6 @@ public class JournalActivity extends Activity {
 		currentButton.setEnabled(false);
 
 		currentFragmentName = OurFragments.album;
-		
-		if(this.listChecked)
-		{
-			ListView listView = (ListView) findViewById(R.id.journal_journeys_list);
-//			fg.fillAlbum();
-		}
 	}
 	
 	/**

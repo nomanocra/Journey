@@ -2,8 +2,6 @@ package fr.m2ihm.journey.adapter;
 
 import java.util.ArrayList;
 
-import fr.m2ihm.journey.R;
-import fr.m2ihm.journey.metier.Photo;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
@@ -14,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import fr.m2ihm.journey.R;
+import fr.m2ihm.journey.metier.Photo;
 
 public class Journal_Album_GridAdapter extends ArrayAdapter<Photo> {
 	private Context context;
@@ -35,6 +35,16 @@ public class Journal_Album_GridAdapter extends ArrayAdapter<Photo> {
 	}
 
 	@Override
+    public Photo getItem(int position) {
+        return data.get(position);
+    }
+	
+	@Override
+	public long getItemId(int position) {
+        return 0;
+    }
+	
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
 		ViewHolder holder = null;
@@ -46,7 +56,7 @@ public class Journal_Album_GridAdapter extends ArrayAdapter<Photo> {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			row = inflater.inflate(layoutResourceId, parent, false);
 			holder = new ViewHolder();
-			holder.imageTitle = (TextView) row.findViewById(R.id.album_text);
+//			holder.imageTitle = (TextView) row.findViewById(R.id.album_text);
 			holder.image = (ImageView) row.findViewById(R.id.album_image);
 			row.setTag(holder);
 		} else {
@@ -54,7 +64,7 @@ public class Journal_Album_GridAdapter extends ArrayAdapter<Photo> {
 		}
 
 		Photo photo = data.get(position);
-		holder.imageTitle.setText(photo.getLieu());
+//		holder.imageTitle.setText(photo.getLieu());
 		// TODO CHANGE THIS
 		Log.v("getView", "Path : " + photo.getNomMedia());
 		holder.image.setImageURI(Uri.parse(photo.getNomMedia()));

@@ -2,48 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Black"
     android:orientation="horizontal" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" >
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1"
+        android:background="@color/Black" >
 
-        <RelativeLayout
-            android:id="@+id/RelativeLayout1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="312dp"
-                android:src="@drawable/ic_launcher" />
-
-            <ImageView
-                android:id="@+id/fullscreen_centralPicture"
-                android:layout_width="800dp"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/imageButton2"
-                android:src="@drawable/acceuil" />
-
-            <ImageButton
-                android:id="@+id/imageButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/imageButton2"
-                android:layout_toRightOf="@+id/centralPicture"
-                android:src="@drawable/ic_launcher" />
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/fullscreen_centralPicture"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/acceuil" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_marginRight="5dp"
+        android:layout_weight="4"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -55,70 +36,126 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="10dp" >
 
                 <TextView
                     android:id="@+id/fullscreen_lieu"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.49"
+                    android:background="@color/Black"
                     android:text="Large Text"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/White"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/fullscreen_edit"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="Large Text"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:layout_weight="0.49" >
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="Le :"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/Gris2"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fullscreen_date_heure"
+                        android:layout_width="83dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/Black"
+                        android:text="Large Text"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/Gris2"
+                        android:textSize="16sp"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
+
             </LinearLayout>
+        </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/fullscreen_edit"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="0.05" >
+
+            <TextView
+                android:id="@+id/TextView01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
+                android:layout_marginRight="5dp"
+                android:text="A : "
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/Gris2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fullscreen_heure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="@color/Gris2"
+                android:textSize="16sp" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
-            android:orientation="vertical" >
+            android:background="@color/Gris4"
+            android:orientation="vertical"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Commentaire :"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/White"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/fullscreen_commentaire"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="@color/White"
+                android:textSize="18sp" />
+
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/RelativeLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2"
+            android:layout_weight="0.03"
+            android:background="@color/Black"
             android:orientation="vertical" >
 
             <ImageButton
-                android:id="@+id/imageButton1"
+                android:id="@+id/fullscreen_return_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="13dp"
+                android:onClick="returnbutton_click"
                 android:src="@drawable/ic_launcher" />
-
-            <TextView
-                android:id="@+id/fullscreen_retour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/imageButton1"
-                android:text="Retour à l&apos;album"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
 
         </RelativeLayout>
     </LinearLayout>

@@ -6,6 +6,7 @@ import java.util.Collections;
 import fr.m2ihm.journey.R;
 import fr.m2ihm.journey.adapter.MyBDAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
+import fr.m2ihm.journey.metier.Date;
 import fr.m2ihm.journey.metier.Photo;
 import fr.m2ihm.journey.metier.Voyage;
 import android.app.Activity;
@@ -13,7 +14,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class Fullscreen_Activity extends Activity {
 
@@ -22,15 +27,16 @@ public class Fullscreen_Activity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fullscreen);
-
-		Log.v("FullSCreen - On Create", "currentVoyageID ? "
-				+ savedInstanceState.get("currentVoyageId"));
-		Log.v("FullSCreen - On Create", "currentVoyageID ? "
-				+ savedInstanceState.get("photoPosition"));
 		
-		int currentVoyageId = (Integer) savedInstanceState.get("currentVoyageId");
-		int photoPositionOnList = (Integer) savedInstanceState.get("photoPosition");
+		//Remove title bar
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
+		setContentView(R.layout.fullscreen);
+		
+		intent = getIntent();
+		
+		int currentVoyageId = Integer.parseInt(intent.getExtras().getString("currentVoyageId"));
+		int photoPositionOnList = Integer.parseInt(intent.getExtras().getString("photoPosition"));
 
 		// We get the list of Photos
 		// We get data from DB
@@ -42,9 +48,40 @@ public class Fullscreen_Activity extends Activity {
 
 		Collections.sort(photoList);
 		
+		Photo currentPhoto = photoList.get(photoPositionOnList);
+		
 		ImageView centralPicture = (ImageView) findViewById(R.id.fullscreen_centralPicture);
-		centralPicture.setImageURI(Uri.parse(photoList.get(photoPositionOnList).getNomMedia()));
-
-		// Bundle bundle = this.getIntent().getExtras();
+		centralPicture.setImageURI(Uri.parse(currentPhoto.getNomMedia()));
+		Log.v("onCreate - FullScreen", "path : " + currentPhoto.getNomMedia());
+		
+		TextView lieu = (TextView) findViewById(R.id.fullscreen_lieu);
+		lieu.setText(currentPhoto.getLieu());
+		
+		Date currentDate = currentPhoto.getDate();
+		
+		TextView date = (TextView) findViewById(R.id.fullscreen_date_heure);
+		date.setText(currentDate.toString());
+	
+		TextView heure = (TextView) findViewById(R.id.fullscreen_heure);
+		heure.setText(currentDate.getHour() + "h" + currentDate.getMinute());
+	
+		
+		TextView commentaire = (TextView) findViewById(R.id.fullscreen_commentaire);
+		commentaire.setText(currentPhoto.getCommentaire());
+	}
+	
+	public void returnbutton_click(View v)
+	{
+		Intent intent = new Intent(this, JournalActivity.class);
+		startActivity(intent);
+		finish();
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		Intent intent = new Intent(this, JournalActivity.class);
+		startActivity(intent);
+		finish();
 	}
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.Toast;
 import fr.m2ihm.journey.R;
 import fr.m2ihm.journey.adapter.Journal_Album_GridAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapter;
@@ -35,19 +33,7 @@ public class JournalAlbumFragment extends Fragment {
 		this.context = (JournalActivity) container.getContext();
 
 		this.gridView = (GridView) context.findViewById(R.id.gridView);
-		Log.v("AlbumFragment-OnCreateView","gridView null ? " + (this.gridView == null));
-
-		Log.v("AlbumFragment-OnCreateView","We are here");
-		/*
-		gridView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v,
-				int position, long id) {
-				Photo photo = (Photo) gridView.getItemAtPosition(position);
-			   Toast.makeText(context,
-				"Image Name : " + photo.getNomMedia(), Toast.LENGTH_SHORT).show();
-			}
-		});
-		*/
+		
 		return v;
 	}
 
@@ -77,27 +63,22 @@ public class JournalAlbumFragment extends Fragment {
 		else
 		{
 			// The adapter will empty the gridView and fill it with the new pictures
-			ArrayList<Photo> listePhotos = this.getData();
-			Log.v("fillAlbum", "listePhoto size : " + listePhotos.size());
 			this.customGridAdapter.updateContent(this.getData());
 		}
 		
-
 		this.gridView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				
-				Log.v("OUIIII", "ON EST ICIIIII");
 				
 				JournalActivity context = (JournalActivity) v.getContext();
 				
 				Intent intent = new Intent(context, Fullscreen_Activity.class);
 				
 				// We give the current Voyage
-				intent.putExtra("currentVoyageId", context.getSelectedVoyageId());
+				intent.putExtra("currentVoyageId", "" + context.getSelectedVoyageId());
 				
-				// And the photo selected
-				intent.putExtra("photoPosition", position);
+				// The photo selected
+				intent.putExtra("photoPosition", "" + position);
 				
 				startActivity(intent);
 				context.finish();
@@ -115,8 +96,6 @@ public class JournalAlbumFragment extends Fragment {
 
 		bdAdapter.open();
 		ArrayList<Photo> photoList = bdAdapter.getAllPhoto(this.context
-				.getSelectedVoyageId());
-		Log.v("getData","selectedVoyageId : " + this.context
 				.getSelectedVoyageId());
 		bdAdapter.close();
 
