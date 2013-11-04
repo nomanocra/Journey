@@ -56,8 +56,6 @@ public class ListeVoyagesAdapter extends ArrayAdapter<Voyage> {
 		titre.setText(currentVoyage.getNom().toString());
 
 		// We store the Voyage's ID
-		Log.v("LISTE VOYAGES ", "Voyage : " + currentVoyage.getNom()
-				+ ", has ID :" + currentVoyage.getId());
 		rowView.setId(currentVoyage.getId());
 
 		return rowView;

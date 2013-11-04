@@ -17,41 +17,43 @@ import fr.m2ihm.journey.metier.ElementMap;
 import fr.m2ihm.journey.metier.Photo;
 import fr.m2ihm.journey.metier.Voyage;
 
-public class ListeElementVoyageAdapter extends ArrayAdapter<ElementMap>{
+public class ListeElementVoyageAdapter extends ArrayAdapter<ElementMap> {
 
 	private final Context context;
-	private final List<ElementMap> values;
-	
-	
+	private List<ElementMap> values;
+
 	public ListeElementVoyageAdapter(Context context, List<ElementMap> values) {
-		super(context,R.layout.journal_list_elements ,values);
+		super(context, R.layout.journal_list_elements, values);
 		// TODO Stub du constructeur généré automatiquement
 		this.context = context;
 		this.values = values;
 	}
-	
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-	View rowView;
-	ElementMap currentElement = values.get(position);
-	rowView = inflater.inflate(R.layout.journal_list_row,
-			parent, false);
-	TextView lieu = (TextView) rowView.findViewById(R.id.lieuListe);
-	TextView date = (TextView) rowView.findViewById(R.id.dateListe);
-	TextView heure = (TextView) rowView.findViewById(R.id.heureListe);
-	ImageView image = (ImageView) rowView.findViewById(R.id.liste_element_image);
-	
-	lieu.setText(currentElement.getLieu().toString());
-	date.setText(currentElement.getDate().toString());
-	heure.setText(currentElement.getDate().toStringHeure());
-	image.setImageResource(currentElement.getIconResource());
-	rowView.setId(currentElement.getId());
-	return rowView;
+		View rowView;
+		ElementMap currentElement = values.get(position);
+		
+		rowView = inflater.inflate(R.layout.journal_list_row, parent, false);
+
+		TextView lieu = (TextView) rowView.findViewById(R.id.lieuListe);
+		TextView date = (TextView) rowView.findViewById(R.id.dateListe);
+		TextView heure = (TextView) rowView.findViewById(R.id.heureListe);
+		ImageView image = (ImageView) rowView
+				.findViewById(R.id.liste_element_image);
+
+		lieu.setText(currentElement.getLieu().toString());
+		date.setText(currentElement.getDate().toString());
+		heure.setText(currentElement.getDate().toStringHeure());
+		image.setImageResource(currentElement.getIconResource());
+		rowView.setId(currentElement.getId());
+		
+		return rowView;
 	}
-	
+
 	public void removeCurrentFromView(ListView listView, int elementID) {
 
 		int listIDToRemove = 0;
@@ -70,5 +72,16 @@ public class ListeElementVoyageAdapter extends ArrayAdapter<ElementMap>{
 			this.notifyDataSetChanged();
 		}
 	}
+
+	@Override
+	public int getCount()
+	{
+		return this.values.size();
+	}
 	
+	public void updateContent(List<ElementMap> listeElement) {
+		this.values = listeElement;
+		this.notifyDataSetChanged();
+	}
+
 }
