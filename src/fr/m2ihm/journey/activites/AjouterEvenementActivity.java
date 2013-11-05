@@ -16,9 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -286,10 +284,9 @@ public class AjouterEvenementActivity extends Activity {
 
 			// affichage des valeurs dans la les zone de saisie
 
-			Log.v("Je suis avant", "Et avant");
 			positionElement = new Gps(location.getLatitude(),
 					location.getLongitude());
-			Log.v("Je suis ici", "Et ici");
+
 			lieu.setText(GpsAdapter.gpsToAdresse(positionElement, c));
 			lieu.setTextColor(Color.BLACK);
 			progressBar.setVisibility(View.INVISIBLE);

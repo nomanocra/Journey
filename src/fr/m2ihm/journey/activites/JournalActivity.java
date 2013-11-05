@@ -14,7 +14,6 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -159,6 +158,7 @@ public class JournalActivity extends Activity {
 				        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				        builder.setMessage("Voulez-vous vraiment supprimer ce voyage ?")
 				               .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+				            	   
 				                   public void onClick(DialogInterface dialog, int id) {				                	   
 										
 										// Delete from DB

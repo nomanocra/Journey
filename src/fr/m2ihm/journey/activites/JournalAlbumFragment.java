@@ -6,7 +6,6 @@ import java.util.Collections;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +32,9 @@ public class JournalAlbumFragment extends Fragment {
 		return v;
 	}
 	
+	/**
+	 * This function waits the view to be created
+	 */
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState)
 	{
@@ -40,9 +42,7 @@ public class JournalAlbumFragment extends Fragment {
 
 		this.gridView = (GridView) context.findViewById(R.id.gridView);
 		
-		Log.v("oncreateview - album", "context null? " + (context == null));
-		Log.v("oncreateview - album", "gridview null? " + (gridView == null));
-		Log.v("oncreateview - album", "focused ? " + (context.isOneVoyageFocused()));
+		// If there is a Voyage selected on the list we fill the album
 		
 		if(context != null && gridView != null && context.isOneVoyageFocused())
 		{
@@ -113,8 +113,6 @@ public class JournalAlbumFragment extends Fragment {
 		bdAdapter.close();
 
 		Collections.sort(photoList);
-
-		Log.v("getData", "size : " + photoList.size());
 		
 		return (ArrayList<Photo>) photoList;
 	}

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -21,7 +20,6 @@ import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
 import fr.m2ihm.journey.metier.Voyage;
 import fr.m2ihm.journey.services.LocationTrackerService;
 import fr.m2ihm.journey.settings.Settings;
-import fr.m2ihm.journey.test.TestBD;
 
 
 public class JourneyMainActivity extends Activity {
@@ -62,9 +60,6 @@ public class JourneyMainActivity extends Activity {
 	       Settings.setTraceurActive(settings.getBoolean("traceurMode", false));
 	       Settings.setDelayTraceur(settings.getInt("delayTracer", 1000));
 	       Settings.setDistanceTraceur(settings.getInt("distanceTracer", 0));
-	       Log.v("settings","active : "+Settings.isTraceurActive());
-	       Log.v("settings","delay " + Settings.getDelayTraceur());
-	       Log.v("settings","distance " + Settings.getDistanceTraceur());
 	}
 	
 	public void saveSettings(){
@@ -94,7 +89,6 @@ public class JourneyMainActivity extends Activity {
 
 	public void pasDeVoyageLayout() {
 		setContentView(R.layout.acceuil);
-		Log.v("pasDeVoyageLayout", "pasDeVoyageLayout");
 	}
 
 
@@ -176,7 +170,6 @@ public class JourneyMainActivity extends Activity {
 		nouveauVoyageDialogue.setPositiveButton("Enregistrer",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
-						Log.v("ActionButtonSetting","delay " + Settings.getDelayTraceur());
 						
 						EditText champDelai = (EditText)  alertDialogView.findViewById(R.id.delaiEditText); 
 						EditText champDistance = (EditText)  alertDialogView.findViewById(R.id.distanceEditText);

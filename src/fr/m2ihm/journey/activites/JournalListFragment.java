@@ -10,11 +10,9 @@ import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
 import fr.m2ihm.journey.metier.ElementMap;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ListView;
 
 public class JournalListFragment extends Fragment {
@@ -43,12 +41,17 @@ public class JournalListFragment extends Fragment {
 		this.context = (JournalActivity) this.getActivity();
 		this.listView = (ListView) context.findViewById(R.id.listElementVoyage);
 		
+		// If there is a Voyage selected on the left hand list, we fill the list
+		
 		if(this.context != null && this.listView != null && this.context.isOneVoyageFocused())
 		{
 			this.fillList();
 		}
 	}
 
+	/**
+	 * Fill the list with all medias got from the DB
+	 */
 	public void fillList() {
 		if (this.context == null) {
 			this.context = (JournalActivity) this.getActivity();
@@ -66,13 +69,12 @@ public class JournalListFragment extends Fragment {
 
 		idVoyageSelected = context.getSelectedVoyageId();
 
+		// We get data from DB and give them to the Adapter
 		bdAdapter.open();
 		listeElement = bdAdapter.getAllMedia(idVoyageSelected);
 		bdAdapter.close();
 
 		Collections.sort(listeElement);
-
-		Log.v("fillList", "listeElements size : " + listeElement.size());
 
 		if (leAdapter == null) {
 			leAdapter = new ListeElementVoyageAdapter(context, listeElement);

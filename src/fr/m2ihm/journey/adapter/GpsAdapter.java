@@ -6,11 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.LocationListener;
-import fr.m2ihm.journey.activites.JourneyMainActivity;
-import fr.m2ihm.journey.listener.GPSListener;
 import fr.m2ihm.journey.metier.Gps;
-import fr.m2ihm.journey.services.LocationTrackerService;
 
 public class GpsAdapter {
 

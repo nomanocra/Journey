@@ -8,15 +8,12 @@ import fr.m2ihm.journey.adapter.MyBDAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
 import fr.m2ihm.journey.metier.Date;
 import fr.m2ihm.journey.metier.Photo;
-import fr.m2ihm.journey.metier.Voyage;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,11 +45,12 @@ public class Fullscreen_Activity extends Activity {
 
 		Collections.sort(photoList);
 		
+		// Then we fill content
+		
 		Photo currentPhoto = photoList.get(photoPositionOnList);
 		
 		ImageView centralPicture = (ImageView) findViewById(R.id.fullscreen_centralPicture);
 		centralPicture.setImageURI(Uri.parse(currentPhoto.getNomMedia()));
-		Log.v("onCreate - FullScreen", "path : " + currentPhoto.getNomMedia());
 		
 		TextView lieu = (TextView) findViewById(R.id.fullscreen_lieu);
 		lieu.setText(currentPhoto.getLieu());
@@ -64,12 +62,15 @@ public class Fullscreen_Activity extends Activity {
 	
 		TextView heure = (TextView) findViewById(R.id.fullscreen_heure);
 		heure.setText(currentDate.getHour() + "h" + currentDate.getMinute());
-	
 		
 		TextView commentaire = (TextView) findViewById(R.id.fullscreen_commentaire);
 		commentaire.setText(currentPhoto.getCommentaire());
 	}
 	
+	/**
+	 * Handles the return button
+	 * @param v
+	 */
 	public void returnbutton_click(View v)
 	{
 		Intent intent = new Intent(this, JournalActivity.class);

@@ -1,7 +1,5 @@
 package fr.m2ihm.journey.settings;
 
-import android.content.SharedPreferences;
-
 public class Settings {
 	static public int delayTraceur;
 	static public int distanceTraceur;

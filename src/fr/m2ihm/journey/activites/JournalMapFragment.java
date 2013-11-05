@@ -17,17 +17,12 @@ import fr.m2ihm.journey.adapter.MyBDAdapter;
 import fr.m2ihm.journey.adapter.MyBDAdapterImpl;
 import fr.m2ihm.journey.metier.ElementMap;
 import fr.m2ihm.journey.metier.Position;
-import fr.m2ihm.journey.metier.Voyage;
-import fr.m2ihm.journey.test.TestMarqueurs;
 import android.app.Fragment;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 public class JournalMapFragment extends Fragment {
 
@@ -74,15 +69,16 @@ public class JournalMapFragment extends Fragment {
 		bdAdapter.open();
 		List<Position> positionList = bdAdapter.getAllPosition(context
 				.getSelectedVoyageId());
-		Log.v("Position List", "POSITION LIST SIZE : " + positionList.size());
+
 		List<ElementMap> elementList = bdAdapter.getAllMedia(context
 				.getSelectedVoyageId());
-		Log.v("ELEMENT List", "ELEMENT LIST SIZE : " + elementList.size());
+
 		bdAdapter.close();
 
 		MarkerOptions marker;
 		if (elementList.size() != 0) {
-			// Then we print markers
+			
+			// We print markers
 			ElementMap currentElement;
 			for (int i = 0; i < elementList.size(); i++) {
 				currentElement = elementList.get(i);

@@ -5,7 +5,6 @@ import java.util.List;
 import fr.m2ihm.journey.R;
 import fr.m2ihm.journey.metier.Voyage;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

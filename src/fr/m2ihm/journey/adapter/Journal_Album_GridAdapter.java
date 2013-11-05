@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,15 +47,11 @@ public class Journal_Album_GridAdapter extends ArrayAdapter<Photo> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
 		ViewHolder holder = null;
-
-		Log.v("GridAdapter - getView", "Position : " + position);
-		Log.v("GridAdapter - getView", "Size : " + data.size());
 		
 		if (row == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			row = inflater.inflate(layoutResourceId, parent, false);
 			holder = new ViewHolder();
-//			holder.imageTitle = (TextView) row.findViewById(R.id.album_text);
 			holder.image = (ImageView) row.findViewById(R.id.album_image);
 			row.setTag(holder);
 		} else {
@@ -64,9 +59,7 @@ public class Journal_Album_GridAdapter extends ArrayAdapter<Photo> {
 		}
 
 		Photo photo = data.get(position);
-//		holder.imageTitle.setText(photo.getLieu());
-		// TODO CHANGE THIS
-		Log.v("getView", "Path : " + photo.getNomMedia());
+
 		holder.image.setImageURI(Uri.parse(photo.getNomMedia()));
 		
 		return row;

@@ -1,15 +1,8 @@
 package fr.m2ihm.journey.adapter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.SQLException;
-import fr.m2ihm.journey.metier.Date;
 import fr.m2ihm.journey.metier.ElementMap;
-import fr.m2ihm.journey.metier.Gps;
-import fr.m2ihm.journey.metier.Note;
 import fr.m2ihm.journey.metier.Photo;
 import fr.m2ihm.journey.metier.Position;
 import fr.m2ihm.journey.metier.Son;
