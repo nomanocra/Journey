@@ -79,10 +79,11 @@ public class AjouterEvenementActivity extends Activity {
 		progressBar.animate();
 		LocationManager objgps = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		LocationListener objlistener = new Myobjlistener(this);
-		objgps.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100000000, 1000000,
-				objlistener);
 		objgps.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100000000, 1000000,
 				objlistener);
+		objgps.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100000000, 1000000,
+				objlistener);
+
 
 	}
 
