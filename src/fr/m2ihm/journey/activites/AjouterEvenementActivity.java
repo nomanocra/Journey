@@ -162,8 +162,6 @@ public class AjouterEvenementActivity extends Activity {
 	}
 
 	public void prendreSon(View v) {
-		
-		
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Fonction indisponible sur la version d'essai")
                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -174,6 +172,7 @@ public class AjouterEvenementActivity extends Activity {
 				}
                    
                });
+        builder.show();
 	}
 
 	public void addPhoto() {
