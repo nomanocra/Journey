@@ -4,7 +4,9 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
@@ -73,13 +75,16 @@ public class AjouterEvenementActivity extends Activity {
 		voyageCourant = myDB.getVoyageCourant();
 		myDB.close();
 		positionElement = new Gps(0, 0);
-		//ajouterElementMap.setEnabled(false);
+		ajouterElementMap.setEnabled(false);
 
 		progressBar.animate();
 		LocationManager objgps = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		LocationListener objlistener = new Myobjlistener(this);
-		objgps.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100000000,
-				1000000, objlistener);
+
+		objgps.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100000000, 1000000,
+				objlistener);
+		objgps.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100000000, 1000000,
+				objlistener);
 	}
 
 	public void saveNewEvent(View v) {
@@ -157,6 +162,18 @@ public class AjouterEvenementActivity extends Activity {
 	}
 
 	public void prendreSon(View v) {
+		
+		
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Fonction indisponible sur la version d'essai")
+               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					// TODO Auto-generated method stub
+				}
+                   
+               });
 	}
 
 	public void addPhoto() {
