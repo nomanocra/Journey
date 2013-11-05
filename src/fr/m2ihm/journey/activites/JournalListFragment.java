@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ListView;
 
 public class JournalListFragment extends Fragment {
@@ -34,6 +35,18 @@ public class JournalListFragment extends Fragment {
 		View v = inflater.inflate(R.layout.journal_list_elements, null);
 
 		return v;
+	}
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState)
+	{
+		this.context = (JournalActivity) this.getActivity();
+		this.listView = (ListView) context.findViewById(R.id.listElementVoyage);
+		
+		if(this.context != null && this.listView != null && this.context.isOneVoyageFocused())
+		{
+			this.fillList();
+		}
 	}
 
 	public void fillList() {

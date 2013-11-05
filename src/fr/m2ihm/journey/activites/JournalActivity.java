@@ -36,6 +36,7 @@ public class JournalActivity extends Activity {
 	private JournalStatsFragment statsFragment;
 	
 	private int selectedVoyageId;
+	private boolean oneVoyageIsFocused;
 	
 	private ListeVoyagesAdapter lvAdapter;
 
@@ -67,6 +68,8 @@ public class JournalActivity extends Activity {
 				.add(R.id.journal_content_container, this.mapFragment).commit();
 
 		currentFragmentName = OurFragments.map;
+		
+		this.oneVoyageIsFocused = false;
 
 	}
 
@@ -113,7 +116,8 @@ public class JournalActivity extends Activity {
 						.getContext();
 
 				context.selectedVoyageId = view.getId();
-
+				context.oneVoyageIsFocused = true;
+				
 				/* Then we change content */
 				switch (context.getCurrentFragmentName()) {
 				case map:
@@ -251,6 +255,11 @@ public class JournalActivity extends Activity {
 	public int getSelectedVoyageId()
 	{
 		return this.selectedVoyageId;
+	}
+	
+	public boolean isOneVoyageFocused()
+	{
+		return this.oneVoyageIsFocused;
 	}
 
 	// ###################################

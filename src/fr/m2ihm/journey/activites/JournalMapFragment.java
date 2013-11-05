@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 public class JournalMapFragment extends Fragment {
 
@@ -35,7 +36,6 @@ public class JournalMapFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		this.context = (JournalActivity) container.getContext();
 
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.journal_map, null);
@@ -43,6 +43,17 @@ public class JournalMapFragment extends Fragment {
 		// this.initializeMap();
 
 		return v;
+	}
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState)
+	{
+		this.context = (JournalActivity) this.getActivity();
+		
+		if(this.context != null && this.context.isOneVoyageFocused())
+		{
+			this.fillMap();
+		}
 	}
 
 	/**
@@ -114,8 +125,6 @@ public class JournalMapFragment extends Fragment {
 			googleMap.addMarker(marker);
 
 			// DEPARTURE FLAG
-			// marker.icon(BitmapDescriptorFactory.fromResource(currentElement
-			// .getIconResource()));
 
 			marker = new MarkerOptions().position(new LatLng(positionList
 					.get(positionList.size() - 1).getGps().getLatitude(),
@@ -125,8 +134,6 @@ public class JournalMapFragment extends Fragment {
 			googleMap.addMarker(marker);
 
 			// FINISH FLAG
-			// marker.icon(BitmapDescriptorFactory.fromResource(currentElement
-			// .getIconResource()));
 			
 			// Then we make the map fit the content
 			LatLngBounds.Builder bounds = new LatLngBounds.Builder();
