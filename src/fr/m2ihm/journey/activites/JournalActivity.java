@@ -181,7 +181,7 @@ public class JournalActivity extends Activity {
 											break;
 
 										case list:
-											//context.albumFragment.clearAlbum();
+											context.listFragment.clearList();
 											break;
 
 										case stats:

@@ -79,12 +79,12 @@
         
  		<service android:name="fr.m2ihm.journey.services.LocationTrackerService" />
 
-        <meta-data
-        android:name="com.google.android.maps.v2.API_KEY"
-        android:value="AIzaSyATqt27k2rNIvKJl39F2SXBitMFRbzz-z4" />
-
 <!--         <meta-data -->
-<!--             android:name="com.google.android.maps.v2.API_KEY" -->
-<!--         	android:value="AIzaSyD8g-hKKZ9PUJMiOBu0AmxEf9AltNjJLs4" /> -->
+<!--         android:name="com.google.android.maps.v2.API_KEY" -->
+<!--         android:value="AIzaSyATqt27k2rNIvKJl39F2SXBitMFRbzz-z4" /> -->
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+        	android:value="AIzaSyD8g-hKKZ9PUJMiOBu0AmxEf9AltNjJLs4" />
     </application>
 </manifest>

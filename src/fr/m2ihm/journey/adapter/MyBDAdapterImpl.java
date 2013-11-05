@@ -645,12 +645,12 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 		int year = calendar.get(Calendar.YEAR);
 		ContentValues values = new ContentValues();
 		values.put(COL_V_EN_COURS, 0);
-		values.put(COL_E_SECONDES, secondes);
-		values.put(COL_E_MINUTES, minutes);
-		values.put(COL_E_HOUR, heures);
-		values.put(COL_E_DAY, day);
-		values.put(COL_E_MONTH, month);
-		values.put(COL_E_YEAR, year);
+		values.put(COL_V_SECONDES_FIN, secondes);
+		values.put(COL_V_MINUTES_FIN, minutes);
+		values.put(COL_V_HOUR_FIN, heures);
+		values.put(COL_V_DAY_FIN, day);
+		values.put(COL_V_MONTH_FIN, month);
+		values.put(COL_V_YEAR_FIN, year);
 		return mDB.update(TABLE_VOYAGE, values, COL_V_ID + "==" + id, null);
 	}
 

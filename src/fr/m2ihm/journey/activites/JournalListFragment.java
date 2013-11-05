@@ -68,4 +68,9 @@ public class JournalListFragment extends Fragment {
 			leAdapter.updateContent(listeElement);
 		}
 	}
+	
+	public void clearList()
+	{
+		this.leAdapter.clearContent();
+	}
 }

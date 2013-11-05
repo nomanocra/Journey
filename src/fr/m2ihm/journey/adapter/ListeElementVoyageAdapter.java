@@ -1,5 +1,6 @@
 package fr.m2ihm.journey.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -81,6 +82,12 @@ public class ListeElementVoyageAdapter extends ArrayAdapter<ElementMap> {
 	
 	public void updateContent(List<ElementMap> listeElement) {
 		this.values = listeElement;
+		this.notifyDataSetChanged();
+	}
+	
+	public void clearContent()
+	{
+		this.values = new ArrayList<ElementMap>();
 		this.notifyDataSetChanged();
 	}
 
