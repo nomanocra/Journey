@@ -61,7 +61,7 @@ public class AjouterEvenementActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.formulaire_nouveau_evement);
-		//this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
+		// this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		intent = getIntent();
 		myDB = new MyBDAdapterImpl(this);
 		commentaire = (EditText) findViewById(R.id.champCommentaireEvenement);
@@ -73,13 +73,13 @@ public class AjouterEvenementActivity extends Activity {
 		voyageCourant = myDB.getVoyageCourant();
 		myDB.close();
 		positionElement = new Gps(0, 0);
-		ajouterElementMap.setEnabled(false);
-		
+		//ajouterElementMap.setEnabled(false);
+
 		progressBar.animate();
 		LocationManager objgps = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		LocationListener objlistener = new Myobjlistener(this);
-		objgps.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100000000, 1000000,
-				objlistener);
+		objgps.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100000000,
+				1000000, objlistener);
 	}
 
 	public void saveNewEvent(View v) {
@@ -121,7 +121,6 @@ public class AjouterEvenementActivity extends Activity {
 		return path;
 	}
 
-	
 	private static File getOutputMediaFile(int type) {
 		// To be safe, you should check that the SDCard is mounted
 		// using Environment.getExternalStorageState() before doing this.
@@ -156,6 +155,7 @@ public class AjouterEvenementActivity extends Activity {
 		return mediaFile;
 
 	}
+
 	public void prendreSon(View v) {
 	}
 
@@ -264,21 +264,26 @@ public class AjouterEvenementActivity extends Activity {
 			// TODO Auto-generated method stub
 		}
 
+		@Override
 		public void onLocationChanged(Location location) {
 
 			// affichage des valeurs dans la les zone de saisie
-			
+
+			Log.v("Je suis avant", "Et avant");
 			positionElement = new Gps(location.getLatitude(),
 					location.getLongitude());
+			Log.v("Je suis ici", "Et ici");
 			lieu.setText(GpsAdapter.gpsToAdresse(positionElement, c));
 			lieu.setTextColor(Color.BLACK);
 			progressBar.setVisibility(View.INVISIBLE);
-			ajouterElementMap.setEnabled(true);	
+			ajouterElementMap.setEnabled(true);
 		}
 	}
+
+	@Override
 	public void onBackPressed() {
 		Intent intent = new Intent(this, JourneyMainActivity.class);
 		startActivity(intent);
 		finish();
-		}
+	}
 }

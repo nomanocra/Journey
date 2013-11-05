@@ -30,11 +30,24 @@ public class JournalAlbumFragment extends Fragment {
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.journal_album, null);
 
-		this.context = (JournalActivity) container.getContext();
+		return v;
+	}
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState)
+	{
+		this.context = (JournalActivity) this.getActivity();
 
 		this.gridView = (GridView) context.findViewById(R.id.gridView);
 		
-		return v;
+		Log.v("oncreateview - album", "context null? " + (context == null));
+		Log.v("oncreateview - album", "gridview null? " + (gridView == null));
+		Log.v("oncreateview - album", "focused ? " + (context.isOneVoyageFocused()));
+		
+		if(context != null && gridView != null && context.isOneVoyageFocused())
+		{
+			this.fillAlbum();
+		}
 	}
 
 	/**
