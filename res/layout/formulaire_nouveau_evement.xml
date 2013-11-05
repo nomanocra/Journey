@@ -53,10 +53,51 @@
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="101dp"
+        android:layout_height="130dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="93dp"
         android:layout_toRightOf="@+id/textView5" >
+
+        <Button
+            android:id="@+id/AjoutVideo"
+            android:layout_width="200dp"
+            android:layout_height="130dp"
+            android:onClick="prendreVideo"
+            android:background="@drawable/b_prendre_video"
+            android:text=" " />
+
+        <TextView
+            android:id="@+id/indicateurMedia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="Vous n&apos;avez pas encore ajouté de média"
+            android:textColor="@color/Gris4"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/ajoutSon"
+            android:layout_width="200dp"
+            android:layout_height="130dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="23dp"
+            android:layout_toLeftOf="@+id/indicateurMedia"
+            android:onClick="prendreSon"
+            android:background="@drawable/b_prendre_son"
+            android:text="  " />
+
+        <Button
+            android:id="@+id/ajoutPhoto"
+            android:layout_width="200dp"
+            android:layout_height="130dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="88dp"
+            android:layout_toRightOf="@+id/AjoutVideo"
+            android:onClick="prendrePhoto"
+            android:background="@drawable/b_prendre_photo"
+            android:text="  " />
+
     </RelativeLayout>
 
     <EditText
@@ -65,7 +106,7 @@
         android:layout_height="120dp"
         android:layout_above="@+id/relativeLayout1"
         android:layout_alignLeft="@+id/relativeLayout1"
-        android:layout_marginBottom="114dp"
+        android:layout_marginBottom="60dp"
         android:ems="10"
         android:inputType="textMultiLine"
         android:singleLine="false"
@@ -153,50 +194,6 @@
         android:onClick="closeActivity"
         android:text="Annuler"
         android:textSize="30dp" />
-
-    <Button
-        android:id="@+id/boutonJeTermineMonVoyage"
-        android:layout_width="200dp"
-        android:layout_height="130dp"
-        android:layout_above="@+id/annulerNouveauEvenement"
-        android:layout_alignLeft="@+id/TextView03"
-        android:layout_marginBottom="27dp"
-        android:onClick="prendreVideo"
-        android:text="Video" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="200dp"
-        android:layout_height="130dp"
-        android:layout_alignBaseline="@+id/boutonJeTermineMonVoyage"
-        android:layout_alignBottom="@+id/boutonJeTermineMonVoyage"
-        android:layout_marginLeft="38dp"
-        android:layout_toRightOf="@+id/boutonJeTermineMonVoyage"
-        android:onClick="prendreSon"
-        android:text="Son" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="200dp"
-        android:layout_height="130dp"
-        android:layout_alignBaseline="@+id/button3"
-        android:layout_alignBottom="@+id/button3"
-        android:layout_marginLeft="48dp"
-        android:layout_toRightOf="@+id/button3"
-        android:onClick="prendrePhoto"
-        android:text="Photo" />
-
-    <TextView
-        android:id="@+id/indicateurMedia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_marginLeft="24dp"
-        android:layout_toRightOf="@+id/button2"
-        android:text="Vous n&apos;avez pas encore ajouté de média"
-        android:textColor="@color/Gris4"
-        android:textSize="25dp" />
 
     <ProgressBar
         android:id="@+id/progressBar"
