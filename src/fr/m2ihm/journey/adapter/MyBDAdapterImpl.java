@@ -80,8 +80,11 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 	public static final String COL_E_YEAR = "year";
 
 	public static final String COL_E_LIEU = "lieu";
-	public static final String COL_E_MEDIA_TYPE = "typeM";
-	public static final String COL_E_MEDIA_NOM = "nomM";
+	public static final String COL_E_MEDIA_TYPE = "typeM"; // On stoque tous les type d'objet ElementMap dans la table Evenement
+															// Pour différencier les type d'objet, on utilise COL_E_MEDIA_TYPE
+															// qui enregistre le type de l'objet (Photo, Video, Note, Position).
+	public static final String COL_E_MEDIA_NOM = "nomM";   	//Pour les objet Note, COL_E_MEDIA_NOM prend une valeur
+															//par defaut car il n'y a pas de media dans la classe Note.
 	public static final String COL_E_COMMENTAIRE = "commentaire";
 
 	private static final String CREATE_TABLE_EVENEMENT = "create table "
@@ -298,7 +301,7 @@ public class MyBDAdapterImpl implements MyBDAdapter {
 			for (int i = 0; i < cursor.getCount(); i++) {
 				
 				typeMedia = cursor.getString(13);
-				
+				// On switch COL_E_MEDIA_TYPE pour pouvoir creer les ElementMap avec du polymorphisme.
 				if (typeMedia.equals("Video")) {
 					e = new Video(v,
 							new Gps(cursor.getFloat(2), cursor.getFloat(3)),

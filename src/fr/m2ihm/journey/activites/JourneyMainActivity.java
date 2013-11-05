@@ -42,6 +42,7 @@ public class JourneyMainActivity extends Activity {
 		myDB.open();
 		voyageEnCours = myDB.getVoyageCourant();
 		myDB.close();
+		//On regarde si il y a un voyage en cours pour pouvoir adapter le layout de la page d'acceuil
 		if (voyageEnCours.getId() == -1) {
 			pasDeVoyageLayout();
 			Toast messageAcceuil = Toast
@@ -55,6 +56,8 @@ public class JourneyMainActivity extends Activity {
 			enVoyageLayout();
 		}
 	}
+	
+	//Permet de de récupérer les settings du local storage
 	public void loadSettings(){
 	       SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 	       Settings.setTraceurActive(settings.getBoolean("traceurMode", false));
@@ -62,6 +65,7 @@ public class JourneyMainActivity extends Activity {
 	       Settings.setDistanceTraceur(settings.getInt("distanceTracer", 0));
 	}
 	
+	//Permet de sauvegarder les settings en local storage
 	public void saveSettings(){
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 	    SharedPreferences.Editor editor = settings.edit();
@@ -72,6 +76,7 @@ public class JourneyMainActivity extends Activity {
 
 	}
 	
+	//Layout si il y a un voyage en cours
 	public void enVoyageLayout() {	
 		setContentView(R.layout.acceuil2);
 		myDB.open();
@@ -80,25 +85,27 @@ public class JourneyMainActivity extends Activity {
 		traceurButton = (Button) findViewById(R.id.traceur);
 		textVoyageEnCours = (TextView) findViewById(R.id.voyageEnCoursText);
 		textVoyageEnCours.setText(voyageEnCours.getNom());
-		if(Settings.isTraceurActive()){
+		if(Settings.isTraceurActive()){ //On regarde si le service qui trace le gps est actif pour adapté l'interface
 			activeButtonTracerLayout();
 		}else{
 			desactiveButtonTracerLayout();
 		}
 	}
 
+	//layout si il n'y a pas de voyage
 	public void pasDeVoyageLayout() {
 		setContentView(R.layout.acceuil);
 	}
 
 
-	// Gestion des boutons
+	// Quand on clique sur ajouter un nouveau voyage
 	public void actionBoutonAjoutVoyage(View v) {
 		// champNouveauVoyage.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
 
 		LayoutInflater factory = LayoutInflater.from(this);
 		final View alertDialogView = factory.inflate(
 				R.layout.formulaire_nouveau_voyage, null);
+		//On ouvre un fenetre de diaglogue pour demander le nom du voyage
 		AlertDialog.Builder nouveauVoyageDialogue = new AlertDialog.Builder(
 				JourneyMainActivity.this);
 		nouveauVoyageDialogue.setView(alertDialogView);
@@ -145,6 +152,7 @@ public class JourneyMainActivity extends Activity {
 		int nbVoyage = myDB.getAllVoyages().size(); 
 		myDB.close();
 		if (nbVoyage == 0){
+			// Si il n'y a pas encore de voyage on ne peut pas ouvrir le carnet de voyage
 			Toast messageAcceuil = Toast
 					.makeText(
 							JourneyMainActivity.this,
@@ -175,13 +183,14 @@ public class JourneyMainActivity extends Activity {
 						EditText champDistance = (EditText)  alertDialogView.findViewById(R.id.distanceEditText);
 						String delai = champDelai.getText().toString();
 						String distance = champDistance.getText().toString();
+						//Si l'utilisateur n'entre pas de valeur dans les champs, on set des valeurs pas defaut.
 						if (delai.equals("")) {
 							delai = "5";
 						} 
 						if (distance.equals("")){
 							distance = "5";
 						}
-						Settings.setDelayTraceur(Integer.parseInt(delai) * 1000);
+						Settings.setDelayTraceur(Integer.parseInt(delai) * 1000); // *1000 pour avoir le delai en secondes
 						Settings.setDelayTraceur(Integer.parseInt(distance));
 						saveSettings();
 					}
@@ -193,6 +202,7 @@ public class JourneyMainActivity extends Activity {
 				});
 		nouveauVoyageDialogue.show();
 	}
+	
 	public void startLocationTracerService(){
 		Intent monService = new Intent(JourneyMainActivity.this, LocationTrackerService.class);
 		startService(monService);	
@@ -202,6 +212,7 @@ public class JourneyMainActivity extends Activity {
 		stopService(new Intent(JourneyMainActivity.this, LocationTrackerService.class));
 	}
 	
+	//Fonction quand on appuie sur le bouton qui gère l'activation et désactivation du service de localisation gps
 	public void clickOnTraceurButton(View c){
 		if(Settings.isTraceurActive()){
 			desactiveButtonTracerLayout();
@@ -223,13 +234,15 @@ public class JourneyMainActivity extends Activity {
 		traceurButton.setText("Traceur désactivé");
 		traceurButton.setTextColor(Color.RED);
 	}
+	
+	//Quand on appuie sur terminer voyage
 	public void actionBoutonTermineVoyage(View v) {
 		pasDeVoyageLayout();
 		myDB.open();
-		myDB.terminerVoyage(voyageEnCours.getId());
+		myDB.terminerVoyage(voyageEnCours.getId()); // on sauvegarde dans la BD
 		myDB.close();
-		stopLocationTracerService();
-		Settings.setTraceurActive(false);
+		stopLocationTracerService(); // On arrête le service de localisation gps
+		Settings.setTraceurActive(false); // On change les setting pour précisé que il n'y a plus de localisation
 		saveSettings();
 	}
 

@@ -75,6 +75,7 @@ public class AjouterEvenementActivity extends Activity {
 		positionElement = new Gps(0, 0);
 		ajouterElementMap.setEnabled(false);
 
+		//On met une bar de chargement le temps que l'application trouve l'addresse postal courante
 		progressBar.animate();
 		LocationManager objgps = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		LocationListener objlistener = new Myobjlistener(this);
@@ -85,13 +86,15 @@ public class AjouterEvenementActivity extends Activity {
 				objlistener);
 	}
 
+	//C'est quand on clique sur ajouter evenement, que on va ajouter l'objet ElementMap dans la BD
 	public void saveNewEvent(View v) {
 		if (commentaire.getText().toString().equals("") && ajoutMedia == false) {
 			Toast messageAcceuil = Toast
 					.makeText(
 							AjouterEvenementActivity.this,
 							"Vous devez au moins mettre un commentaire ou ajouter un media !",
-							Toast.LENGTH_LONG);
+							Toast.LENGTH_LONG); // Il faut au moins entrer un commentaire (pour creer une Note)
+												// ou ajouter un media (Video ou Photo)
 			messageAcceuil.setGravity(0, 0, 0);
 			messageAcceuil.show();
 		} else {
@@ -159,22 +162,10 @@ public class AjouterEvenementActivity extends Activity {
 
 	}
 
-	public void prendreSon(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Fonction indisponible sur la version d'essai")
-               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-				@Override
-				public void onClick(DialogInterface arg0, int arg1) {
-					// TODO Auto-generated method stub
-				}
-                   
-               });
-        builder.show();
-	}
 
+	//Fonction appelée quand on a pris une photo avec l'appareil.
 	public void addPhoto() {
-
 		newEvent = new Photo(voyageCourant, positionElement,
 				Date.dateCourant(), filePath, lieu.getText().toString(),
 				commentaire.getText().toString());
@@ -182,8 +173,8 @@ public class AjouterEvenementActivity extends Activity {
 		indicateurMedia.setText("Vous avez ajouté une photo");
 	}
 
+	//Fonction appelée quand on a pris une photo avec l'appareil.
 	public void addVideo() {
-
 		newEvent = new Video(voyageCourant, positionElement,
 				Date.dateCourant(), filePath, lieu.getText().toString(),
 				commentaire.getText().toString());
@@ -191,6 +182,7 @@ public class AjouterEvenementActivity extends Activity {
 		indicateurMedia.setText("Vous avez ajouté une video");
 	}
 
+	//Fonction appelée quand on enregistre un son. (ne sert pas pour l'instant mais est implémentée)
 	public void addSon() {
 		newEvent = new Son(voyageCourant, GpsAdapter.getCurrentGps(),
 				Date.dateCourant(), filePath, lieu.getText().toString(),
@@ -199,6 +191,7 @@ public class AjouterEvenementActivity extends Activity {
 		indicateurMedia.setText("Vous avez ajouté un son");
 	}
 
+	// Quand on clique sur le bouton video
 	public void prendreVideo(View v) {
 		// create Intent to take a picture and return control to the calling
 		// application
@@ -213,12 +206,13 @@ public class AjouterEvenementActivity extends Activity {
 															// image quality to
 															// high
 
-		// start the Video Capture Intent
+		// on appelle une appli de capture video
 		startActivityForResult(intent, CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE);
 
 		filePath = getOutputMediaFilePath(MEDIA_TYPE_VIDEO);// Intent
 	}
 
+	// Quand on clique sur le bouton video
 	public void prendrePhoto(View v) {
 		// create Intent to take a picture and return control to the calling
 		// application
@@ -229,11 +223,27 @@ public class AjouterEvenementActivity extends Activity {
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file
 															// name
 
-		// start the image capture Intent
+		// on appelle une appli de capture photo
 		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 		filePath = getOutputMediaFilePath(MEDIA_TYPE_IMAGE);// Intent
 	}
+	
+	//Fonction d'enregistrement de son pas encore implémentée
+	public void prendreSon(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Fonction indisponible sur la version d'essai")
+               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					// TODO Auto-generated method stub
+				}
+                   
+               });
+        builder.show();
+	}
+	
+	//Fonction appelé lors des retour des appli de capture video et photo.
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -259,6 +269,7 @@ public class AjouterEvenementActivity extends Activity {
 		}
 	}
 
+	
 	private class Myobjlistener implements LocationListener {
 		private Context c;
 
@@ -285,7 +296,8 @@ public class AjouterEvenementActivity extends Activity {
 
 			positionElement = new Gps(location.getLatitude(),
 					location.getLongitude());
-
+			//Losque que l'adresse est trouvé, on stop la Progress bar et on active le bouton 
+			//qui permet d'ajouter un evenement.
 			lieu.setText(GpsAdapter.gpsToAdresse(positionElement, c));
 			lieu.setTextColor(Color.BLACK);
 			progressBar.setVisibility(View.INVISIBLE);
