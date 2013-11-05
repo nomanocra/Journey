@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import fr.m2ihm.journey.R;
 import fr.m2ihm.journey.metier.ElementMap;
-import fr.m2ihm.journey.metier.Photo;
-import fr.m2ihm.journey.metier.Voyage;
 
 public class ListeElementVoyageAdapter extends ArrayAdapter<ElementMap> {
 
@@ -55,6 +51,11 @@ public class ListeElementVoyageAdapter extends ArrayAdapter<ElementMap> {
 		return rowView;
 	}
 
+	/**
+	 * Called to remove an element from the list
+	 * @param listView
+	 * @param elementID
+	 */
 	public void removeCurrentFromView(ListView listView, int elementID) {
 
 		int listIDToRemove = 0;
@@ -80,11 +81,18 @@ public class ListeElementVoyageAdapter extends ArrayAdapter<ElementMap> {
 		return this.values.size();
 	}
 	
+	/**
+	 * Called when you select another Voyage on the left list
+	 * @param listeElement
+	 */
 	public void updateContent(List<ElementMap> listeElement) {
 		this.values = listeElement;
 		this.notifyDataSetChanged();
 	}
 	
+	/**
+	 * Called when a Voyage is destroyed : clean the view
+	 */
 	public void clearContent()
 	{
 		this.values = new ArrayList<ElementMap>();

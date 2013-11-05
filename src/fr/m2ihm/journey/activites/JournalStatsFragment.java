@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 
 import fr.m2ihm.journey.R;
 
+/**
+ * Not implemented yet
+ * @author G.Mercier, D.Duprat
+ *
+ */
 public class JournalStatsFragment extends Fragment {
 	
 	@Override
